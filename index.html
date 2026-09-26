@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#07090d">
-<title>יפן 2026 · v68</title>
+<title>יפן 2026 · v73</title>
 <style>
   :root { --bg:#07090d; --card:#141a24; --line:#2a3444; --text:#f4f7fb; --muted:#93a0b3; --blue:#8ebcff; --ink:#071018; }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -37,6 +37,11 @@
   .primary { background:var(--blue); color:var(--ink); flex:1; }
   .ghost { background:transparent; color:#d7e6f8; border:1px solid #4d6986; }
   .late { width:100%; margin-top:8px; min-height:44px; border-radius:12px; border:1px solid var(--line); background:transparent; color:#c9d6e6; }
+  .mymaps-link {
+    width:100%; min-height:44px; margin:8px 0 2px; border-radius:12px;
+    border:1px solid #315e87; background:#102033; color:#cfe8ff;
+    display:flex; align-items:center; justify-content:center; text-decoration:none; font-weight:800;
+  }
   .block { margin:18px 0 8px; color:var(--muted); font-size:13px; font-weight:800; }
   .row { width:100%; min-height:58px; display:flex; flex-direction:column; align-items:stretch; gap:2px; text-align:right; background:var(--card); border:1px solid var(--line); border-radius:16px; padding:12px; margin-top:8px; }
   .row .t { direction:ltr; unicode-bidi:isolate; color:var(--blue); font-weight:700; font-size:15px; text-align:left; }
@@ -80,6 +85,64 @@
   .menu button, .menu a { min-height:44px; border-radius:12px; border:1px solid var(--line); background:#182232; color:#e7eef8; padding:10px 12px; text-decoration:none; }
   .opt { width:100%; text-align:right; background:#101722; border:1px solid var(--line); border-radius:14px; padding:12px; margin-top:8px; }
   .toast { position:fixed; left:16px; right:16px; bottom:calc(16px + env(safe-area-inset-bottom)); z-index:30; background:#182232; border:1px solid var(--line); border-radius:14px; padding:12px; display:flex; justify-content:space-between; align-items:center; gap:8px; }
+
+  /* v69 — Restaurants tab */
+  .restaurant-head { margin-bottom:12px; }
+  .restaurant-head h1 { margin-bottom:4px; }
+  .restaurant-note { color:var(--muted); font-size:13px; line-height:1.45; margin:0 0 12px; }
+  .restaurant-search { margin-bottom:10px; }
+  .restaurant-filters { display:flex; gap:8px; overflow-x:auto; padding-bottom:4px; margin-bottom:10px; }
+  .restaurant-filters::-webkit-scrollbar { display:none; }
+  .restaurant-filters button {
+    flex:0 0 auto; min-height:38px; border-radius:999px; padding:0 12px;
+    border:1px solid var(--line); background:#10151d; color:var(--text); font-weight:750;
+  }
+  .restaurant-filters button.on { background:var(--blue); color:var(--ink); border-color:var(--blue); }
+  .restaurant-grid { display:grid; grid-template-columns:1fr; gap:12px; }
+  .restaurant-card {
+    border:1px solid var(--line); border-radius:18px; overflow:hidden; background:var(--card);
+  }
+  .restaurant-photo-wrap { width:100%; aspect-ratio:16/9; background:#0c1118; overflow:hidden; }
+  .restaurant-photo {
+    display:block; width:100%; height:100%; object-fit:cover; background:#0c1118;
+  }
+  .restaurant-body { padding:13px; }
+  .restaurant-topline { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
+  .restaurant-name { margin:0; font-size:19px; line-height:1.2; }
+  .diet-badge {
+    flex:0 0 auto; display:inline-flex; align-items:center; min-height:28px; padding:4px 9px;
+    border-radius:999px; font-size:11px; font-weight:900; border:1px solid;
+  }
+  .diet-vegan { color:#bff6d1; border-color:#2f7d50; background:#10281c; }
+  .diet-vegetarian { color:#d5f5c4; border-color:#5d7c39; background:#1b2812; }
+  .diet-vegan-options { color:#bfeef0; border-color:#39717a; background:#10282d; }
+  .diet-veg-friendly { color:#ffe4a8; border-color:#766031; background:#2a2110; }
+  .diet-unknown { color:#c4cfdd; border-color:#435064; background:#171d26; }
+  .restaurant-verify { margin-top:8px; color:#88a1bc; font-size:11px; line-height:1.35; }
+  .saved-japan { display:inline-flex; align-items:center; margin-inline-start:6px; padding:3px 7px; border-radius:999px; border:1px solid #4b3c63; background:#1b1625; color:#d8c9ef; font-size:10px; font-weight:800; }
+  .restaurant-meta { color:var(--muted); font-size:12px; margin-top:5px; }
+  .restaurant-desc { color:#d5deea; line-height:1.45; font-size:14px; margin:9px 0 0; }
+  .restaurant-diet { margin-top:9px; font-size:13px; line-height:1.42; color:#dce7f4; }
+  .restaurant-address {
+    margin-top:10px; color:#aebbc9; font-size:12px; line-height:1.35; direction:ltr; text-align:left;
+  }
+  .restaurant-actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; margin-top:12px; }
+  .restaurant-actions a {
+    min-height:42px; display:flex; align-items:center; justify-content:center; text-align:center;
+    border-radius:11px; border:1px solid var(--line); background:#182232; color:#e9f1fb;
+    font-size:12px; font-weight:850; text-decoration:none; padding:8px 9px;
+  }
+  .restaurant-actions a.map { background:#17304a; border-color:#315e87; color:#cfe8ff; }
+  .restaurant-actions a.youtube { background:#2a1515; border-color:#6a3535; color:#ffbcbc; }
+  .restaurant-actions a.menu { background:#18251a; border-color:#3f6847; color:#cef0d3; }
+  .restaurant-actions a.photos { background:#251b32; border-color:#57406f; color:#e5d4ff; }
+  @media (min-width: 760px) {
+    .restaurant-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+  }
+  @media (min-width: 1180px) {
+    .restaurant-grid { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  }
+
   .hidden { display:none !important; }
   @media (min-width: 960px) {
     .nav button[data-tab="places"] { display:none; }
@@ -123,6 +186,7 @@
 <body>
 <nav class="nav">
   <button type="button" data-tab="today" class="on">היום</button>
+  <button type="button" data-tab="restaurants">מסעדות</button>
   <button type="button" data-tab="places">מקומות</button>
   <button type="button" data-tab="more">עוד</button>
 </nav>
@@ -156,6 +220,10 @@ if(!live.media || typeof live.media!=='object') live.media={};
 let tab='today';
 let placeFilter='הכל';
 let query='';
+let restaurantFilter='הכל';
+let restaurantCityFilter='הכל';
+let restaurantQuery='';
+const RESTAURANTS=[{"id":"reissue","name":"Reissue 3D Latte Art","city":"טוקיו","area":"Harajuku","kind":"קפה / קינוחים","dietKey":"unknown","dietLabel":"לא מאומת לצמחוני","dietDetail":"בית קפה עם 2D/3D latte art. משקאות יכולים להתאים לפי ההזמנה, אבל אין אימות מלא של כל האוכל והקינוחים.","desc":"קפה מפורסם בהראג׳וקו עם latte art לפי בקשה.","address":"3-25-7 Jingumae, Shibuya-ku, Tokyo 150-0001","maps":"https://www.google.com/maps/search/?api=1&query=Reissue+3D+Latte+Art+Harajuku+Tokyo","menu":"https://www.reissue.co.jp/","photo":"https://images.squarespace-cdn.com/content/v1/5b196ee731d4df831f0acadd/1580873477199-5HC3NRU8U1BXY7NWVUT3/Japan_2019-9481.jpg","verification":"קיים במאגר","savedJapan":false},{"id":"shunju","name":"Shunju Shibuya Bunkamuradori","city":"טוקיו","area":"Shibuya","kind":"מסעדה יפנית","dietKey":"veg-friendly","dietLabel":"מתאים עם התאמה","dietDetail":"מסעדה מעורבת. בפרויקט כבר נשמרה אפשרות שניתן לבקש ללא fish stock. לבקש במפורש בלי בשר, דגים, פירות ים ו-dashi.","desc":"New Japanese cuisine בשיבויה; מתאים לזוג עם העדפות שונות.","address":"2-23-12 Dogenzaka, Fontis Building 1F, Shibuya-ku, Tokyo 150-0043","maps":"https://www.google.com/maps/search/?api=1&query=Shunju+Shibuya+Bunkamuradori+Tokyo","menu":"https://shunju.com/shibuya/menu","photo":"https://www.ozmall.co.jp/restaurant/images/seat/4152_20022_ph_d.jpg?t=20260317","verification":"קיים במאגר","savedJapan":false},{"id":"hatcoffee","name":"HATCOFFEE Asakusa","city":"טוקיו","area":"Asakusa","kind":"קפה","dietKey":"unknown","dietLabel":"לא מאומת לצמחוני","dietDetail":"קפה עם 3D foam art. אין כאן אימות מלא של מרכיבי האוכל/קינוחים.","desc":"בית קפה באסאקוסה עם לאטה וקצף תלת-ממדי.","address":"2-19 Kaminarimon, Taito-ku, Tokyo (2F)","maps":"https://www.google.com/maps/search/?api=1&query=HATCOFFEE+Asakusa+Tokyo","menu":"https://www.google.com/search?q=HATCOFFEE+Asakusa+menu","photo":"https://media.timeout.com/images/105526211/1024/576/image.jpg","verification":"קיים במאגר","savedJapan":false},{"id":"tstantan","name":"T’s Tantan Tokyo Station","city":"טוקיו","area":"Tokyo Station","kind":"ראמן","dietKey":"vegan","dietLabel":"100% טבעוני","dietDetail":"מסעדת ראמן טבעונית; ללא בשר, דגים, ביצים ומוצרי חלב.","desc":"אחד המקומות הכי נוחים לראמן טבעוני בתחנת Tokyo Station.","address":"GRANSTA TOKYO, Square Zero Area B1F, outside ticket gates, 1-9-1 Marunouchi, Chiyoda-ku, Tokyo","maps":"https://www.google.com/maps/search/?api=1&query=T%27s+Tantan+Gransta+Tokyo","menu":"https://foods.jr-cross.co.jp/ts-tantan/menu/","photo":"https://static.gltjp.com/glt/data/article/21000/20519/20240331_082836_ef20e56b_w1920.webp","verification":"מאומת","savedJapan":true},{"id":"pikachu-sweets","name":"Pikachu Sweets by Pokémon Cafe","city":"טוקיו","area":"Ikebukuro","kind":"קינוחים / משקאות","dietKey":"unknown","dietLabel":"לא מאומת לצמחוני","dietDetail":"קיימת רשימת אלרגנים, אבל לא סומן כאן כצמחוני בלי אימות מרכיבים לכל מוצר.","desc":"Takeaway של Pokémon בתוך Sunshine City.","address":"Sunshine City alpa 2F, 3-1-2 Higashi-Ikebukuro, Toshima-ku, Tokyo 170-6002","maps":"https://www.google.com/maps/search/?api=1&query=Pikachu+Sweets+by+Pokemon+Cafe+Sunshine+City","menu":"https://www.pokemon-cafe.jp/en/pikachu_sweets/","photo":"https://www.gotokyo.org/shared/images/pages/destinations/northern-tokyo/ikebukuro/images/pokemon_02.jpg","verification":"קיים במאגר","savedJapan":false},{"id":"starbucks-roastery","name":"Starbucks Reserve Roastery Tokyo","city":"טוקיו","area":"Nakameguro","kind":"קפה / מאפייה","dietKey":"veg-friendly","dietLabel":"אפשרויות צמחיות","dietDetail":"לא מסעדה טבעונית. קיימות אפשרויות חלב צמחי ומוצרים משתנים; לבדוק מרכיבים של אוכל ספציפי.","desc":"Roastery גדול ומרשים לאורך Meguro River. מייצג את Starbucks Japan שהופיע ב-Saved.","address":"2-19-23 Aobadai, Meguro City, Tokyo 153-0042","maps":"https://www.google.com/maps/search/?api=1&query=Starbucks+Reserve+Roastery+Tokyo+2-19-23+Aobadai","menu":"https://www.starbucks.co.jp/assets/images/web2/images/products/pdf/Roastery_menusheet.pdf","photo":"https://upload.wikimedia.org/wikipedia/commons/5/50/Starbucks_Reserve_Roastery_Tokyo_-_Sep_09_2019.jpg","verification":"אימות חלקי","savedJapan":true},{"id":"te-cor-gentil","name":"Te cor gentil – vegan bakes","city":"טוקיו","area":"Azabu-Juban","kind":"מאפייה","dietKey":"vegan","dietLabel":"100% טבעוני","dietDetail":"מאפייה טבעונית; מקורות עדכניים מתארים את המוצרים כ-100% vegan וללא ביצים/חלב/חמאה.","desc":"מאפים מלוחים ומתוקים, לחמים ופיצה טבעונית.","address":"2-18-8 Azabujuban, Minato City, Tokyo 106-0045, Gran Louvre Azabujuban 1F","maps":"https://www.google.com/maps/search/?api=1&query=te+cor+gentil+vegan+bakes+Azabujuban+Tokyo","menu":"https://tecorgentil.sacri-store.jp/","photo":"https://images.happycow.net/venues/1024/31/49/hcmp314964_2566464.jpeg","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"vegan-cafe-pqs","name":"Vegan Cafe PQ’s","city":"טוקיו","area":"Taito / Ryusen","kind":"קפה / מסעדה","dietKey":"vegan","dietLabel":"100% טבעוני","dietDetail":"מקום טבעוני מלא; מזוהה גם כ-@vegancurry מהפוסט.","desc":"קארי, rice plates, קינוחים ומנות ביתיות טבעוניות.","address":"1-1-2 Ryusen, Taito City, Tokyo 110-0012","maps":"https://www.google.com/maps/search/?api=1&query=Vegan+Cafe+PQs+1-1-2+Ryusen+Tokyo","menu":"https://lit.link/vegancafepqs","photo":"https://tblg.k-img.com/restaurant/images/Rvw/166759/640x640_rect_41f27284cdfa02644f8deefbced4d038.jpg","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"shogun-pizza-shibuya","name":"SHOGUN PIZZA Shibuya","city":"טוקיו","area":"Shibuya","kind":"פיצה","dietKey":"vegan-options","dietLabel":"יש מנות טבעוניות","dietDetail":"מסעדה מעורבת. קיימות פיצות vegan, אבל יש גם בשר/דגים/גבינות בתפריט — לבחור מנה טבעונית מפורשת.","desc":"פיצרייה במרכז Shibuya עם מספר אפשרויות vegan.","address":"13-4 Udagawacho, Shibuya, Tokyo 150-0042, Spain-zaka OK Bldg 1F","maps":"https://www.google.com/maps/search/?api=1&query=SHOGUN+PIZZA+Shibuya+13-4+Udagawacho","menu":"https://shogunpizza.com/","photo":"https://ximg.retty.me/crop/s600x600/q80/das/-/retty/img_repo/2l/01/38402593.jpg","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"vegan-gyoza","name":"VEGAN GYOZA","city":"טוקיו","area":"Taito / Negishi","kind":"גיוזה","dietKey":"vegan","dietLabel":"100% טבעוני","dietDetail":"מסעדה טבעונית המתמקדת בגיוזה ללא מרכיבים מן החי.","desc":"גיוזה טבעונית במגוון מילויים, קרוב לאזור Ueno/Asakusa.","address":"3-11-17 Negishi, Taito City, Tokyo 110-0003","maps":"https://www.google.com/maps/search/?api=1&query=VEGAN+GYOZA+3-11-17+Negishi+Tokyo","menu":"https://www.vegangyoza.com/","photo":"https://images.happycow.net/venues/1024/23/55/hcmp235557_1946275.jpeg","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"vegan-sushi-tokyo","name":"Vegan Sushi Tokyo","city":"טוקיו","area":"Shoto / Shibuya","kind":"סושי","dietKey":"vegan","dietLabel":"100% טבעוני","dietDetail":"מסעדת סושי טבעונית; כל הסושי מבוסס צומח.","desc":"סושי יצירתי ללא דגים — אופציה חזקה במיוחד לשיבויה.","address":"Parkside Shoto 103, 1-25-6 Shoto, Shibuya-ku, Tokyo 150-0046","maps":"https://www.google.com/maps/search/?api=1&query=Vegan+Sushi+Tokyo+Parkside+Shoto+103","menu":"https://vcook.co.jp/vegansushitokyo/en","photo":"https://image.cdn.tablecheck.com/unsafe/full-fit-in/smart/https%3A%2F%2Fcdn0.tablecheck.com%2Fimages%2F69e87df9b6468cd58aa83d76%2Fimages%2Foriginal%2F38a0d083.jpg%3F1776844281","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"masaka","name":"Vegan Izakaya Masaka","city":"טוקיו","area":"Shibuya PARCO","kind":"Izakaya","dietKey":"vegan","dietLabel":"100% טבעוני","dietDetail":"תפריט plant-based, כולל karaage וגיוזה טבעוניים. מתאים במיוחד כי כבר מגיעים ל-Shibuya PARCO.","desc":"Izakaya טבעוני ב-B1 של Shibuya PARCO.","address":"Shibuya PARCO B1F, 15-1 Udagawacho, Shibuya, Tokyo 150-0042","maps":"https://www.google.com/maps/search/?api=1&query=Vegan+Izakaya+Masaka+Shibuya+PARCO","menu":"https://tabelog.com/en/tokyo/A1303/A130301/13241217/dtlmenu/","photo":"https://shibuya.parco.jp/cmsR5/parco/shibuya/images/store/storage/feature_cycle_230303_b1f_1.jpg","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"komeda-is","name":"KOMEDA is □ Higashiginza","city":"טוקיו","area":"Tsukiji / Higashiginza","kind":"קפה / מסעדה","dietKey":"vegan","dietLabel":"100% plant-based","dietDetail":"הקונספט והתפריט הם plant-based. האתר מציין שייתכן shared equipment בתהליך הייצור.","desc":"גרסת ה-plant-based של Komeda: burgers, pancakes, Shiro-Noir ועוד.","address":"Ginza Shochiku Square 1F, 1-13-1 Tsukiji, Chuo City, Tokyo 104-0045","maps":"https://www.google.com/maps/search/?api=1&query=KOMEDA+is+Higashiginza+1-13-1+Tsukiji","menu":"https://www.komeda-is.com/pdf/menu.pdf","photo":"https://tblg.k-img.com/restaurant/images/Rvw/146596/146596375.jpg","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"uzu-tokyo","name":"Vegan Ramen UZU Tokyo","city":"טוקיו","area":"Toyosu / teamLab Planets","kind":"ראמן","dietKey":"vegan","dietLabel":"100% טבעוני","dietDetail":"Vegan Ramen UZU בתוך teamLab Planets. הכניסה למסעדה אפשרית רק אחרי הכניסה ל-teamLab Planets.","desc":"התאמה מצוינת ליום Toyosu שכבר קיים במסלול.","address":"teamLab Planets TOKYO, 6-1-16 Toyosu, Koto City, Tokyo 135-0061","maps":"https://www.google.com/maps/search/?api=1&query=Vegan+Ramen+UZU+Tokyo+teamLab+Planets","menu":"https://vegan-uzu.com/pages/uzu-tokyo-en","photo":"https://assets.st-note.com/production/uploads/images/63090939/picture_pc_45d6b84eeb04dd88465eb06a60b9e23c.png?fit=bounds&height=2000&quality=85&width=2000","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"afuri-harajuku","name":"AFURI Harajuku","city":"טוקיו","area":"Harajuku","kind":"ראמן","dietKey":"vegan-options","dietLabel":"יש ראמן טבעוני","dietDetail":"לבחור Rainbow Vegan Ramen — 100% plant-based. ה-Yuzu Shio הרגיל מבוסס chicken & dashi ואינו מתאים.","desc":"סניף Harajuku של AFURI; חשוב לבחור דווקא במנה המסומנת vegan.","address":"Grandeforesta Harajuku 1F, 3-63-1 Sendagaya, Shibuya, Tokyo 151-0051","maps":"https://www.google.com/maps/search/?api=1&query=AFURI+Harajuku+3-63-1+Sendagaya","menu":"https://www.afuri.com/menu/","photo":"https://images.happycow.net/venues/1024/28/41/hcmp284123_2202688.jpeg","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"ain-soph-journey","name":"AIN SOPH. Journey Shinjuku","city":"טוקיו","area":"Shinjuku","kind":"מסעדה / קפה","dietKey":"vegan","dietLabel":"100% טבעוני","dietDetail":"האתר הרשמי מגדיר את התפריט 100% plant-based ללא בשר, דגים, חלב וביצים.","desc":"מפורסם בפנקייקים טבעוניים ובמנות עונתיות.","address":"Shinjuku Q Building B1/1F/2F, 3-8-9 Shinjuku, Shinjuku-ku, Tokyo 160-0022","maps":"https://www.google.com/maps/search/?api=1&query=AIN+SOPH+Journey+Shinjuku+3-8-9","menu":"https://en.ain-soph.jp/journey-shinjuku","photo":"https://tblg.k-img.com/restaurant/images/Rvw/46390/640x640_rect_46390322.jpg","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"saji-shibuya","name":"saji. Shibuya","city":"טוקיו","area":"Shibuya / Nanpeidaicho","kind":"ראמן / Mazesoba","dietKey":"unknown","dietLabel":"מנה טבעונית לפי הפוסט — לבדוק","dietDetail":"ב-Saved הוצג vegan cheese mazesoba. הכתובת אומתה, אבל לא נמצא תפריט רשמי עדכני שמאמת את המנה כ-vegan; לשאול במקום לפני הזמנה.","desc":"渋谷中華そば saji. — פוסט ה-Saved מציג vegan cheese mazesoba.","address":"Nosaka Bldg. 1F, 15-11 Nanpeidaicho, Shibuya, Tokyo 150-0036","maps":"https://www.google.com/maps/search/?api=1&query=saji+Shibuya+15-11+Nanpeidaicho","menu":"https://www.google.com/search?q=saji+Shibuya+vegan+cheese+mazesoba+menu","photo":"https://livedoor.blogimg.jp/ramenzubatto/imgs/0/3/03c1897b.jpg","verification":"אימות חלקי 26/09/2026","savedJapan":true},{"id":"natural-lawson","name":"Natural Lawson — Shin-Tokyo Building","city":"טוקיו","area":"Marunouchi / Yurakucho","kind":"Convenience / אוכל חירום","dietKey":"veg-friendly","dietLabel":"מוצרים טבעוניים משתנים","dietDetail":"הפוסט דיבר על Natural Lawson כרשת, לא על סניף מסוים. לעיתים יש מוצרים vegan-certified, אבל חובה לקרוא תווית: טעמים אחרים של אותו מוצר עלולים להכיל fish extract.","desc":"סניף מרכזי שנבחר כדוגמה פרקטית ליד Tokyo Station. לא הסניף שזוהה בפוסט.","address":"Shin-Tokyo Building B1F, 3-3-1 Marunouchi, Chiyoda City, Tokyo 100-0005","maps":"https://www.google.com/maps/search/?api=1&query=Natural+Lawson+Shin-Tokyo+Building","menu":"https://natural.lawson.co.jp/","photo":"https://prcdn.freetls.fastly.net/release_image/51694/223/51694-223-d0a9d2c8d34df833532f1777316fe793-3744x2407.jpg?auto=webp&bg-color=fff&fit=bounds&format=jpeg&height=1350&quality=85%2C65&width=1950","verification":"אימות חלקי 26/09/2026","savedJapan":true},{"id":"engine-ramen","name":"KYOTO ENGINE RAMEN","city":"קיוטו","area":"Kawaramachi","kind":"ראמן","dietKey":"vegan-options","dietLabel":"יש מנות טבעוניות","dietDetail":"מסעדה מעורבת עם מנות vegan מסומנות. לבחור במפורש במנת vegan.","desc":"ראמן בקיוטו עם אפשרויות טבעוניות לצד מנות רגילות.","address":"580-2 Nakanocho, Nakagyo Ward, Kyoto 604-8042","maps":"https://www.google.com/maps/search/?api=1&query=KYOTO+ENGINE+RAMEN+580-2+Nakanocho+Kyoto","menu":"https://www.instagram.com/kyotoengine/","photo":"https://ak-d.tripcdn.com/images/1mi3812000g2rzkf62E20.jpg?proc=source%2Ftrip","verification":"קיים במאגר","savedJapan":false},{"id":"uzu","name":"Vegan Ramen UZU Kyoto","city":"קיוטו","area":"Gosho-Minami","kind":"ראמן","dietKey":"vegan","dietLabel":"100% טבעוני","dietDetail":"מטבח טבעוני; המרק מבוסס kombu, shiitake וירקות ולא fish dashi.","desc":"Vegan ramen + חלל אמנות של teamLab.","address":"146 Umenokicho, Nakagyo Ward, Kyoto 604-0905","maps":"https://www.google.com/maps/search/?api=1&query=Vegan+Ramen+UZU+Kyoto+146+Umenokicho","menu":"https://vegan-uzu.com/pages/uzu-kyoto-en","photo":"https://media.vogue.com.tw/photos/641b050237990f06447f0fd0/master/w_1600%2Cc_limit/211202facade_007.jpg","verification":"מאומת","savedJapan":false},{"id":"uno-yukiko-gion","name":"Gion Soy Milk Ramen Uno Yukiko","city":"קיוטו","area":"Gion","kind":"ראמן","dietKey":"vegan","dietLabel":"100% טבעוני","dietDetail":"האתר הרשמי מצהיר שהראמן 100% plant-based & vegan, עם מרק סויה, ירקות, פטריות ו-kombu.","desc":"Soy-milk ramen טבעוני ו-gluten-free בלב Gion.","address":"40 Kamei-cho, Higashiyama-ku, Kyoto 605-0803","maps":"https://www.google.com/maps/search/?api=1&query=Gion+Soy+Milk+Ramen+Uno+Yukiko+40+Kamei-cho+Kyoto","menu":"https://www.soymilkramen.com/en/Food-Menu.html","photo":"https://www.soymilkramen.com/images/dd8d6557-7c9a-0ccd-7b8f-ee1ab9749990.jpg","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"hale-nishiki","name":"Hale — Nishiki Market","city":"קיוטו","area":"Nishiki Market","kind":"ארוחת צהריים יפנית","dietKey":"vegan-options","dietLabel":"מנות ללא רכיבים מן החי","dietDetail":"האתר הרשמי של Nishiki מתאר vegetarian dishes שאינן משתמשות ברכיבים מן החי. לא הנחתי שכל מנה ביום הביקור טבעונית — לבדוק סט יומי.","desc":"Kyoto machiya שקטה בתוך Nishiki Market עם yuba, nama-fu וירקות.","address":"198-1 Higashi-Uoya-cho, Nakagyo-ku, Kyoto","maps":"https://www.google.com/maps/search/?api=1&query=Hale+198-1+Higashi-Uoya-cho+Kyoto","menu":"https://www.kyoto-nishiki.or.jp/en/stores/hale/","photo":"https://images.happycow.net/venues/1024/16/52/hcmp16523_3139570.jpeg","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"shokaku-noodle","name":"SHOKAKU NOODLE KYOTO","city":"קיוטו","area":"Kawaramachi / Nishiki","kind":"ראמן","dietKey":"vegan-options","dietLabel":"יש ראמן טבעוני","dietDetail":"מרק ה-vegan הוא 100% plant-based; המקום גם מגיש Wagyu ועוף, עם תהליכי הכנה וכלים נפרדים לפי המדיניות הרשמית.","desc":"Vegan & Halal ramen ליד Nishiki Market.","address":"613 Nishidaimonjicho, Nakagyo-ku, Kyoto 604-8054","maps":"https://www.google.com/maps/search/?api=1&query=SHOKAKU+NOODLE+KYOTO+613+Nishidaimonjicho","menu":"https://shokaku-noodle.com/","photo":"https://images.happycow.net/venues/1024/49/00/hcmp490086_3847944.jpeg","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"veg-out-kyoto","name":"Veg Out","city":"קיוטו","area":"Kamogawa / Shichijo","kind":"קפה / Brunch","dietKey":"vegan","dietLabel":"100% טבעוני","dietDetail":"מסעדה/קפה plant-based; ידועה ב-brunch, bowls ומנות tempeh.","desc":"אוכל טבעוני רגוע מול נהר Kamo.","address":"Kamogawa Bldg 1F, 448 Inaricho, Shimogyo Ward, Kyoto 600-8133","maps":"https://www.google.com/maps/search/?api=1&query=Veg+Out+448+Inaricho+Kyoto","menu":"https://tamisa-yoga.com/cafe/veg-out/index.html","photo":"https://suni.tw/wp-content/uploads/20180510083935_86.jpg","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"pizza-strada-gion","name":"Pizza Strada Kyoto Gion","city":"קיוטו","area":"Gion","kind":"פיצה","dietKey":"unknown","dietLabel":"לא מאומת כצמחוני","dietDetail":"הופיע בהמלצת veg-friendly, אבל לא נמצא תפריט עדכני שמאמת אפשרות ללא גבינה/דגים/בשר באופן מספק. לשאול לפני הזמנה.","desc":"פיצה wood-fired ב-Gion; שמרתי את ההמלצה אבל לא מסמן אותה כבטוחה.","address":"557-6 Komatsucho, Higashiyama-ku, Kyoto","maps":"https://www.google.com/maps/search/?api=1&query=Pizza+Strada+Kyoto+Gion+557-6+Komatsucho","menu":"https://www.pizzastrada.jp/","photo":"https://tblg.k-img.com/restaurant/images/Rvw/334786/640x640_rect_be778a844c3fefdce8527eae4754a486.jpg","verification":"אימות חלקי 26/09/2026","savedJapan":true},{"id":"takinoya","name":"Takinoya — Kiyomizu-dera","city":"קיוטו","area":"Kiyomizu-dera","kind":"Soba / Udon / Tofu","dietKey":"unknown","dietLabel":"סיכון dashi — לבדוק","dietDetail":"הפוסט מציג soba, udon וטופו כצמחוניים, אבל לא נמצא אימות אמין שהציר ללא דגים. לבקש בלי fish dashi/bonito לפני הזמנה.","desc":"מקום בתוך מתחם Kiyomizu-dera, נוח במיוחד ליום Higashiyama.","address":"1-302 Kiyomizu, Higashiyama Ward, Kyoto 605-0862, by Otowa Waterfall","maps":"https://www.google.com/maps/search/?api=1&query=Takinoya+Kiyomizu-dera+Kyoto","menu":"https://www.google.com/search?q=Takinoya+Kiyomizu+menu+soba+udon","photo":"https://ximg.retty.me/crop/s400x400/q80/das/-/retty/img_repo/2l/01/21624867.jpg","verification":"אימות חלקי 26/09/2026","savedJapan":true},{"id":"pivot","name":"Pivot BASE Cafe & Bar @Dotonbori","city":"אוסקה","area":"Dotonbori","kind":"Cafe & Bar","dietKey":"vegan-options","dietLabel":"יש תפריט טבעוני","dietDetail":"המקום מפרסם vegan menu עם מנות Osaka כמו takoyaki, yakisoba ו-kushikatsu. לא כל התפריט טבעוני.","desc":"Cafe & Bar במרכז Dotonbori עם גרסאות טבעוניות למנות Osaka.","address":"1-7-21 Dotonbori, Chuo Ward, Osaka 542-0071","maps":"https://www.google.com/maps/search/?api=1&query=Pivot+BASE+Cafe+Bar+Dotonbori+Osaka","menu":"https://dotonbori-night.com/pivot/en/","photo":"https://tblg.k-img.com/restaurant/images/Rvw/185039/640x640_rect_a4bbe165326ad2e3ba497ed2ef5fe4ce.jpg","verification":"קיים במאגר","savedJapan":false},{"id":"oko","name":"OKO Takoyaki","city":"אוסקה","area":"Higashishinsaibashi","kind":"Takoyaki / Okonomiyaki","dietKey":"vegan","dietLabel":"טאקויאקי טבעוני","dietDetail":"גם ב-Saved מופיע כ-vegan version של אוכל Osaka. קיימים כמה עסקים/חשבונות OKO באזור ולכן הכתובת המדויקת אינה ננעלת כאן — לפתוח Maps לפי השם לפני הגעה.","desc":"יעד חובה בשביל vegan takoyaki / Osaka street food.","address":"Higashishinsaibashi, Chuo Ward, Osaka — verify exact OKO Takoyaki location before arrival","maps":"https://www.google.com/maps/search/?api=1&query=OKO+Takoyaki+vegan+Osaka","menu":"https://www.instagram.com/oko_tako_osaka/","photo":"https://cdn.prod.website-files.com/60cbefeceef92c04e1cf295d/6690a32dbbbc91a6821fe500_OKO-okonomiyaki-osaka-vegan-restaurants-1.webp","verification":"אימות חלקי — כתובת","savedJapan":true},{"id":"mercy-vegan","name":"MERCY Vegan Factory","city":"אוסקה","area":"Tanimachi / Kawarayamachi","kind":"מסעדה / מאפייה","dietKey":"vegan","dietLabel":"100% טבעוני","dietDetail":"האתר הרשמי מציג את המקום כ-Vegan Factory עם אוכל טבעוני; מתאים גם לבוקר/מאפים.","desc":"מנות יפניות טבעוניות, מאפים, sweets וארוחות בוקר/צהריים.","address":"2-4-15 Kawarayamachi, Chuo Ward, Osaka 542-0066, 1F west side","maps":"https://www.google.com/maps/search/?api=1&query=MERCY+Vegan+Factory+2-4-15+Kawarayamachi+Osaka","menu":"https://mercy-vegan-factory.owst.jp/","photo":"https://assets.st-note.com/img/1764506785-6un5G8y7pXxgALW1lh4INUfO.jpg?fit=bounds&height=2000&quality=85&width=2000","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"paprika-shokudo","name":"Paprika Shokudo Vegan","city":"אוסקה","area":"Shinmachi / Shinsaibashi","kind":"מסעדה","dietKey":"vegan","dietLabel":"100% טבעוני","dietDetail":"מסעדה טבעונית מלאה עם comfort food, curry, rice bowls ועוד.","desc":"אחת ההמלצות החזקות ב-Saved לאוכל יפני טבעוני באוסקה.","address":"Alivio Shinmachi 1F, 1-9-9 Shinmachi, Nishi Ward, Osaka 550-0013","maps":"https://www.google.com/maps/search/?api=1&query=Paprika+Shokudo+Vegan+1-9-9+Shinmachi+Osaka","menu":"https://paprikacafe.owst.jp/","photo":"https://cdn.r-corona.jp/prd.rb.r-corona.jp/assets/site_files/cpqj5jxz/28773579/i4of_w710h710.jpg","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"shogun-burger-osaka","name":"SHOGUN BURGER Shinsaibashi","city":"אוסקה","area":"Shinsaibashi","kind":"Burger","dietKey":"veg-friendly","dietLabel":"Plant-based אבל לא vegan","dietDetail":"יש Plant Based Beef Burger, אבל חומר רשמי של הרשת מציין במפורש שה-plant-based burger אינו vegan. לצמחוני: לבדוק sauce/cheese/bun ולבקש התאמה.","desc":"מסעדת בשר עם plant-based burger; לא להתייחס אליה כמסעדה טבעונית.","address":"2-2-13 Shinsaibashisuji, Chuo Ward, Osaka 542-0085, Hozan Shinsaibashi Bldg 1F","maps":"https://www.google.com/maps/search/?api=1&query=SHOGUN+BURGER+Shinsaibashi+2-2-13","menu":"https://tabelog.com/en/osaka/A2701/A270202/27133604/dtlmenu/","photo":"https://tblg.k-img.com/restaurant/images/Rvw/207919/640x640_rect_09ad4cbaf948cf766289738d10bc7134.jpg","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"gyozaoh","name":"Gyozaoh! Dotonbori","city":"אוסקה","area":"Dotonbori","kind":"Gyoza / Izakaya","dietKey":"vegan-options","dietLabel":"יש אפשרויות טבעוניות","dietDetail":"יש vegetarian menu ו-vegetable gyoza. לא כל התפריט טבעוני; לגבי sauces, soup ו-dashi צריך לשאול במפורש.","desc":"גיוזה בלב Dotonbori עם תפריט צמחוני נפרד.","address":"2-4-14 Dotonbori, Chuo Ward, Osaka 542-0071","maps":"https://www.google.com/maps/search/?api=1&query=Gyozaoh+Dotonbori+2-4-14","menu":"https://www.godotonbori.com/shop/gyozaoh-dotonbori/","photo":"https://ximg.retty.me/crop/s400x400/q80/das/-/retty/img_repo/2l/01/16412873.jpg","verification":"מאומת 26/09/2026","savedJapan":true},{"id":"nakatanidou","name":"Nakatanidou Mochi","city":"מסביב לאוסקה","area":"Nara","kind":"Mochi / מתוק","dietKey":"unknown","dietLabel":"לא מאומת לצמחוני","dietDetail":"Yomogi mochi עם anko; לא סומן כבטוח בלי אימות רשמי של כל המרכיבים/עיבוד.","desc":"חנות mochi מפורסמת עם הדגמות pounding מהירות.","address":"29 Hashimotocho, Nara, Nara Prefecture","maps":"https://www.google.com/maps/search/?api=1&query=Nakatanidou+29+Hashimotocho+Nara","menu":"http://www.nakatanidou.jp/","photo":"https://sp-ao.shortpixel.ai/client/q_glossy%2Cret_img%2Cw_670%2Ch_446/https%3A/img01.jalannews.jp/img/2024/09/20240918_nakatanidou_005.jpg","verification":"קיים במאגר","savedJapan":false},{"id":"kinatei","name":"Vegetarian Restaurant Kinatei","city":"מסביב לאוסקה","area":"Nara","kind":"מסעדה","dietKey":"vegetarian","dietLabel":"100% צמחוני","dietDetail":"המסעדה מציגה את עצמה כמסעדה צמחונית מלאה. אם רוצים vegan בלבד — לשאול על המנה הספציפית.","desc":"מסעדה צמחונית ליד JR Nara.","address":"25-1 Sugigacho, Nara, Nara Prefecture 630-8357","maps":"https://www.google.com/maps/search/?api=1&query=Vegetarian+Restaurant+Kinatei+Nara+25-1+Sugigacho","menu":"https://www.kinatei.com/","photo":"https://images.ctfassets.net/9uvqwr58loxx/D00058_PKY_J8A8903.JPG/e954e88b981204eeb73ad3cc2aba11e4/PKY_J8A8903.JPG?fit=thumb&h=640&q=70&w=700","verification":"קיים במאגר","savedJapan":false}];
 let sheet=null;
 let toastTimer=0;
 
@@ -446,16 +514,37 @@ function toast(text, undo){
 }
 
 function isDesk(){ return matchMedia('(min-width:960px)').matches; }
+function dayCityLabel(d){
+  const labels={
+    '2026-11-25':'טוקיו',
+    '2026-11-26':'טוקיו',
+    '2026-11-27':'טוקיו',
+    '2026-11-28':'טוקיו',
+    '2026-11-29':'טוקיו',
+    '2026-11-30':'טוקיו',
+    '2026-12-01':'קיוטו',
+    '2026-12-02':'קיוטו',
+    '2026-12-03':'קיוטו → אוסקה',
+    '2026-12-04':'אוסקה',
+    '2026-12-05':'נארה',
+    '2026-12-06':'אוסקה → טוקיו',
+    '2026-12-07':'טוקיו',
+    '2026-12-08':'טוקיו',
+    '2026-12-09':'טוקיו'
+  };
+  return labels[d.id] || d.base || '';
+}
 function renderRail(){
   const day=activeDay();
-  return '<div class="rail-title">הימים</div>'+TRIP.days.map(d=>'<button class="daylink'+(d.id===day.id?' on':'')+'" data-day="'+d.id+'" type="button"><b>'+esc(d.date)+'</b><span>'+esc(d.dow)+' · '+esc(d.title)+'</span></button>').join('');
+  return '<div class="rail-title">הימים</div>'+TRIP.days.map(d=>'<button class="daylink'+(d.id===day.id?' on':'')+'" data-day="'+d.id+'" type="button"><b>'+esc(d.date)+' · '+esc(dayCityLabel(d))+'</b><span>'+esc(d.dow)+' · '+esc(d.title)+'</span></button>').join('');
 }
 function render(){
   const root=document.getElementById('app');
   document.body.classList.toggle('desk', isDesk());
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on', b.dataset.tab===tab));
-  if(isDesk() && tab!=='more') root.innerHTML='<div class="work"><aside class="rail">'+renderRail()+'</aside><main>'+renderToday()+'</main><aside class="side">'+renderPlaces()+'</aside></div>';
+  if(isDesk() && tab==='today') root.innerHTML='<div class="work"><aside class="rail">'+renderRail()+'</aside><main>'+renderToday()+'</main><aside class="side">'+renderPlaces()+'</aside></div>';
   else if(tab==='today') root.innerHTML=renderToday();
+  else if(tab==='restaurants') root.innerHTML=renderRestaurants();
   else if(tab==='places') root.innerHTML=renderPlaces();
   else root.innerHTML=renderMore();
   document.getElementById('sheet').innerHTML = sheet ? renderSheet() : '';
@@ -466,6 +555,7 @@ function renderToday(){
   let html='<div class="days">'+TRIP.days.map(d=>'<button class="pill'+(d.id===day.id?' on':'')+'" data-day="'+d.id+'" type="button"><b>'+esc(d.date)+'</b><span>'+esc(d.dow)+'</span></button>').join('')+'</div>';
   html+='<div class="dow">'+esc(day.dow)+' · '+esc(day.base||'')+'</div>';
   html+='<h1>'+esc(day.date)+'</h1><p class="sub">'+esc(day.title)+(day.subtitle?' · '+esc(day.subtitle):'')+'</p>';
+  html+='<a class="mymaps-link" target="_blank" rel="noopener" href="https://www.google.com/maps/d/u/0/edit?mid=1_J3VtAh7aeQm4eNmhs2IENs4dfl31Ks&ll=35.660636463289485%2C139.73541419999998&z=12">🗺️ Japan 2026 ב־Google My Maps</a>';
   if(day.empty){
     html+='<section class="now"><div class="label">יום הגעה</div><h2>בלי תכנון</h2><p class="desc">נוחתים בערך ב־13:00. היום נשאר פתוח בכוונה.</p></section>';
     return html;
@@ -486,7 +576,7 @@ function renderToday(){
     if((live.delay[day.id]||0)>0) html+='<div class="warn">השעות שנותרו הוזזו ב־'+(live.delay[day.id])+' דקות.</div>';
     if(next) html+='<div class="next">הלאה: '+esc(next.it.name)+(current.hop?' · '+esc(current.hop):'')+'</div>';
     html+='<div class="actions">';
-    if(current.maps) html+='<a class="btn primary" target="_blank" rel="noopener" href="'+esc(current.maps)+'">מפה</a>';
+    if(current.maps) html+='<a class="btn primary" target="_blank" rel="noopener" href="'+esc(current.maps)+'">Google Maps</a>';
     html+='<button class="btn ghost" id="done" type="button">סיימתי</button></div>';
     if(current.start!=null) html+='<button class="late" id="late" type="button">אחרנו 15 דקות</button>';
     html+='</section>';
@@ -518,6 +608,88 @@ function renderToday(){
   }
   return html;
 }
+
+function restaurantYoutubeUrl(r){
+  return 'https://www.youtube.com/results?search_query='+encodeURIComponent(r.name+' Japan restaurant');
+}
+function restaurantPhotosUrl(r){
+  return 'https://www.google.com/search?tbm=isch&q='+encodeURIComponent(r.name+' '+r.city+' restaurant');
+}
+function restaurantCityGroup(r){
+  if(r.city==='טוקיו') return 'טוקיו';
+  if(r.city==='קיוטו') return 'קיוטו';
+  if(r.city==='אוסקה') return 'אוסקה';
+  if(r.area==='Nara' || r.city==='נארה' || r.city==='מסביב לאוסקה') return 'נארה';
+  return r.city||'אחר';
+}
+function filteredRestaurants(){
+  const q=(restaurantQuery||'').trim().toLowerCase();
+  return RESTAURANTS.filter(r=>{
+    if(restaurantCityFilter!=='הכל' && restaurantCityGroup(r)!==restaurantCityFilter) return false;
+    if(restaurantFilter!=='הכל' && r.dietKey!==restaurantFilter) return false;
+    if(q && (r.name+' '+r.city+' '+r.area+' '+(r.kind||'')+' '+r.dietLabel+' '+r.dietDetail+' '+r.desc+' '+restaurantCityGroup(r)).toLowerCase().indexOf(q)<0) return false;
+    return true;
+  });
+}
+function restaurantBadgeClass(key){
+  if(key==='vegan') return 'diet-vegan';
+  if(key==='vegetarian') return 'diet-vegetarian';
+  if(key==='vegan-options') return 'diet-vegan-options';
+  if(key==='veg-friendly') return 'diet-veg-friendly';
+  return 'diet-unknown';
+}
+function restaurantCards(rows){
+  if(!rows.length) return '<p class="sub">לא נמצאו מסעדות לפי הסינון.</p>';
+  return rows.map(r=>{
+    let html='<article class="restaurant-card">';
+    if(r.photo){
+      html+='<div class="restaurant-photo-wrap"><img class="restaurant-photo" loading="lazy" referrerpolicy="no-referrer" alt="'+esc(r.name)+'" src="'+esc(r.photo)+'" onerror="this.parentElement.style.display=\'none\'"></div>';
+    }
+    html+='<div class="restaurant-body">';
+    html+='<div class="restaurant-topline"><h2 class="restaurant-name">'+esc(r.name)+'</h2><span class="diet-badge '+restaurantBadgeClass(r.dietKey)+'">'+esc(r.dietLabel)+'</span></div>';
+    html+='<div class="restaurant-meta">'+esc(r.city)+' · '+esc(r.area)+(r.kind?' · '+esc(r.kind):'')+(r.savedJapan?'<span class="saved-japan">📌 Saved Japan</span>':'')+'</div>';
+    html+='<p class="restaurant-desc">'+esc(r.desc||'')+'</p>';
+    html+='<div class="restaurant-diet">'+esc(r.dietDetail||'')+'</div>';
+    if(r.verification) html+='<div class="restaurant-verify">אימות: '+esc(r.verification)+'</div>';
+    html+='<div class="restaurant-address">'+esc(r.address||'')+'</div>';
+    html+='<div class="restaurant-actions">';
+    html+='<a class="map" target="_blank" rel="noopener" href="'+esc(r.maps)+'">Google Maps</a>';
+    html+='<a class="menu" target="_blank" rel="noopener" href="'+esc(r.menu)+'">תפריט / אתר</a>';
+    html+='<a class="photos" target="_blank" rel="noopener" href="'+esc(restaurantPhotosUrl(r))+'">תמונות</a>';
+    html+='<a class="youtube" target="_blank" rel="noopener" href="'+esc(restaurantYoutubeUrl(r))+'">▶ YouTube</a>';
+    html+='</div></div></article>';
+    return html;
+  }).join('');
+}
+function renderRestaurants(){
+  const cityFilters=[
+    ['הכל','כל הערים'],
+    ['טוקיו','טוקיו'],
+    ['קיוטו','קיוטו'],
+    ['אוסקה','אוסקה'],
+    ['נארה','נארה']
+  ];
+  const dietFilters=[
+    ['הכל','הכל'],
+    ['vegan','100% טבעוני'],
+    ['vegetarian','100% צמחוני'],
+    ['vegan-options','יש מנות טבעוניות'],
+    ['veg-friendly','מתאים / דורש התאמה'],
+    ['unknown','לא בטוח / לבדוק']
+  ];
+  const rows=filteredRestaurants();
+  let html='<div class="restaurant-head"><h1>מסעדות</h1>';
+  html+='<p class="sub" id="restaurant-count">'+rows.length+' מתוך '+RESTAURANTS.length+' מקומות</p>';
+  html+='<p class="restaurant-note">לצמחוני אצלנו: בלי בשר, דגים, פירות ים ו־dashi על בסיס דגים. v71 מפריד בין מקום טבעוני מלא, מקום עם מנות טבעוניות, מקום שדורש התאמה ומקום שלא הצלחנו לאמת. 📌 מסמן מקום שהגיע מה-Saved Japan ששלחת.</p></div>';
+  html+='<input class="search restaurant-search" id="rq" placeholder="חיפוש מסעדה, אזור, עיר או סוג אוכל" value="'+esc(restaurantQuery)+'">';
+  html+='<div class="block" style="margin-top:10px">עיר</div>';
+  html+='<div class="restaurant-filters">'+cityFilters.map(f=>'<button type="button" data-rcity="'+esc(f[0])+'" class="'+(restaurantCityFilter===f[0]?'on':'')+'">'+esc(f[1])+'</button>').join('')+'</div>';
+  html+='<div class="block" style="margin-top:10px">התאמה לצמחוני</div>';
+  html+='<div class="restaurant-filters">'+dietFilters.map(f=>'<button type="button" data-rfilter="'+esc(f[0])+'" class="'+(restaurantFilter===f[0]?'on':'')+'">'+esc(f[1])+'</button>').join('')+'</div>';
+  html+='<div class="restaurant-grid" id="restaurant-list">'+restaurantCards(rows)+'</div>';
+  return html;
+}
+
 function renderPlaces(){
   const filters=['הכל','טוקיו','קיוטו','אוסקה','מסביב לאוסקה','מלונות','אוכל'];
   const rows=filteredPlaces();
@@ -547,7 +719,7 @@ function filteredPlaces(){
   });
 }
 function renderMore(){
-  return '<h1>עוד</h1><p class="sub">גרסה v68 · אחרי לחיצה על ״סיימתי״ הכרטיס נסגר ונשאר ככרטיס ירוק עם ✓. לחיצה עליו מחזירה אותו למסלול. תמונות מוצגות רק בהתאמה מדויקת, וכפתור YouTube נשאר זמין.</p><p class="sub">באייפון השמירה נפתחת כשיתוף. בוחרים "שמור לקבצים", ואז פותחים את הקובץ החדש מ־Safari.</p><button class="btn primary" id="save-full" type="button">שמור גרסה מלאה</button><p class="desc" style="margin-top:18px">25/11 נשאר ריק. גנים בבוקר, קניות לקראת הסוף, ולילה רק אם נשאר כוח.</p>';
+  return '<h1>עוד</h1><a class="mymaps-link" target="_blank" rel="noopener" href="https://www.google.com/maps/d/u/0/edit?mid=1_J3VtAh7aeQm4eNmhs2IENs4dfl31Ks&ll=35.660636463289485%2C139.73541419999998&z=12">🗺️ פתח Japan 2026 ב־Google My Maps</a><p class="sub">גרסה v73 · הוחזר הקישור הקבוע ל־Japan 2026 ב־Google My Maps, גם במסך היום וגם תחת ״עוד״. שמות הערים ברשימת הימים וכל קישורי Google Maps של v72 נשמרו.</p><p class="sub">באייפון השמירה נפתחת כשיתוף. בוחרים "שמור לקבצים", ואז פותחים את הקובץ החדש מ־Safari.</p><button class="btn primary" id="save-full" type="button">שמור גרסה מלאה</button><p class="desc" style="margin-top:18px">25/11 נשאר ריק. גנים בבוקר, קניות לקראת הסוף, ולילה רק אם נשאר כוח.</p>';
 }
 function renderSheet(){
   if(sheet.mode==='item'){
@@ -561,7 +733,7 @@ function renderSheet(){
     if(isFood(it)) html+='<div class="warn">לצמחוני: בלי בשר, דגים, פירות ים ו־dashi.</div>';
     html+='<p class="sub">הערה</p><textarea id="note">'+esc(live.notes[it.uid]||'')+'</textarea>';
     html+='<div class="menu">';
-    if(it.maps) html+='<a target="_blank" rel="noopener" href="'+esc(it.maps)+'">מפה</a>';
+    if(it.maps) html+='<a target="_blank" rel="noopener" href="'+esc(it.maps)+'">Google Maps</a>';
     if(it.website) html+='<a target="_blank" rel="noopener" href="'+esc(it.website)+'">אתר</a>';
     if(it.start!=null) html+='<button type="button" id="longer">עוד 15 דק׳</button><button type="button" id="shorter">פחות 15 דק׳</button>';
     html+='<button type="button" id="swap">החלף</button><button type="button" id="skip">דלג</button><button type="button" data-close="1">סגור</button>';
@@ -582,7 +754,7 @@ function renderSheet(){
     let html='<div class="sheet-back" data-close="1"><div class="sheet"><div class="handle"></div><h2>'+esc(p.name)+'</h2>'+mediaBlock(p.name,'hero')+'<p class="desc">'+esc(p.desc||'')+'</p>';
     if(p.note) html+='<div class="warn">'+esc(p.note)+'</div>';
     html+='<div class="menu">';
-    if(p.maps) html+='<a target="_blank" rel="noopener" href="'+esc(p.maps)+'">מפה</a>';
+    if(p.maps) html+='<a target="_blank" rel="noopener" href="'+esc(p.maps)+'">Google Maps</a>';
     if(p.website) html+='<a target="_blank" rel="noopener" href="'+esc(p.website)+'">אתר</a>';
     if(p.booking) html+='<a target="_blank" rel="noopener" href="'+esc(p.booking)+'">Booking</a>';
     html+='</div></div></div>';
@@ -611,7 +783,7 @@ function markDone(){
   toast('✓ הושלם', ()=>{ live.done[uid]=prev; persist(); render(); document.getElementById('toast').classList.add('hidden'); });
 }
 function savedHtml(){
-  const snap={snapshotId:'snap-'+Date.now().toString(36), savedAt:new Date().toISOString(), version:'v68', live:live};
+  const snap={snapshotId:'snap-'+Date.now().toString(36), savedAt:new Date().toISOString(), version:'v73', live:live};
   const close='</'+'script>';
   let html=document.documentElement.outerHTML;
   if(!html.startsWith('<!DOCTYPE')) html='<!DOCTYPE html>\n'+html;
@@ -623,7 +795,7 @@ function savedHtml(){
 }
 async function saveFull(){
   const html=savedHtml();
-  const file=new File([html], 'japan_2026_trip_dashboard_v68.html', {type:'text/html'});
+  const file=new File([html], 'japan_2026_trip_dashboard_v73.html', {type:'text/html'});
   if(navigator.share && navigator.canShare && navigator.canShare({files:[file]})){
     try{
       await navigator.share({files:[file], title:'יפן 2026'});
@@ -636,7 +808,7 @@ async function saveFull(){
   const blob=new Blob([html],{type:'text/html;charset=utf-8'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
-  a.download='japan_2026_trip_dashboard_v68.html';
+  a.download='japan_2026_trip_dashboard_v73.html';
   document.body.appendChild(a); a.click(); a.remove();
   toast('אם הקובץ לא נשמר: כפתור השיתוף של Safari, ואז שמור לקבצים');
 }
@@ -665,6 +837,10 @@ document.getElementById('app').onclick=e=>{
   }
   const unskip=e.target.closest('[data-unskip]');
   if(unskip){ delete live.skipped[unskip.dataset.unskip]; persist(); render(); return; }
+  const rc=e.target.closest('[data-rcity]');
+  if(rc){ restaurantCityFilter=rc.dataset.rcity; render(); return; }
+  const rf=e.target.closest('[data-rfilter]');
+  if(rf){ restaurantFilter=rf.dataset.rfilter; render(); return; }
   const f=e.target.closest('[data-filter]');
   if(f){ placeFilter=f.dataset.filter; render(); return; }
   const card=e.target.closest('[data-place]');
@@ -672,6 +848,15 @@ document.getElementById('app').onclick=e=>{
   if(e.target.id==='save-full') saveFull();
 };
 document.getElementById('app').oninput=e=>{
+  if(e.target.id==='rq'){
+    restaurantQuery=e.target.value;
+    const rows=filteredRestaurants();
+    const count=document.getElementById('restaurant-count');
+    const list=document.getElementById('restaurant-list');
+    if(count) count.textContent=rows.length+' מקומות';
+    if(list) list.innerHTML=restaurantCards(rows);
+    return;
+  }
   if(e.target.id==='q'){
     query=e.target.value;
     const rows=filteredPlaces();
