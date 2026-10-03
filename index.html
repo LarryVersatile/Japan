@@ -144,7 +144,7 @@
   .plan-section-title span { color:var(--muted); font-size:12px; }
   .plan-grid { display:grid; grid-template-columns:1fr; gap:10px; }
   .plan-card { position:relative; border:1px solid var(--line); border-radius:18px; background:var(--card); overflow:hidden; }
-  /* v84 — restored traffic-light planning priority */
+  /* v85 — restored traffic-light planning priority */
   .plan-card.status-must,
   .kyoto-card.status-must {
     border-color:#22c55e;
@@ -335,6 +335,21 @@
   .kyoto-video-preset .preset-sub{color:#bcc7d8;font-size:13px;line-height:1.5;margin:0}
   .kyoto-video-hotel{margin:10px 0;border:1px solid #344963;background:#101a27;border-radius:13px;padding:10px 11px;color:#d2ddec;font-size:13px;line-height:1.45}
   .kyoto-video-hotel a{color:#cfe4ff;font-weight:850;text-decoration:none}
+  .hotel-zone{border:1px solid #355b82;background:linear-gradient(180deg,#122338,#101823);border-radius:18px;padding:16px;margin:12px 0 18px}
+  .hotel-zone h2{margin:0 0 6px;font-size:22px}
+  .hotel-zone p{margin:5px 0;color:#b9c9dc;line-height:1.55}
+  .hotel-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}
+  .hotel-rec{border:1px solid #30445d;border-radius:17px;background:#111a27;padding:14px;position:relative}
+  .hotel-rec.top{border-color:#43a06b;box-shadow:0 0 0 1px rgba(67,160,107,.15) inset}
+  .hotel-rec .pick{display:inline-block;border:1px solid #43a06b;background:#153624;color:#dfffea;border-radius:999px;padding:4px 8px;font-size:11px;font-weight:900;margin-bottom:8px}
+  .hotel-rec h3{font-size:18px;margin:0 0 5px}
+  .hotel-rec .meta{color:#8fa6bf;font-size:12px;margin-bottom:9px}
+  .hotel-rec .facts{display:grid;gap:6px;margin:9px 0}
+  .hotel-rec .fact{display:flex;gap:7px;align-items:flex-start;color:#d7e1ec;font-size:13px;line-height:1.4}
+  .hotel-rec .links{display:flex;gap:7px;flex-wrap:wrap;margin-top:11px}
+  .hotel-rec .links a{border:1px solid #425a77;background:#172438;color:#edf6ff;border-radius:10px;padding:7px 9px;text-decoration:none;font-size:12px;font-weight:850}
+  .hotel-note{border:1px solid #5c4b2a;background:#2d2515;color:#f5e7bd;border-radius:13px;padding:10px 11px;margin-top:14px;font-size:13px;line-height:1.5}
+
   .kyoto-video-actions{display:flex;gap:8px;flex-wrap:wrap;margin:10px 0 12px}
   .kyoto-video-actions button,.kyoto-video-actions a{border:1px solid #536685;background:#172235;color:#ecf4ff;border-radius:11px;min-height:39px;padding:8px 11px;font-size:12px;font-weight:850;text-decoration:none;display:inline-flex;align-items:center}
   .kyoto-video-actions button.primary{background:#dbeafe;color:#0c1724;border-color:#dbeafe}
@@ -429,6 +444,7 @@
   <nav class="nav">
     <button type="button" data-tab="today" class="on">היום</button>
     <button type="button" data-tab="restaurants">מסעדות</button>
+    <button type="button" data-tab="hotels">מלונות</button>
     <button type="button" data-tab="places">מקומות</button>
     <button type="button" data-tab="more">עוד</button>
   </nav>
@@ -1395,7 +1411,7 @@ function renderKyotoExportLayer(){
     const rows=kyotoExportRows(d,false), hi=kyotoExportRows(d,true);
     return '<div class="kyoto-export-day"><h4>יום '+d+'</h4><div class="meta">'+rows.length+' נקודות · '+hi.length+' חובה/רוצה</div><div class="kyoto-export-actions">'+kyotoRouteLinks(d)+'<button type="button" data-kexport="csv" data-kday="'+d+'">⬇ CSV</button><button type="button" data-kexport="csv" data-kday="'+d+'" data-khigh="1">★ CSV חובה+רוצה</button><button type="button" data-kexport="kml" data-kday="'+d+'">KML</button><button type="button" data-kexport="copy" data-kday="'+d+'">📋 Copy</button></div></div>';
   };
-  let h='<section class="kyoto-export-layer"><div class="label">Maps & Export · v84</div><h3>מוציאים את הבחירות ל־Google Maps / My Maps</h3><p class="export-sub">ה־export משתמש בשיבוץ הנוכחי שלך ליום 1/2/3. מקומות שסימנת “לא רוצה” לא יוצאים. במסלול Google Maps נשמר קודם הסדר של מסלול הסרטון, ומקומות נוספים מצטרפים אחריו.</p>';
+  let h='<section class="kyoto-export-layer"><div class="label">Maps & Export · v85</div><h3>מוציאים את הבחירות ל־Google Maps / My Maps</h3><p class="export-sub">ה־export משתמש בשיבוץ הנוכחי שלך ליום 1/2/3. מקומות שסימנת “לא רוצה” לא יוצאים. במסלול Google Maps נשמר קודם הסדר של מסלול הסרטון, ומקומות נוספים מצטרפים אחריו.</p>';
   h+='<div class="kyoto-export-global"><a class="primary" target="_blank" rel="noopener" href="'+KYOTO_MYMAPS_URL+'">🗺️ פתח Japan 2026 ב־My Maps</a><button type="button" data-kexport="allcsv">⬇ CSV · כל 3 הימים</button><button type="button" data-kexport="threecsv">⬇ 3 קבצי CSV · שכבה לכל יום</button><button type="button" data-kexport="allcsv" data-khigh="1">★ CSV · רק חובה+רוצה</button><button type="button" data-kexport="kmlall">⬇ KML · 3 תיקיות ימים</button><button type="button" data-kexport="copyall">📋 Copy · כל 3 הימים</button></div>';
   h+='<div class="kyoto-export-days">'+['1','2','3'].map(dayCard).join('')+'</div>';
   h+='<div class="kyoto-export-note"><b>ל־Google My Maps:</b> פתח את המפה → Add layer → Import → בחר את קובץ ה־CSV של היום. בשלב בחירת מיקום בחר בעמודה <b>Location</b>, ובשם הסמן בחר <b>Name</b>. כדי לקבל 3 שכבות נפרדות, ייבא את שלושת קבצי ה־CSV — אחד לכל שכבה. KML מצורף גם כאופציית גיבוי; CSV הוא הפורמט המומלץ לייבוא כתובות/שמות מקומות.</div></section>';
@@ -1448,6 +1464,7 @@ function render(){
   else if(isDesk() && tab==='today') root.innerHTML='<div class="work"><aside class="rail">'+renderRail()+'</aside><main>'+renderToday()+'</main><aside class="side">'+renderPlaces()+'</aside></div>';
   else if(tab==='today') root.innerHTML=renderToday();
   else if(tab==='restaurants') root.innerHTML=renderRestaurants();
+  else if(tab==='hotels') root.innerHTML=renderHotels();
   else if(tab==='places') root.innerHTML=renderPlaces();
   else root.innerHTML=renderMore();
   document.getElementById('sheet').innerHTML = sheet ? renderSheet() : '';
@@ -1622,8 +1639,75 @@ function filteredPlaces(){
     return planStatus(p)!=='לא';
   });
 }
+
+const KYOTO_HOTELS=[
+  {
+    name:'THE GATE HOTEL Kyoto Takasegawa by HULIC',
+    top:true,
+    area:'Takasegawa / Kiyamachi / Kawaramachi',
+    why:'ההתאמה הכי חזקה למה שביקשת: ממש ליד Kiyamachi, Pontocho, הנהר ו-Gion. בערב יוצאים מהמלון ברגל למסעדות וברים.',
+    breakfast:'ארוחת בוקר 06:30–10:00; בחירה בין מנות עיקריות כולל Eggs Benedict ומיץ סחוט.',
+    bath:'בחלק מקטגוריות החדרים יש אמבטיה ומקלחת נפרדות. לבדוק את סוג החדר הספציפי לפני הזמנה.',
+    vibe:'Upscale / modern Kyoto, אבל עדיין בתוך אזור ערב פעיל.',
+    maps:'https://www.google.com/maps/search/?api=1&query=THE+GATE+HOTEL+Kyoto+Takasegawa+by+HULIC',
+    site:'https://www.gate-hotel.jp/en/kyoto/'
+  },
+  {
+    name:'Good Nature Hotel Kyoto',
+    top:false,
+    area:'Kawaramachi',
+    why:'מיקום מעולה ל-Downtown, קניות, Pontocho ו-Gion. יותר design/lifestyle באופי.',
+    breakfast:'מלון עם מספר מסעדות ובית קפה/פטיסרי; מתאים למי שרוצה חוויית מלון מודרנית.',
+    bath:'תצורת חדר הרחצה משתנה לפי קטגוריית החדר — לבדוק bathtub/shower בחדר הספציפי.',
+    vibe:'Design hotel מודרני ומגניב באזור מרכזי מאוד.',
+    maps:'https://www.google.com/maps/search/?api=1&query=Good+Nature+Hotel+Kyoto',
+    site:'https://goodnaturehotel.jp/'
+  },
+  {
+    name:'Cross Hotel Kyoto',
+    top:false,
+    area:'Kawaramachi / Sanjo / Kiyamachi',
+    why:'אחד המיקומים הכי טובים לחיי ערב — קרוב מאוד למסעדות, Kiyamachi, Pontocho והליכה ל-Gion.',
+    breakfast:'אופציה טובה אם המחיר נמוך משמעותית מה-Gate; לבדוק חבילת breakfast בעת ההזמנה.',
+    bath:'לבדוק לפי סוג החדר; המלון ידוע בחדרים מודרניים ומקלחות טובות.',
+    vibe:'מודרני, פחות luxury statement אבל תמורה חזקה מאוד.',
+    maps:'https://www.google.com/maps/search/?api=1&query=Cross+Hotel+Kyoto',
+    site:'https://www.crosshotel.com/kyoto/'
+  },
+  {
+    name:'Mitsui Garden Hotel Kyoto Kawaramachi Jokyoji',
+    top:false,
+    area:'Kawaramachi',
+    why:'מרכזי מאוד ונוח ל-Downtown. יתרון גדול אם חשוב לך גם bathhouse במלון.',
+    breakfast:'06:30–11:00; 6 מנות עיקריות לבחירה + half buffet, כולל אפשרויות vegan.',
+    bath:'בחדרים סטנדרטיים רבים יש shower booth בלבד; יש bathhouse משותף במלון.',
+    vibe:'שקט ומלוטש יותר, פחות nightlife hotel אבל עדיין ממש במרכז.',
+    maps:'https://www.google.com/maps/search/?api=1&query=Mitsui+Garden+Hotel+Kyoto+Kawaramachi+Jokyoji',
+    site:'https://www.gardenhotels.co.jp/kyoto-kawaramachi-jokyoji/eng/'
+  }
+];
+
+function renderHotels(){
+  let h='<div class="hotel-zone"><div class="label">Kyoto · 30/11–04/12</div><h2>אזור לינה מומלץ: Downtown Kyoto · Kawaramachi / Kiyamachi</h2>';
+  h+='<p>מבוסס על מסלול קיוטו שלנו ועל זה שאתה רוצה לצאת בערב ברגל: זה האזור שאני מעדיף על Kyoto Station. הוא קרוב ל-Pontocho, Gion, Kamo River ו-Kiyamachi, ובמקביל נותן תחבורה טובה ל-Fushimi, Arashiyama, Uji וצפון קיוטו.</p>';
+  h+='<p><b>העדפה גאוגרפית:</b> Kyoto Kawaramachi Station ↔ Pontocho ↔ Sanjo/Kiyamachi.</p></div>';
+  h+='<div class="hotel-grid">';
+  h+=KYOTO_HOTELS.map(x=>'<article class="hotel-rec'+(x.top?' top':'')+'">'
+    +(x.top?'<span class="pick">הבחירה המובילה כרגע</span>':'')
+    +'<h3>'+esc(x.name)+'</h3><div class="meta">'+esc(x.area)+'</div>'
+    +'<div class="facts">'
+    +'<div class="fact"><b>📍</b><span>'+esc(x.why)+'</span></div>'
+    +'<div class="fact"><b>🥐</b><span>'+esc(x.breakfast)+'</span></div>'
+    +'<div class="fact"><b>🚿</b><span>'+esc(x.bath)+'</span></div>'
+    +'<div class="fact"><b>✨</b><span>'+esc(x.vibe)+'</span></div>'
+    +'</div><div class="links"><a target="_blank" rel="noopener" href="'+esc(x.maps)+'">Google Maps</a><a target="_blank" rel="noopener" href="'+esc(x.site)+'">אתר רשמי</a></div></article>').join('');
+  h+='</div>';
+  h+='<div class="hotel-note"><b>חשוב:</b> סוג האמבטיה/מקלחת יכול להשתנות בין קטגוריות חדרים באותו מלון. לפני הזמנה נבדוק את החדר הספציפי ואת המחיר לתאריכים 30/11–04/12/2026.</div>';
+  return h;
+}
+
 function renderMore(){
-  return '<h1>עוד</h1><a class="mymaps-link" target="_blank" rel="noopener" href="https://www.google.com/maps/d/u/0/edit?mid=1_J3VtAh7aeQm4eNmhs2IENs4dfl31Ks&ll=35.660636463289485%2C139.73541419999998&z=12">🗺️ פתח Japan 2026 ב־Google My Maps</a><p class="sub">גרסה v79 · כל 61 אתרי התיירות בטוקיו שאינם חנויות קיבלו סיפור היסטורי רציף ומורחב בעברית: איך המקום נוצר, אירועים אמיתיים שקרו בו, דמויות ותקופות היסטוריות, הרס ושיקום והקשר לתרבות היפנית. אין יותר תבנית של ״מה זה / למה זה חשוב / מה לשים לב״. קישור למקור מאומת נשמר בכל מקום שנחקר.</p><p class="sub">באייפון השמירה נפתחת כשיתוף. בוחרים "שמור לקבצים", ואז פותחים את הקובץ החדש מ־Safari.</p><button class="btn primary" id="save-full" type="button">שמור גרסה מלאה</button><p class="desc" style="margin-top:18px">25/11 נשאר ריק. גנים בבוקר, קניות לקראת הסוף, ולילה רק אם נשאר כוח.</p>';
+  return '<h1>עוד</h1><a class="mymaps-link" target="_blank" rel="noopener" href="https://www.google.com/maps/d/u/0/edit?mid=1_J3VtAh7aeQm4eNmhs2IENs4dfl31Ks&ll=35.660636463289485%2C139.73541419999998&z=12">🗺️ פתח Japan 2026 ב־Google My Maps</a><p class="sub">גרסה v85 · כל 61 אתרי התיירות בטוקיו שאינם חנויות קיבלו סיפור היסטורי רציף ומורחב בעברית: איך המקום נוצר, אירועים אמיתיים שקרו בו, דמויות ותקופות היסטוריות, הרס ושיקום והקשר לתרבות היפנית. אין יותר תבנית של ״מה זה / למה זה חשוב / מה לשים לב״. קישור למקור מאומת נשמר בכל מקום שנחקר.</p><p class="sub">באייפון השמירה נפתחת כשיתוף. בוחרים "שמור לקבצים", ואז פותחים את הקובץ החדש מ־Safari.</p><button class="btn primary" id="save-full" type="button">שמור גרסה מלאה</button><p class="desc" style="margin-top:18px">25/11 נשאר ריק. גנים בבוקר, קניות לקראת הסוף, ולילה רק אם נשאר כוח.</p>';
 }
 function renderSheet(){
   if(sheet.mode==='item'){
@@ -1688,7 +1772,7 @@ function markDone(){
   toast('✓ הושלם', ()=>{ live.done[uid]=prev; persist(); render(); document.getElementById('toast').classList.add('hidden'); });
 }
 function savedHtml(){
-  const snap={snapshotId:'snap-'+Date.now().toString(36), savedAt:new Date().toISOString(), version:'v82', live:live};
+  const snap={snapshotId:'snap-'+Date.now().toString(36), savedAt:new Date().toISOString(), version:'v85', live:live};
   const close='</'+'script>';
   let html=document.documentElement.outerHTML;
   if(!html.startsWith('<!DOCTYPE')) html='<!DOCTYPE html>\n'+html;
