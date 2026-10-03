@@ -144,10 +144,49 @@
   .plan-section-title span { color:var(--muted); font-size:12px; }
   .plan-grid { display:grid; grid-template-columns:1fr; gap:10px; }
   .plan-card { position:relative; border:1px solid var(--line); border-radius:18px; background:var(--card); overflow:hidden; }
-  .plan-card.status-must { border-color:#8a6b2f; box-shadow:0 0 0 1px rgba(240,190,82,.07) inset; }
-  .plan-card.status-want { border-color:#315d83; }
-  .plan-card.status-maybe { border-color:#4b5360; }
-  .plan-card.status-no { opacity:.58; }
+  /* v83 — restored traffic-light planning priority */
+  .plan-card.status-must,
+  .kyoto-card.status-must {
+    border-color:#22c55e;
+    box-shadow:0 0 0 2px rgba(34,197,94,.18) inset, 0 0 18px rgba(34,197,94,.08);
+    background:linear-gradient(180deg,rgba(34,197,94,.08),var(--card) 34%);
+  }
+  .plan-card.status-want,
+  .kyoto-card.status-want {
+    border-color:#3fae62;
+    box-shadow:0 0 0 1px rgba(63,174,98,.10) inset;
+    background:linear-gradient(180deg,rgba(63,174,98,.045),var(--card) 30%);
+  }
+  .plan-card.status-maybe,
+  .kyoto-card.status-maybe {
+    border-color:#e59b28;
+    box-shadow:0 0 0 1px rgba(229,155,40,.10) inset;
+    background:linear-gradient(180deg,rgba(229,155,40,.05),var(--card) 30%);
+  }
+  .plan-card.status-no,
+  .kyoto-card.status-no {
+    border-color:#d6535b;
+    background:linear-gradient(180deg,rgba(214,83,91,.055),var(--card) 30%);
+    opacity:.72;
+  }
+  .plan-card.status-must::before,
+  .plan-card.status-want::before,
+  .plan-card.status-maybe::before,
+  .plan-card.status-no::before,
+  .kyoto-card.status-must::before,
+  .kyoto-card.status-want::before,
+  .kyoto-card.status-maybe::before,
+  .kyoto-card.status-no::before {
+    content:"";
+    position:absolute;
+    inset:0 auto 0 0;
+    width:5px;
+    z-index:2;
+  }
+  .plan-card.status-must::before,.kyoto-card.status-must::before{background:#22c55e}
+  .plan-card.status-want::before,.kyoto-card.status-want::before{background:#3fae62}
+  .plan-card.status-maybe::before,.kyoto-card.status-maybe::before{background:#e59b28}
+  .plan-card.status-no::before,.kyoto-card.status-no::before{background:#d6535b}
   .plan-card-body { padding:13px; }
   .plan-card-top { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; }
   .plan-card-title { margin:0; font-size:18px; line-height:1.25; }
@@ -158,10 +197,29 @@
   .plan-route .not-scheduled { background:#171b22; border-color:#38404b; color:#9ba9ba; }
   .plan-status { display:grid; grid-template-columns:repeat(4,1fr); gap:5px; margin-top:11px; }
   .plan-status button { min-height:38px; border-radius:10px; border:1px solid #2b384a; background:#101722; color:#aebdd0; font-size:12px; font-weight:850; padding:4px 3px; }
-  .plan-status button.on[data-plan-status="חובה"] { background:#493816; border-color:#9b7531; color:#ffe5a3; }
-  .plan-status button.on[data-plan-status="רוצה"] { background:#102b44; border-color:#3976a6; color:#cdeaff; }
-  .plan-status button.on[data-plan-status="אולי"] { background:#292d35; border-color:#606976; color:#e0e6ee; }
-  .plan-status button.on[data-plan-status="לא"] { background:#351c20; border-color:#7b3d47; color:#ffc8ce; }
+  .plan-status button.on[data-plan-status="חובה"] {
+    background:#0f4d2a; border-color:#22c55e; color:#d9ffe6;
+    box-shadow:0 0 0 2px rgba(34,197,94,.18) inset;
+  }
+  .plan-status button.on[data-plan-status="רוצה"] {
+    background:#173e26; border-color:#3fae62; color:#ddffe7;
+  }
+  .plan-status button.on[data-plan-status="אולי"] {
+    background:#4a3111; border-color:#e59b28; color:#fff0ca;
+  }
+  .plan-status button.on[data-plan-status="לא"] {
+    background:#4b1d22; border-color:#d6535b; color:#ffdadd;
+  }
+  .traffic-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-left:4px;vertical-align:0;background:#64748b}
+  .traffic-dot.green{background:#22c55e;box-shadow:0 0 7px rgba(34,197,94,.45)}
+  .traffic-dot.orange{background:#e59b28;box-shadow:0 0 7px rgba(229,155,40,.35)}
+  .traffic-dot.red{background:#d6535b;box-shadow:0 0 7px rgba(214,83,91,.35)}
+  .traffic-legend{display:flex;flex-wrap:wrap;gap:7px;margin:9px 0 13px}
+  .traffic-legend span{display:inline-flex;align-items:center;gap:3px;padding:6px 9px;border:1px solid #2d3c50;border-radius:999px;background:#101722;color:#c8d5e4;font-size:12px;font-weight:850}
+  .traffic-status-badge.must{border-color:#22c55e!important;color:#d9ffe6!important;background:#123a24!important}
+  .traffic-status-badge.want{border-color:#3fae62!important;color:#ddffe7!important;background:#173523!important}
+  .traffic-status-badge.maybe{border-color:#e59b28!important;color:#fff0ca!important;background:#3a2a13!important}
+  .traffic-status-badge.no{border-color:#d6535b!important;color:#ffdadd!important;background:#3c1c20!important}
   .plan-card-actions { display:flex; gap:7px; margin-top:9px; }
   .plan-card-actions a,.plan-card-actions button { min-height:38px; border-radius:10px; border:1px solid var(--line); background:#151e2a; color:#dce8f6; padding:7px 10px; text-decoration:none; font-size:12px; font-weight:800; }
   .plan-info-mini { width:36px; height:36px; min-width:36px; border-radius:50%; border:1px solid #56708e; background:#152233; color:#cfe6ff; font-family:Georgia,serif; font-weight:900; font-size:18px; }
@@ -312,7 +370,7 @@
   .kyoto-filter-row button{flex:0 0 auto;min-height:37px;border-radius:999px;border:1px solid var(--line);background:#101722;color:#bdc9d8;font-size:12px;font-weight:800;padding:0 11px}
   .kyoto-filter-row button.on{background:#dbeafe;color:#0b1725;border-color:#dbeafe}
   .kyoto-grid{display:grid;grid-template-columns:1fr;gap:12px}
-  .kyoto-card{border:1px solid var(--line);border-radius:18px;background:var(--card);overflow:hidden}
+  .kyoto-card{position:relative;border:1px solid var(--line);border-radius:18px;background:var(--card);overflow:hidden}
   .kyoto-card.kday-1{border-color:#4f7fa7}.kyoto-card.kday-2{border-color:#6f7f4c}.kyoto-card.kday-3{border-color:#836a9a}
   .kyoto-card-body{padding:14px}
   .kyoto-card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
@@ -981,8 +1039,8 @@ function planStatusClass(status){
 }
 function planStatusButtons(p){
   const cur=planStatus(p);
-  const vals=[['חובה','★ חובה'],['רוצה','רוצה'],['אולי','אולי'],['לא','לא רוצה']];
-  return '<div class="plan-status">'+vals.map(x=>'<button type="button" data-plan-id="'+esc(p.id)+'" data-plan-status="'+esc(x[0])+'" class="'+(cur===x[0]?'on':'')+'">'+esc(x[1])+'</button>').join('')+'</div>';
+  const vals=[['חובה','<span class="traffic-dot green"></span><span class="traffic-dot green"></span> חובה'],['רוצה','<span class="traffic-dot green"></span> רוצה'],['אולי','<span class="traffic-dot orange"></span> אולי'],['לא','<span class="traffic-dot red"></span> לא רוצה']];
+  return '<div class="plan-status">'+vals.map(x=>'<button type="button" data-plan-id="'+esc(p.id)+'" data-plan-status="'+esc(x[0])+'" class="'+(cur===x[0]?'on':'')+'">'+x[1]+'</button>').join('')+'</div>';
 }
 function setPlanStatus(id,status){
   if(!live.plan || typeof live.plan!=='object') live.plan={};
@@ -1062,7 +1120,7 @@ function planSort(rows){
 function planningFilters(includeArea){
   const cities=['הכל','טוקיו','קיוטו','אוסקה','מסביב לאוסקה'];
   const kinds=['הכל','אטרקציות','חנויות','אוכל','מלונות'];
-  const statuses=[['הכל','כל הסטטוסים'],['חובה','★ חובה'],['רוצה','רוצה'],['אולי','אולי'],['לא','לא רוצה']];
+  const statuses=[['הכל','כל הסטטוסים'],['חובה','🟢🟢 חובה'],['רוצה','🟢 רוצה'],['אולי','🟠 אולי'],['לא','🔴 לא רוצה']];
   let h='<div class="plan-toolbar'+(includeArea?' two':'')+'"><input id="plan-q" class="search" placeholder="חיפוש מקום, אזור או תוכן" value="'+esc(planQuery)+'">';
   if(includeArea){
     const areaRows=TRIP.places.filter(p=>planCityFilter==='הכל'||p.city===planCityFilter);
@@ -1080,13 +1138,13 @@ function planningSummary(rows){
   const counts={'חובה':0,'רוצה':0,'אולי':0,'לא':0};
   rows.forEach(p=>{ const s=planStatus(p); if(counts[s]!=null) counts[s]++; });
   const scheduled=rows.filter(p=>scheduledDaysForPlace(p).length).length;
-  return '<div class="plan-summary"><span>'+rows.length+' מקומות</span><span>★ '+counts['חובה']+' חובה</span><span>'+counts['רוצה']+' רוצה</span><span>'+counts['אולי']+' אולי</span><span>'+counts['לא']+' לא רוצה</span><span>✓ '+scheduled+' כבר במסלול</span></div>';
+  return '<div class="plan-summary"><span>'+rows.length+' מקומות</span><span>🟢🟢 '+counts['חובה']+' חובה</span><span>🟢 '+counts['רוצה']+' רוצה</span><span>🟠 '+counts['אולי']+' אולי</span><span>🔴 '+counts['לא']+' לא רוצה</span><span>✓ '+scheduled+' כבר במסלול</span></div>';
 }
 function renderPlanningDay(){
   const day=activeDay();
   let h='<div class="days">'+TRIP.days.map(d=>'<button class="pill'+(d.id===day.id?' on':'')+'" data-day="'+d.id+'" type="button"><b>'+esc(d.date)+'</b><span>'+esc(dayCityLabel(d))+'</span></button>').join('')+'</div>';
   h+='<div class="dow">'+esc(day.dow)+' · '+esc(dayCityLabel(day))+'</div><h1>'+esc(day.date)+'</h1><p class="sub">'+esc(day.title)+(day.subtitle?' · '+esc(day.subtitle):'')+'</p>';
-  h+='<div class="plan-note">מצב תכנון: סימון ★ חובה / רוצה / אולי / לא רוצה לא משנה כרגע את השעות או את סדר המסלול. הוא נשמר בנפרד ומשמש לקבלת החלטות.</div>';
+  h+='<div class="traffic-legend"><span><i class="traffic-dot green"></i><i class="traffic-dot green"></i> חובה</span><span><i class="traffic-dot green"></i> רוצה</span><span><i class="traffic-dot orange"></i> אולי</span><span><i class="traffic-dot red"></i> לא רוצה</span></div><div class="plan-note">מצב תכנון: הרמזור הוא שכבת ההעדפה שלך בלבד — הוא לא משנה את שעות היום או את סדר המסלול עד שמחליטים לבנות את המסלול הסופי.</div>';
   if(day.items.length){
     h+='<div class="plan-day-route">'+day.items.filter(it=>!it.transit).map(it=>'<div class="plan-day-line"><span class="t">'+esc(it.time||'הבא')+'</span><span class="n">'+esc((live.replace&&live.replace[it.uid]&&live.replace[it.uid].name)||it.name)+'</span></div>').join('')+'</div>';
   }
@@ -1183,8 +1241,8 @@ function kyotoDecisionCard(p){
   const assign=kyotoAssignment(p);
   const st=planStatus(p);
   const srcs=(p.kyotoSources||[]);
-  let h='<article class="kyoto-card kday-'+esc(assign)+'"><div class="kyoto-card-body">';
-  h+='<div class="kyoto-card-head"><div><h3 class="kyoto-card-title">'+esc(p.name)+'</h3><div class="kyoto-badges"><span class="kyoto-badge">'+esc(p.area||'')+'</span><span class="kyoto-badge">'+esc(kyotoKindLabel(p))+'</span>'+(p.duration?'<span class="kyoto-badge">'+esc(p.duration)+'</span>':'')+'<span class="kyoto-badge">'+esc(st)+'</span></div></div><button class="plan-info-mini" data-info-place="'+esc(p.id)+'" type="button" aria-label="מידע על '+esc(p.name)+'">i</button></div>';
+  let h='<article class="kyoto-card kday-'+esc(assign)+' status-'+planStatusClass(st)+'"><div class="kyoto-card-body">';
+  h+='<div class="kyoto-card-head"><div><h3 class="kyoto-card-title">'+esc(p.name)+'</h3><div class="kyoto-badges"><span class="kyoto-badge">'+esc(p.area||'')+'</span><span class="kyoto-badge">'+esc(kyotoKindLabel(p))+'</span>'+(p.duration?'<span class="kyoto-badge">'+esc(p.duration)+'</span>':'')+'<span class="kyoto-badge traffic-status-badge '+planStatusClass(st)+'">'+(st==='חובה'?'🟢🟢 חובה':st==='רוצה'?'🟢 רוצה':st==='אולי'?'🟠 אולי':'🔴 לא רוצה')+'</span></div></div><button class="plan-info-mini" data-info-place="'+esc(p.id)+'" type="button" aria-label="מידע על '+esc(p.name)+'">i</button></div>';
   if(p.desc) h+='<p class="kyoto-card-desc">'+esc(p.desc)+'</p>';
   if(p.kyotoWhy) h+='<div class="kyoto-why"><b>מה חשוב בהחלטה:</b> '+esc(p.kyotoWhy)+'</div>';
   h+='<details class="kyoto-details"><summary>הסבר מלא, שילובים ומקור</summary><div class="inside"><p>'+esc(p.info||p.desc||'')+'</p>'+(p.kyotoCombine?'<p><b>מתחבר טוב עם:</b> '+esc(p.kyotoCombine)+'</p>':'')+(srcs.length?'<div class="kyoto-source-tags">'+srcs.map(s=>'<span>'+esc(s)+'</span>').join('')+'</div>':'')+'</div></details>';
@@ -1300,7 +1358,7 @@ function renderKyotoExportLayer(){
     const rows=kyotoExportRows(d,false), hi=kyotoExportRows(d,true);
     return '<div class="kyoto-export-day"><h4>יום '+d+'</h4><div class="meta">'+rows.length+' נקודות · '+hi.length+' חובה/רוצה</div><div class="kyoto-export-actions">'+kyotoRouteLinks(d)+'<button type="button" data-kexport="csv" data-kday="'+d+'">⬇ CSV</button><button type="button" data-kexport="csv" data-kday="'+d+'" data-khigh="1">★ CSV חובה+רוצה</button><button type="button" data-kexport="kml" data-kday="'+d+'">KML</button><button type="button" data-kexport="copy" data-kday="'+d+'">📋 Copy</button></div></div>';
   };
-  let h='<section class="kyoto-export-layer"><div class="label">Maps & Export · v82</div><h3>מוציאים את הבחירות ל־Google Maps / My Maps</h3><p class="export-sub">ה־export משתמש בשיבוץ הנוכחי שלך ליום 1/2/3. מקומות שסימנת “לא רוצה” לא יוצאים. במסלול Google Maps נשמר קודם הסדר של מסלול הסרטון, ומקומות נוספים מצטרפים אחריו.</p>';
+  let h='<section class="kyoto-export-layer"><div class="label">Maps & Export · v83</div><h3>מוציאים את הבחירות ל־Google Maps / My Maps</h3><p class="export-sub">ה־export משתמש בשיבוץ הנוכחי שלך ליום 1/2/3. מקומות שסימנת “לא רוצה” לא יוצאים. במסלול Google Maps נשמר קודם הסדר של מסלול הסרטון, ומקומות נוספים מצטרפים אחריו.</p>';
   h+='<div class="kyoto-export-global"><a class="primary" target="_blank" rel="noopener" href="'+KYOTO_MYMAPS_URL+'">🗺️ פתח Japan 2026 ב־My Maps</a><button type="button" data-kexport="allcsv">⬇ CSV · כל 3 הימים</button><button type="button" data-kexport="threecsv">⬇ 3 קבצי CSV · שכבה לכל יום</button><button type="button" data-kexport="allcsv" data-khigh="1">★ CSV · רק חובה+רוצה</button><button type="button" data-kexport="kmlall">⬇ KML · 3 תיקיות ימים</button><button type="button" data-kexport="copyall">📋 Copy · כל 3 הימים</button></div>';
   h+='<div class="kyoto-export-days">'+['1','2','3'].map(dayCard).join('')+'</div>';
   h+='<div class="kyoto-export-note"><b>ל־Google My Maps:</b> פתח את המפה → Add layer → Import → בחר את קובץ ה־CSV של היום. בשלב בחירת מיקום בחר בעמודה <b>Location</b>, ובשם הסמן בחר <b>Name</b>. כדי לקבל 3 שכבות נפרדות, ייבא את שלושת קבצי ה־CSV — אחד לכל שכבה. KML מצורף גם כאופציית גיבוי; CSV הוא הפורמט המומלץ לייבוא כתובות/שמות מקומות.</div></section>';
