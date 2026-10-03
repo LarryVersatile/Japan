@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#07090d">
-<title>יפן 2026 · v87</title>
+<title>יפן 2026 · v88</title>
 <style>
   :root { --bg:#07090d; --card:#141a24; --line:#2a3444; --text:#f4f7fb; --muted:#93a0b3; --blue:#8ebcff; --ink:#071018; }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -1036,13 +1036,13 @@ function dayCityLabel(d){
     '2026-11-30':'טוקיו',
     '2026-12-01':'קיוטו',
     '2026-12-02':'קיוטו',
-    '2026-12-03':'קיוטו → אוסקה',
+    '2026-12-03':'קיוטו',
     '2026-12-04':'אוסקה',
-    '2026-12-05':'נארה',
-    '2026-12-06':'אוסקה → טוקיו',
+    '2026-12-05':'אוסקה',
+    '2026-12-06':'אוסקה',
     '2026-12-07':'טוקיו',
     '2026-12-08':'טוקיו',
-    '2026-12-09':'טוקיו'
+    '2026-12-09':'טוקיו · טיסה 23:00'
   };
   return labels[d.id] || d.base || '';
 }
@@ -1195,7 +1195,13 @@ function planningSummary(rows){
 }
 function renderPlanningDay(){
   const day=activeDay();
-  let h='<div class="days">'+TRIP.days.map(d=>'<button class="pill'+(d.id===day.id?' on':'')+'" data-day="'+d.id+'" type="button"><b>'+esc(d.date)+'</b><span>'+esc(dayCityLabel(d))+'</span></button>').join('')+'</div>';
+  let h='<div class="plan-ranges">'
+    +'<span class="plan-range tokyo">25.11–1.12 · טוקיו</span>'
+    +'<span class="plan-range kyoto">1.12–4.12 · קיוטו</span>'
+    +'<span class="plan-range osaka">4.12–7.12 · אוסקה</span>'
+    +'<span class="plan-range tokyo">7.12–9.12 · טוקיו · טיסה 9.12 ב־23:00</span>'
+    +'</div>';
+  h+='<div class="days">'+TRIP.days.map(d=>'<button class="pill'+(d.id===day.id?' on':'')+'" data-day="'+d.id+'" type="button"><b>'+esc(d.date)+'</b><span>'+esc(dayCityLabel(d))+'</span></button>').join('')+'</div>';
   h+='<div class="dow">'+esc(day.dow)+' · '+esc(dayCityLabel(day))+'</div><h1>'+esc(day.date)+'</h1><p class="sub">'+esc(day.title)+(day.subtitle?' · '+esc(day.subtitle):'')+'</p>';
   h+='<div class="traffic-legend"><span><i class="traffic-dot green"></i><i class="traffic-dot green"></i> חובה</span><span><i class="traffic-dot green"></i> רוצה</span><span><i class="traffic-dot orange"></i> אולי</span><span><i class="traffic-dot red"></i> לא רוצה</span></div><div class="plan-note">מצב תכנון: הרמזור הוא שכבת ההעדפה שלך בלבד — הוא לא משנה את שעות היום או את סדר המסלול עד שמחליטים לבנות את המסלול הסופי.</div>';
   if(day.items.length){
@@ -1423,7 +1429,7 @@ function renderKyotoExportLayer(){
     const rows=kyotoExportRows(d,false), hi=kyotoExportRows(d,true);
     return '<div class="kyoto-export-day"><h4>יום '+d+'</h4><div class="meta">'+rows.length+' נקודות · '+hi.length+' חובה/רוצה</div><div class="kyoto-export-actions">'+kyotoRouteLinks(d)+'<button type="button" data-kexport="csv" data-kday="'+d+'">⬇ CSV</button><button type="button" data-kexport="csv" data-kday="'+d+'" data-khigh="1">★ CSV חובה+רוצה</button><button type="button" data-kexport="kml" data-kday="'+d+'">KML</button><button type="button" data-kexport="copy" data-kday="'+d+'">📋 Copy</button></div></div>';
   };
-  let h='<section class="kyoto-export-layer"><div class="label">Maps & Export · v87</div><h3>מוציאים את הבחירות ל־Google Maps / My Maps</h3><p class="export-sub">ה־export משתמש בשיבוץ הנוכחי שלך ליום 1/2/3. מקומות שסימנת “לא רוצה” לא יוצאים. במסלול Google Maps נשמר קודם הסדר של מסלול הסרטון, ומקומות נוספים מצטרפים אחריו.</p>';
+  let h='<section class="kyoto-export-layer"><div class="label">Maps & Export · v88</div><h3>מוציאים את הבחירות ל־Google Maps / My Maps</h3><p class="export-sub">ה־export משתמש בשיבוץ הנוכחי שלך ליום 1/2/3. מקומות שסימנת “לא רוצה” לא יוצאים. במסלול Google Maps נשמר קודם הסדר של מסלול הסרטון, ומקומות נוספים מצטרפים אחריו.</p>';
   h+='<div class="kyoto-export-global"><a class="primary" target="_blank" rel="noopener" href="'+KYOTO_MYMAPS_URL+'">🗺️ פתח Japan 2026 ב־My Maps</a><button type="button" data-kexport="allcsv">⬇ CSV · כל 3 הימים</button><button type="button" data-kexport="threecsv">⬇ 3 קבצי CSV · שכבה לכל יום</button><button type="button" data-kexport="allcsv" data-khigh="1">★ CSV · רק חובה+רוצה</button><button type="button" data-kexport="kmlall">⬇ KML · 3 תיקיות ימים</button><button type="button" data-kexport="copyall">📋 Copy · כל 3 הימים</button></div>';
   h+='<div class="kyoto-export-days">'+['1','2','3'].map(dayCard).join('')+'</div>';
   h+='<div class="kyoto-export-note"><b>ל־Google My Maps:</b> פתח את המפה → Add layer → Import → בחר את קובץ ה־CSV של היום. בשלב בחירת מיקום בחר בעמודה <b>Location</b>, ובשם הסמן בחר <b>Name</b>. כדי לקבל 3 שכבות נפרדות, ייבא את שלושת קבצי ה־CSV — אחד לכל שכבה. KML מצורף גם כאופציית גיבוי; CSV הוא הפורמט המומלץ לייבוא כתובות/שמות מקומות.</div></section>';
@@ -1719,7 +1725,7 @@ function renderHotels(){
 }
 
 function renderMore(){
-  return '<h1>עוד</h1><a class="mymaps-link" target="_blank" rel="noopener" href="https://www.google.com/maps/d/u/0/edit?mid=1_J3VtAh7aeQm4eNmhs2IENs4dfl31Ks&ll=35.660636463289485%2C139.73541419999998&z=12">🗺️ פתח Japan 2026 ב־Google My Maps</a><p class="sub">גרסה v87 · כל 61 אתרי התיירות בטוקיו שאינם חנויות קיבלו סיפור היסטורי רציף ומורחב בעברית: איך המקום נוצר, אירועים אמיתיים שקרו בו, דמויות ותקופות היסטוריות, הרס ושיקום והקשר לתרבות היפנית. אין יותר תבנית של ״מה זה / למה זה חשוב / מה לשים לב״. קישור למקור מאומת נשמר בכל מקום שנחקר.</p><p class="sub">באייפון השמירה נפתחת כשיתוף. בוחרים "שמור לקבצים", ואז פותחים את הקובץ החדש מ־Safari.</p><button class="btn primary" id="save-full" type="button">שמור גרסה מלאה</button><p class="desc" style="margin-top:18px">25/11 נשאר ריק. גנים בבוקר, קניות לקראת הסוף, ולילה רק אם נשאר כוח.</p>';
+  return '<h1>עוד</h1><a class="mymaps-link" target="_blank" rel="noopener" href="https://www.google.com/maps/d/u/0/edit?mid=1_J3VtAh7aeQm4eNmhs2IENs4dfl31Ks&ll=35.660636463289485%2C139.73541419999998&z=12">🗺️ פתח Japan 2026 ב־Google My Maps</a><p class="sub">גרסה v88 · כל 61 אתרי התיירות בטוקיו שאינם חנויות קיבלו סיפור היסטורי רציף ומורחב בעברית: איך המקום נוצר, אירועים אמיתיים שקרו בו, דמויות ותקופות היסטוריות, הרס ושיקום והקשר לתרבות היפנית. אין יותר תבנית של ״מה זה / למה זה חשוב / מה לשים לב״. קישור למקור מאומת נשמר בכל מקום שנחקר.</p><p class="sub">באייפון השמירה נפתחת כשיתוף. בוחרים "שמור לקבצים", ואז פותחים את הקובץ החדש מ־Safari.</p><button class="btn primary" id="save-full" type="button">שמור גרסה מלאה</button><p class="desc" style="margin-top:18px">25/11 נשאר ריק. גנים בבוקר, קניות לקראת הסוף, ולילה רק אם נשאר כוח.</p>';
 }
 function renderSheet(){
   if(sheet.mode==='item'){
@@ -1784,7 +1790,7 @@ function markDone(){
   toast('✓ הושלם', ()=>{ live.done[uid]=prev; persist(); render(); document.getElementById('toast').classList.add('hidden'); });
 }
 function savedHtml(){
-  const snap={snapshotId:'snap-'+Date.now().toString(36), savedAt:new Date().toISOString(), version:'v87', live:live};
+  const snap={snapshotId:'snap-'+Date.now().toString(36), savedAt:new Date().toISOString(), version:'v88', live:live};
   const close='</'+'script>';
   let html=document.documentElement.outerHTML;
   if(!html.startsWith('<!DOCTYPE')) html='<!DOCTYPE html>\n'+html;
