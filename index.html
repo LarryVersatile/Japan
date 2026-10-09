@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, interactive-widget=resizes-content">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="theme-color" content="#07090d">
-<title>יפן 2026 · v99 Responsive</title>
+<title>יפן 2026 · v105 Verified Mobile</title>
 <style>
   :root { --bg:#07090d; --card:#141a24; --line:#2a3444; --text:#f4f7fb; --muted:#93a0b3; --blue:#8ebcff; --ink:#071018; }
   * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -608,11 +608,144 @@
 }
 
 
-.m-photo-unavailable.loading{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;background:linear-gradient(180deg,#132740,#0c1d31);color:#d5e6ff;width:100%;height:100%;border:1px dashed rgba(124,176,255,.35);border-radius:16px;padding:8px;text-align:center;font-size:12px;line-height:1.2}
-.m-photo-unavailable.loading small{display:block;font-size:11px;opacity:.9}
-.m-place-thumb img,.m-act-photo img{width:100%;height:100%;object-fit:cover;border-radius:14px;display:block}
-.m-place-thumb,.m-act-photo{overflow:hidden;background:#102238}
-.m-map-link{display:inline-flex;align-items:center;justify-content:center}
+/* v105 mobile: one verified-media pipeline for detail, list and itinerary thumbnails */
+.m-mobile-media{display:block!important;width:100%!important;height:100%!important;min-height:72px!important;margin:0!important;border:0!important;background:#10243a!important;border-radius:14px!important;overflow:hidden!important;box-shadow:none!important}
+.m-mobile-media .media-image-wrap{display:block!important;width:100%!important;height:100%!important;min-height:72px!important;background:#10243a!important;margin:0!important;border:0!important}
+.m-mobile-media .media-image-wrap.on{display:block!important}
+.m-mobile-media .media-image{display:block!important;width:100%!important;height:100%!important;min-height:72px!important;object-fit:cover!important;border-radius:14px!important}
+.m-mobile-media .media-image-note,.m-mobile-media .media-actions{display:none!important}
+.m-mobile-media .m-no-verified-image{display:flex!important;width:100%;height:100%;min-height:72px;align-items:center;justify-content:center;flex-direction:column;gap:3px;color:#7f9ab6;background:#10243a;font-size:17px}
+.m-mobile-media .m-no-verified-image small{font-size:9px;color:#91a8bf;text-align:center;padding:2px 5px}
+.m-place-thumb:has(.m-mobile-media),.m-act-photo:has(.m-mobile-media){padding:0!important;overflow:hidden!important}
+body.mobile-execute .m-day-progress{border-color:#1f8e78}
+.m-execute-check{font-weight:800}
+
+
+/* v106 — mobile execute UI + verified imagery */
+@media (max-width:759px){
+  .m-segment{grid-template-columns:repeat(4,1fr)!important;direction:ltr!important}
+  .m-segment a,.m-segment button{min-height:39px;border:0;border-radius:10px;background:transparent;color:#91a5bd;font-size:11px;font-weight:800;text-decoration:none;display:flex;align-items:center;justify-content:center}
+  .m-segment.execute-segment button.on{background:linear-gradient(135deg,#50e0be,#68e8b8)!important;color:#05231e!important;box-shadow:0 0 0 1px rgba(90,240,197,.15) inset}
+  .mobile-execute .m-mode-switch button[data-mode-mobile="execute"]{background:linear-gradient(135deg,#50e0be,#68e8b8)!important;color:#05231e!important}
+  .m-date-dot{display:block;width:5px;height:5px;border-radius:50%;margin:5px auto 0;background:#4e86c8}.m-date-dot.kyoto{background:#4bd69a}.m-date-dot.osaka{background:#f3a13a}
+  .exec-progress{border-color:#246c64!important;background:linear-gradient(180deg,#0b1d27,#08151f)!important}.exec-progress .m-mini-track i{background:linear-gradient(90deg,#39d7a7,#6ce6c0)!important}
+  .m-exec-now{margin:10px 0 12px;padding:12px 14px;border-radius:16px;border:1px solid #237bc0;background:linear-gradient(135deg,rgba(17,70,112,.75),rgba(7,29,47,.94));display:grid;grid-template-columns:auto 1fr;gap:2px 10px;align-items:center}
+  .m-exec-now>span{grid-row:1/3;background:#1487d7;color:#fff;border-radius:999px;padding:5px 9px;font-size:10px;font-weight:900}.m-exec-now b{font-size:14px;color:#f4f8ff}.m-exec-now small{font-size:10px;color:#82b7df;direction:ltr;text-align:left}
+  .m-execute-app .m-part{background:#07131e;border-color:#19364b}.m-execute-app .m-part-head{background:#091823}
+  .m-activity-line{position:relative!important}
+  .m-execute-app .m-activity-line{margin:8px 9px!important;border:1px solid #24445e!important;border-radius:14px!important;background:#0b2031!important;overflow:hidden!important;transition:.2s ease;padding-right:42px!important}
+  .m-execute-app .m-activity-line .m-activity{margin:0!important;width:100%!important;border:0!important;background:transparent!important;border-radius:0!important;padding:7px!important;grid-template-columns:68px minmax(0,1fr) 12px!important;min-height:82px!important}
+  .m-execute-app .m-act-photo{width:68px!important;height:68px!important;min-height:68px!important;border-radius:11px!important;background:#102439!important;overflow:hidden!important}
+  .m-execute-app .m-act-photo .m-mobile-media,.m-execute-app .m-act-photo .media-image-wrap,.m-execute-app .m-act-photo .media-image{min-height:68px!important;height:68px!important;width:68px!important;border-radius:11px!important}
+  .m-execute-app .m-act-content{min-width:0}.m-execute-app .m-act-content b{display:block;font-size:13px;line-height:1.25;color:#f3f7fb}.m-execute-app .m-act-content small{font-size:10px;color:#7ea0bc;margin-top:4px;direction:ltr;text-align:left}
+  .m-exec-state{position:absolute!important;right:8px!important;top:50%!important;transform:translateY(-50%)!important;width:28px!important;height:28px!important;border-radius:50%!important;border:2px solid #6f8294!important;background:#07131e!important;color:#8fa1b2!important;z-index:4!important;font-size:16px!important;display:flex!important;align-items:center!important;justify-content:center!important;padding:0!important}
+  .m-activity-line.is-done{border-color:#1b5c4c!important;background:#0a1b1d!important;opacity:.72}.m-activity-line.is-done .m-act-content b{text-decoration:line-through;color:#7eaa9d!important}.m-activity-line.is-done .m-act-content small{text-decoration:line-through;color:#5e8078!important}.m-activity-line.is-done .m-act-photo{filter:saturate(.45) brightness(.72)}.m-exec-state.is-done{border-color:#40d7a5!important;background:#35ce9a!important;color:#04241b!important;font-size:15px!important}
+  .m-activity-line.is-current{border:2px solid #2ea6ff!important;box-shadow:0 0 0 2px rgba(46,166,255,.10),0 8px 25px rgba(0,91,160,.16)!important;background:linear-gradient(135deg,#0c2940,#0a1e30)!important}.m-exec-state.is-current{border-color:#2ea6ff!important;color:#2ea6ff!important;background:#071827!important;box-shadow:0 0 0 4px rgba(46,166,255,.12)}
+  .m-live-badge{display:inline-flex;margin-top:5px;padding:3px 7px;border-radius:999px;border:1px solid #2f83b7;background:#0a3655;color:#7dccff;font-size:8px;font-style:normal;font-weight:800}
+  .m-activity-line.is-upcoming{opacity:.92}.m-exec-state.is-upcoming{border-color:#60768b!important;color:#60768b!important}
+  .part-complete>.m-part-head span{color:#55d9ab!important}
+  .m-op-icon{display:flex;width:100%;height:100%;min-height:68px;align-items:center;justify-content:center;font-size:28px;background:linear-gradient(145deg,#142e47,#0b1e31);border-radius:11px}
+  .m-place-thumb .media-image,.m-act-photo .media-image{object-fit:cover!important}
+  .m-no-verified-image{background:linear-gradient(145deg,#12263b,#0a1725)!important}
+}
+
+
+/* v108 — dedicated mobile Execute screen */
+@media(max-width:759px){
+  .mx-screen{padding:0 16px 118px;direction:rtl}
+  .mx-top{padding:12px 16px 14px;border-bottom:1px solid #20364b;background:#06111d;position:sticky;top:0;z-index:12}
+  .mx-dayline{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:8px 0 6px}
+  .mx-dayline h1{margin:0;font-size:32px;line-height:1;font-weight:900;letter-spacing:-1px}
+  .mx-dayline p{margin:6px 0 0;color:#91a6bd;font-size:13px}
+  .mx-weather{border:1px solid #315170;border-radius:999px;padding:8px 12px;color:#d9e7f5;background:#0d2033;font-size:12px;white-space:nowrap}
+  .mx-dates{display:flex;gap:8px;overflow:auto;padding:8px 0 4px;scrollbar-width:none;direction:rtl}
+  .mx-dates::-webkit-scrollbar{display:none}
+  .mx-date{min-width:54px;height:66px;border-radius:18px;border:1px solid #2b425a;background:#0b1827;color:#c9d5e3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+  .mx-date b{font-size:19px}.mx-date span{font-size:10px;color:#8599af}.mx-date.on{background:#5aa4ff;border-color:#79b7ff;color:#051528}.mx-date.on span{color:#173a5e}
+  .mx-tabs{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:6px;background:#091624;border:1px solid #253b51;border-radius:18px;padding:6px;margin-top:10px}
+  .mx-tabs button,.mx-tabs a{border:0;background:transparent;color:#91a5ba;border-radius:13px;min-height:38px;font-weight:800;font-size:12px;text-decoration:none;display:flex;align-items:center;justify-content:center}
+  .mx-tabs .on{background:linear-gradient(135deg,#45d9b4,#70eac2);color:#05231d}
+  .mx-summary{display:grid;grid-template-columns:auto 1fr;gap:13px;align-items:center;background:#0b1c2d;border:1px solid #284762;border-radius:24px;padding:16px;margin:16px 0}
+  .mx-ring{width:66px;height:66px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#4ce0b3 var(--p),#1b334a 0);position:relative}
+  .mx-ring:after{content:"";position:absolute;inset:8px;border-radius:50%;background:#0b1c2d}.mx-ring b{position:relative;z-index:1;font-size:16px}
+  .mx-summary-copy b{display:block;font-size:16px}.mx-summary-copy small{display:block;color:#90a4ba;margin-top:4px;font-size:12px}.mx-progress{height:7px;background:#1a3046;border-radius:999px;overflow:hidden;margin-top:10px}.mx-progress i{display:block;height:100%;background:#49dbae;border-radius:999px}
+  .mx-label{display:flex;align-items:center;justify-content:space-between;margin:22px 2px 10px}.mx-label b{font-size:13px;letter-spacing:.04em;color:#8fa5bc}.mx-label span{font-size:11px;color:#5ce0b6}
+  .mx-now{background:linear-gradient(180deg,#0d2338,#0a1a2b);border:2px solid #38a2ff;border-radius:26px;overflow:hidden;box-shadow:0 16px 38px rgba(0,0,0,.24)}
+  .mx-now-photo{height:190px;background:#10263b;position:relative;overflow:hidden}.mx-now-photo img{width:100%;height:100%;object-fit:cover;display:block}.mx-now-photo .m-photo-unavailable{height:100%;justify-content:center}
+  .mx-now-photo:after{content:"NOW";position:absolute;top:12px;right:12px;background:#45dfb4;color:#06241d;font-weight:900;font-size:11px;padding:7px 10px;border-radius:999px;letter-spacing:.08em}
+  .mx-now-body{padding:16px}.mx-now-title{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}.mx-now-title h2{margin:0;font-size:24px;line-height:1.12}.mx-now-time{color:#76baff;font-size:12px;font-weight:800;margin-top:7px}.mx-now-meta{color:#91a6bb;font-size:12px;margin-top:4px}.mx-now-desc{color:#c0cedc;font-size:13px;line-height:1.55;margin:12px 0 0}
+  .mx-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:14px}.mx-action{min-height:46px;border-radius:15px;border:1px solid #315372;background:#102840;color:#dceafa;font-weight:800;font-size:12px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:7px}.mx-action.primary{background:#1c75d8;border-color:#4aa1ff;color:white}
+  .mx-done{width:100%;border:0;border-radius:17px;min-height:54px;background:linear-gradient(135deg,#41dbae,#66e5bc);color:#05251d;font-size:16px;font-weight:950;margin-top:10px;box-shadow:0 8px 22px rgba(66,221,176,.16)}
+  .mx-complete{background:#0b2b23;color:#74e9c4;border:1px solid #24624f;padding:18px;border-radius:22px;text-align:center;font-weight:900}
+  .mx-next{display:grid;grid-template-columns:76px 1fr auto;gap:11px;align-items:center;background:#0b1c2d;border:1px solid #29475f;border-radius:20px;padding:10px;min-height:94px}.mx-next-photo{width:76px;height:72px;border-radius:15px;overflow:hidden;background:#10253a}.mx-next-photo img{width:100%;height:100%;object-fit:cover}.mx-next-copy b{display:block;font-size:15px;line-height:1.2}.mx-next-copy small{display:block;color:#8fa4ba;margin-top:4px;font-size:11px}.mx-next-arrow{color:#65afff;font-size:24px}
+  .mx-timeline{display:flex;flex-direction:column;gap:9px;margin-bottom:20px}.mx-row{display:grid;grid-template-columns:54px 1fr 34px;gap:10px;align-items:center;border:1px solid #274158;background:#0b1b2b;border-radius:18px;padding:9px;position:relative}.mx-row.done{opacity:.56;background:#091620}.mx-row.current{border-color:#38a2ff;background:#0d2338}.mx-row-photo{width:54px;height:54px;border-radius:12px;overflow:hidden;background:#10243a}.mx-row-photo img{width:100%;height:100%;object-fit:cover}.mx-row-copy b{font-size:13px;line-height:1.25;display:block}.mx-row-copy small{display:block;color:#839ab0;font-size:10px;margin-top:3px}.mx-row.done .mx-row-copy b{text-decoration:line-through}.mx-status{width:30px;height:30px;border-radius:50%;display:grid;place-items:center;border:1px solid #3b5974;background:#0d2235;color:#7890a9;font-weight:900}.mx-row.done .mx-status{background:#3bd5a7;border-color:#63e5bd;color:#05261f}.mx-row.current .mx-status{border:2px solid #38a2ff;color:#38a2ff;background:#071521}.mx-row button.mx-status{padding:0}
+  .mx-empty{border:1px dashed #365570;border-radius:22px;padding:28px 18px;text-align:center;color:#96aabd;background:#091827}.mx-empty b{display:block;color:#eaf4ff;font-size:18px;margin-bottom:6px}
+}
+
+
+@media(max-width:759px){
+  .mx-row-copy,.mx-row-photo{border:0;color:inherit;text-align:right;padding:0;font:inherit}
+  .mx-row-copy{background:transparent;min-width:0}
+  .mx-row-photo{display:block}
+  .mx-ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+  .mx-now-time{direction:ltr;unicode-bidi:isolate;text-align:right}
+}
+
+
+@media(max-width:759px){
+  body > .modebar, body > .nav{display:none!important;}
+}
+
+/* v109 — Execute is the same dedicated NOW / NEXT / TODAY experience at every viewport */
+body.execute-v109{background:#06111d!important;color:#eef6ff!important}
+body.execute-v109 .chrome{display:none!important}
+body.execute-v109 .app{width:100%!important;max-width:none!important;margin:0!important;padding:0!important;background:#06111d!important}
+body.execute-v109 .mobile-trip-app{display:block!important;min-height:100vh;background:linear-gradient(180deg,#07111d 0,#06111d 240px,#050b12 100%);direction:rtl;color:#eef6ff}
+body.execute-v109 .m-app-head{position:sticky;top:0;z-index:40;max-width:980px;margin:0 auto;padding:18px 24px 14px;background:rgba(6,17,29,.94);backdrop-filter:blur(18px);border-bottom:1px solid #183047}
+body.execute-v109 .m-head-row{display:flex;align-items:center;justify-content:space-between;gap:14px}
+body.execute-v109 .m-brand{display:flex;align-items:center;gap:12px;min-width:0}
+body.execute-v109 .m-brand-mark{width:46px;height:46px;border-radius:15px;background:linear-gradient(145deg,#173f6c,#0c2239);border:1px solid #315f91;display:grid;place-items:center;font-size:24px}
+body.execute-v109 .m-brand b{display:block;font-size:22px;letter-spacing:-.02em}
+body.execute-v109 .m-brand small{display:block;color:#8196ad;font-size:11px;margin-top:3px;direction:ltr;text-align:right}
+body.execute-v109 .m-icon-btn{width:42px;height:42px;border-radius:14px;border:1px solid #2c4863;background:#0d2135;color:#e7f2ff;display:grid;place-items:center;font-size:17px}
+body.execute-v109 .m-mode-switch{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:13px}
+body.execute-v109 .m-mode-switch button{min-height:44px;border:1px solid #28465f;background:#0c1e30;color:#a7bacd;border-radius:14px;font-weight:900;font-size:13px}
+body.execute-v109 .m-mode-switch button[data-mode-mobile="execute"].on{background:linear-gradient(135deg,#4adbb2,#72e8c3);border-color:#62e2bd;color:#05231d}
+body.execute-v109 .mx-top{max-width:980px;margin:0 auto;padding:16px 24px 18px;border-bottom:1px solid #183047;background:#06111d;position:sticky;top:120px;z-index:25}
+body.execute-v109 .mx-dayline{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:8px}
+body.execute-v109 .mx-dayline h1{margin:0;font-size:38px;line-height:1;font-weight:950;letter-spacing:-1.2px}
+body.execute-v109 .mx-dayline p{margin:7px 0 0;color:#91a6bd;font-size:14px}
+body.execute-v109 .mx-weather{border:1px solid #315170;border-radius:999px;padding:9px 13px;color:#d9e7f5;background:#0d2033;font-size:12px;white-space:nowrap}
+body.execute-v109 .mx-dates{display:flex;gap:8px;overflow:auto;padding:9px 0 5px;scrollbar-width:none;direction:rtl}
+body.execute-v109 .mx-date{min-width:58px;height:68px;border-radius:18px;border:1px solid #2b425a;background:#0b1827;color:#c9d5e3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
+body.execute-v109 .mx-date b{font-size:19px} body.execute-v109 .mx-date span{font-size:10px;color:#8599af}
+body.execute-v109 .mx-date.on{background:#5aa4ff;border-color:#79b7ff;color:#051528} body.execute-v109 .mx-date.on span{color:#173a5e}
+body.execute-v109 .mx-tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:7px;background:#091624;border:1px solid #253b51;border-radius:18px;padding:6px;margin-top:10px;direction:ltr}
+body.execute-v109 .mx-tabs button,body.execute-v109 .mx-tabs a{border:0;background:transparent;color:#91a5ba;border-radius:13px;min-height:42px;font-weight:850;font-size:12px;text-decoration:none;display:flex;align-items:center;justify-content:center}
+body.execute-v109 .mx-tabs .on{background:linear-gradient(135deg,#45d9b4,#70eac2);color:#05231d}
+body.execute-v109 .mx-screen{max-width:760px;margin:0 auto;padding:0 20px 60px}
+body.execute-v109 .mx-summary{display:grid;grid-template-columns:auto 1fr;gap:14px;align-items:center;background:#0b1c2d;border:1px solid #284762;border-radius:24px;padding:17px;margin:18px 0}
+body.execute-v109 .mx-ring{width:68px;height:68px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(#4ce0b3 var(--p),#1b334a 0);position:relative}
+body.execute-v109 .mx-ring:after{content:"";position:absolute;inset:8px;border-radius:50%;background:#0b1c2d} body.execute-v109 .mx-ring b{position:relative;z-index:1;font-size:16px}
+body.execute-v109 .mx-summary-copy b{display:block;font-size:17px} body.execute-v109 .mx-summary-copy small{display:block;color:#90a4ba;margin-top:4px;font-size:12px}
+body.execute-v109 .mx-progress{height:7px;background:#1a3046;border-radius:999px;overflow:hidden;margin-top:10px} body.execute-v109 .mx-progress i{display:block;height:100%;background:#49dbae;border-radius:999px}
+body.execute-v109 .mx-label{display:flex;align-items:center;justify-content:space-between;margin:22px 2px 10px} body.execute-v109 .mx-label b{font-size:13px;letter-spacing:.04em;color:#8fa5bc} body.execute-v109 .mx-label span{font-size:11px;color:#5ce0b6}
+body.execute-v109 .mx-now{background:linear-gradient(180deg,#0d2338,#0a1a2b);border:2px solid #38a2ff;border-radius:26px;overflow:hidden;box-shadow:0 16px 38px rgba(0,0,0,.24)}
+body.execute-v109 .mx-now-photo{height:300px;background:#10263b;position:relative;overflow:hidden} body.execute-v109 .mx-now-photo img{width:100%;height:100%;object-fit:cover;display:block} body.execute-v109 .mx-now-photo .m-photo-unavailable{height:100%;justify-content:center}
+body.execute-v109 .mx-now-photo:after{content:"NOW";position:absolute;top:14px;right:14px;background:#45dfb4;color:#06241d;font-weight:950;font-size:11px;padding:7px 10px;border-radius:999px;letter-spacing:.08em}
+body.execute-v109 .mx-now-body{padding:18px} body.execute-v109 .mx-now-title{display:flex;align-items:flex-start;justify-content:space-between;gap:12px} body.execute-v109 .mx-now-title h2{margin:0;font-size:28px;line-height:1.12}
+body.execute-v109 .mx-now-time{color:#76baff;font-size:13px;font-weight:850;margin-top:8px;direction:ltr;unicode-bidi:isolate;text-align:right} body.execute-v109 .mx-now-meta{color:#91a6bb;font-size:12px;margin-top:4px} body.execute-v109 .mx-now-desc{color:#c0cedc;font-size:14px;line-height:1.6;margin:14px 0 0}
+body.execute-v109 .mx-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:15px} body.execute-v109 .mx-action{min-height:48px;border-radius:15px;border:1px solid #315372;background:#102840;color:#dceafa;font-weight:850;font-size:12px;text-decoration:none;display:flex;align-items:center;justify-content:center;gap:7px} body.execute-v109 .mx-action.primary{background:#1c75d8;border-color:#4aa1ff;color:white}
+body.execute-v109 .mx-done{width:100%;border:0;border-radius:17px;min-height:56px;background:linear-gradient(135deg,#41dbae,#66e5bc);color:#05251d;font-size:16px;font-weight:950;margin-top:10px;box-shadow:0 8px 22px rgba(66,221,176,.16)}
+body.execute-v109 .mx-next{display:grid;grid-template-columns:82px 1fr auto;gap:12px;align-items:center;background:#0b1c2d;border:1px solid #29475f;border-radius:20px;padding:11px;min-height:98px;width:100%;color:#eef6ff;text-align:right}
+body.execute-v109 .mx-next-photo{width:82px;height:76px;border-radius:15px;overflow:hidden;background:#10253a} body.execute-v109 .mx-next-photo img{width:100%;height:100%;object-fit:cover} body.execute-v109 .mx-next-copy b{display:block;font-size:15px;line-height:1.25} body.execute-v109 .mx-next-copy small{display:block;color:#8fa4ba;margin-top:5px;font-size:11px} body.execute-v109 .mx-next-arrow{color:#65afff;font-size:24px}
+body.execute-v109 .mx-timeline{display:flex;flex-direction:column;gap:9px;margin-bottom:20px} body.execute-v109 .mx-row{display:grid;grid-template-columns:62px 1fr 36px;gap:11px;align-items:center;border:1px solid #274158;background:#0b1b2b;border-radius:18px;padding:9px;position:relative} body.execute-v109 .mx-row.done{opacity:.56;background:#091620} body.execute-v109 .mx-row.current{border-color:#38a2ff;background:#0d2338}
+body.execute-v109 .mx-row-photo{width:62px;height:62px;border-radius:12px;overflow:hidden;background:#10243a;border:0;padding:0;display:block} body.execute-v109 .mx-row-photo img{width:100%;height:100%;object-fit:cover} body.execute-v109 .mx-row-copy{border:0;background:transparent;color:inherit;text-align:right;padding:0;font:inherit;min-width:0} body.execute-v109 .mx-row-copy b{font-size:13px;line-height:1.25;display:block;color:#eef6ff} body.execute-v109 .mx-row-copy small{display:block;color:#839ab0;font-size:10px;margin-top:3px} body.execute-v109 .mx-row.done .mx-row-copy b{text-decoration:line-through}
+body.execute-v109 .mx-status{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;border:1px solid #3b5974;background:#0d2235;color:#7890a9;font-weight:900;padding:0} body.execute-v109 .mx-row.done .mx-status{background:#3bd5a7;border-color:#63e5bd;color:#05261f} body.execute-v109 .mx-row.current .mx-status{border:2px solid #38a2ff;color:#38a2ff;background:#071521}
+body.execute-v109 .mx-complete{background:#0b2b23;color:#74e9c4;border:1px solid #24624f;padding:18px;border-radius:22px;text-align:center;font-weight:900} body.execute-v109 .mx-empty{border:1px dashed #365570;border-radius:22px;padding:28px 18px;text-align:center;color:#96aabd;background:#091827}
+body.execute-v109 .mx-ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
+@media(min-width:760px){body.execute-v109 .mobile-bottom-nav{display:none!important}}
+@media(max-width:759px){body.execute-v109 .m-app-head{padding:calc(12px + env(safe-area-inset-top)) 16px 10px} body.execute-v109 .mx-top{top:110px;padding:12px 16px 14px} body.execute-v109 .mx-dayline h1{font-size:32px} body.execute-v109 .mx-screen{padding:0 16px 118px} body.execute-v109 .mx-now-photo{height:190px} body.execute-v109 .mx-now-title h2{font-size:24px} body.execute-v109 .mobile-bottom-nav{display:grid!important}}
 
 </style>
 
@@ -714,13 +847,6 @@ body:not(.planning-mode) .app{width:100%;max-width:none;margin:0;padding:0 0 110
 const TRIP = JSON.parse(document.getElementById('trip-data').textContent);
 const LIVE = 'japan26-live-v1';
 const APPLIED = 'japan26-applied-snapshot-id';
-const MYMAPS_URL = 'https://www.google.com/maps/d/u/0/edit?mid=1_J3VtAh7aeQm4eNmhs2IENs4dfl31Ks&ll=35.660636463289485%2C139.73541419999998&z=12';
-const MEDIA_CACHE = typeof MEDIA_CACHE!=='undefined' ? MEDIA_CACHE : {};
-const mediaPrefetchPending = new Set();
-let mediaRefreshTimer=0;
-function scheduleMediaRefresh(){ clearTimeout(mediaRefreshTimer); mediaRefreshTimer=setTimeout(()=>{ try{render();}catch(e){} }, 120); }
-function exactMediaForName(name){ const key=String(name||'').trim(); if(!key) return null; const alias=IMAGE_ALIASES[key]; const m1=(live.media&&live.media[key])?live.media[key]:null; if(m1&&m1.image) return m1; const m2=alias&&live.media&&live.media[alias]?live.media[alias]:null; if(m2&&m2.image) return m2; const c1=MEDIA_CACHE[key] || (alias?MEDIA_CACHE[alias]:null); return c1&&c1.image?c1:null; }
-function queueResolveMedia(name){ const key=String(name||'').trim(); if(!key) return; const known=exactMediaForName(key); if(known&&known.image) return; if(mediaPrefetchPending.has(key)) return; mediaPrefetchPending.add(key); resolveMedia(key).then(()=>{ mediaPrefetchPending.delete(key); scheduleMediaRefresh(); }).catch(()=>{ mediaPrefetchPending.delete(key); }); }
 function loadLive(){ try { return JSON.parse(localStorage.getItem(LIVE)||'null') || {}; } catch(e){ return {}; } }
 function saveLive(s){ try { localStorage.setItem(LIVE, JSON.stringify(s)); } catch(e){} }
 (function applySnap(){
@@ -1104,9 +1230,19 @@ const IMAGE_ALIASES={
   'Ginza Mitsukoshi Depachika':'Mitsukoshi',
   'Tsukiji Outer Market':'Tsukiji fish market',
   'Imperial Palace East Gardens':'Tokyo Imperial Palace',
-  'Tokyo National Museum':'Tokyo National Museum'
+  'Tokyo National Museum':'Tokyo National Museum',
+  'Senso-ji':'Sensō-ji',
+  'Shinjuku Gyoen':'Shinjuku Gyo-en',
+  'Yoyogi Park':'Yoyogi Park',
+  'Takeshita Street':'Takeshita Street',
+  'Omotesando':'Omotesandō',
+  'Cat Street':'Cat Street',
+  'Iwatayama Monkey Park':'Iwatayama Monkey Park',
+  'Rikugien Garden':'Rikugi-en',
+  'teamLab Borderless':'teamLab Borderless'
 };
 
+const VERIFIED_IMAGES={"Shibuya Crossing":"https://media.cntraveler.com/photos/598202951209f576909acb19/master/w_1200%2Cc_limit/Shibuya-Crossing-GettyImages-533959897.jpg","Senso-ji":"https://kokorojapanstore.com/cdn/shop/articles/Temple_11_1024x1024.jpg?v=1630686517","Tokyo Tower":"https://images.selfguidejapan.com/blog/japan-golden-week-2027-tokyo-tower.jpg","Tokyo Metropolitan Government Observatory":"https://www.nippon.com/ja/ncommon/contents/japan-topics/722119/722119.jpg","Kaminarimon":"https://res.cloudinary.com/hrmedia/image/authenticated/s--M0Ko4B1H--/202307omo5asakusa-065_DSC04577web_jmr9my.webp?w=3840","Nakamise Street":"https://fl-at.jp/images/prep/pp57bb4ca65ff7031/f7550e04303f1901224709567f28ec3c.jpeg","Golden Gai":"https://president.ismcdn.jp/mwimgs/b/c/1420wm/img_bcf8ea535ac8485239f4891c6f9b0b8f923688.jpg","Meiji Jingu Shrine":"https://ims.easyvoyage.info/medium_shutterstock_1107716792_e43b579b81/medium_shutterstock_1107716792_e43b579b81.jpg","Yoyogi Park":"https://monthly48.com/storage/article/98/HQTlCAnpZAp662noR5ZNiWKhfGfQYLa7vLKAtGCW.jpeg","Takeshita Street":"https://i.pinimg.com/736x/6c/65/0e/6c650e74eb6847a26fd4a834ccedda61.jpg","Omotesando":"https://cdn.excursionmania.com/cdn-cgi/image/quality%3D75%2Cformat%3Dwebp%2Cw%3Dauto%2Ch%3Dauto%2Cfit%3Dscale-down%2Ctrim%3Dborder/uploads/blog/gallery/4971/1765807060.jpg","Cat Street":"https://media.timeout.com/images/105887096/1920/1440/image.jpg","Shibuya Sky":"https://media.vogue.com.tw/photos/5dbbfa2e525c8c0008e6df6f/master/pass/12.%20SHIBUYA%20SKY_SKY%20STAGE_SKY%20EDGE_DAY.jpg","Shibuya PARCO — Nintendo, Pokémon, CAPCOM, JUMP, JoJo & SEGA":"https://www.bring-you.info/imgs/2023/04/shibuya-parco-1.jpg","Shinjuku Gyoen":"https://www.pelago.co/img/collections/shinjuku-gyoen-national-garden/1103-0824_shinjuku-gyoen-national-garden-tokyo-xlarge.jpg","3D Cat Billboard":"https://media.cnn.com/api/v1/images/stellar/prod/210706210012-3d-cat-billboard-tokyo.jpg?q=w_2500%2Ch_1362%2Cx_0%2Cy_0%2Cc_fill","Godzilla Head":"https://i0.wp.com/zimminaroundtheworld.com/wp-content/uploads/2025/11/DSC_6700.jpg?resize=960%2C640&ssl=1","Bandai Namco Cross Store":"https://www.4gamer.net/games/999/G999905/20230317049/SS/001.jpg","Animate Ikebukuro":"https://img.japankuru.com/prg_img/img/img2023090716314518198400.jpg","National Museum of Nature and Science":"https://prtimes.jp/i/47048/118/ogp/d47048-118-293617-3.jpg","Ameyoko Market":"https://res.klook.com/images/fl_lossy.progressive%2Cq_65/c_fill%2Cw_1295%2Ch_863/w_80%2Cx_15%2Cy_15%2Cg_south_west%2Cl_Klook_water_br_trans_yhcmh3/activities/iwdb9pje22vequy1qdbu/TurBerjalan-jalandiAsakusa%2CKappabashi%2CUeno%3ARasakanSejarahdanBudayaTokyodalam3Jam.jpg","Imperial Palace East Gardens":"https://i.pinimg.com/736x/1d/91/b8/1d91b8f0c7c63b56b343a0526a8be391--tokyo-japan-palaces.jpg","Kanda Myojin":"https://res.cloudinary.com/dbeud0a7k/image/upload/v1753420718/locations/tokyo/173-kanda-myoujin-shrine/173-kanda-myoujin-shrine_1753420717_grsQMMHW.jpg","Kappabashi Street":"https://www.kanpai.fr/sites/default/files/styles/content_xs/public/uploads/2023/12/kappabashi-tokyo-10.jpg","Ueno Park":"https://cdn.travelpal.ai/prod/places/E7eBQv13dCfR8IADJT5pDjhg_T5/photos/google/webp/d4ec88f98f70227f41aa3473.webp","Tokyo National Museum":"https://ak-d.tripcdn.com/images/1mi4s224x90gn3s429AEC.jpg?proc=source%2Ftrip","GiGO Arcades":"https://cdn.getyourguide.com/image/format%3Dauto%2Cfit%3Dcrop%2Cgravity%3Dauto%2Cquality%3D60%2Cwidth%3D450%2Cheight%3D450%2Cdpr%3D2/tour_img/81f08624991c282122246e17ce38e9ea2c89c71325536eedab766d4d3c843f6f.jpg","Mandarake Complex":"https://article-image.travel.navitime.jp/img/NTJnews0704-en/Mandarake_2025_2.jpg","Radio Kaikan":"https://svcstrg.cld.navitime.jp/travelguide/p13090002/p13090002_01.jpg","Kotobukiya Akihabara":"https://res-3.cloudinary.com/dbm1qiew0/image/upload/q_auto/v1/blog-images/akiba-attractions-4.jpg","Bamboo Grove + Tenryu-ji":"https://mediaim.expedia.com/destination/2/6f024abcd72a361f2ef55a471e0d51a6.jpg","Bamboo Grove":"https://mediaim.expedia.com/destination/2/6f024abcd72a361f2ef55a471e0d51a6.jpg","Kinkaku-ji + Ryoan-ji":"https://www.driveconsultant.jp/assets/img/spot/26/0069-5.jpg?size=medium","Kinkaku-ji":"https://www.driveconsultant.jp/assets/img/spot/26/0069-5.jpg?size=medium","Nintendo Museum":"https://www.museum.or.jp/storage/article_objects/2025/05/31/5a816c3a4cf7.jpg","Byodo-in + Uji River":"https://cdn-imgix.headout.com/media/images/0c5a9331-3ef8-44d6-a2d8-2c6d7c8dfbfa-1756812877048-307720.jpg?ar=16%3A9&auto=format&crop=faces&fit=crop&h=687.6&q=90&w=1222.3999999999999","Byodo-in":"https://cdn-imgix.headout.com/media/images/0c5a9331-3ef8-44d6-a2d8-2c6d7c8dfbfa-1756812877048-307720.jpg?ar=16%3A9&auto=format&crop=faces&fit=crop&h=687.6&q=90&w=1222.3999999999999","Kiyomizu-dera → Sannenzaka → Ninenzaka":"https://lp-cms-production.imgix.net/2024-02/shutterstockRF391009933.jpg?auto=format%2Ccompress&crop=faces%2Cedges&fit=crop&q=72&w=1920","Kiyomizu-dera":"https://lp-cms-production.imgix.net/2024-02/shutterstockRF391009933.jpg?auto=format%2Ccompress&crop=faces%2Cedges&fit=crop&q=72&w=1920","Kodai-ji / Yasaka Shrine / Gion":"https://s3-ap-northeast-1.amazonaws.com/thegate/2021/02/12/17/15/21/Yasaka-shrine.jpg","Yasaka Shrine":"https://s3-ap-northeast-1.amazonaws.com/thegate/2021/02/12/17/15/21/Yasaka-shrine.jpg","Eikando + Nanzen-ji אם הזמן והשלכת מצדיקים":"https://photos.smugmug.com/Kyoto/Kyoto-Restaurants-Near-The-Sights/i-vDhpm8W/0/1fce1d3b/L/shutterstock_1233575119-L.jpg","Nanzen-ji":"https://photos.smugmug.com/Kyoto/Kyoto-Restaurants-Near-The-Sights/i-vDhpm8W/0/1fce1d3b/L/shutterstock_1233575119-L.jpg","Nara Park":"https://www.snowmonkeyresorts.com/wp-content/uploads/2021/03/3531103_m-2.jpg","Todai-ji":"https://www2.ntj.jac.go.jp/dglib/contents/learn/edc28/common/img/temple/11/image01.jpg","Kasuga Taisha":"https://sacred-japan.net/images/kasuga-taisha.jpg","Isuien Garden":"https://news.walkerplus.com/article/167114/976121_615.jpg","Kuromon Ichiba Market":"https://queverentusviajes.com/wp-content/uploads/2023/01/Mercado-Kuromon-Ichiba-en-Osaka.jpg","Dotonbori Canal & Glico Man":"https://res.klook.com/image/upload/fl_lossy.progressive%2Cq_85/c_fill%2Cw_1000/v1771140590/hl2yijdiqoz8ywg9qghj.jpg","Dotonbori":"https://res.klook.com/image/upload/fl_lossy.progressive%2Cq_85/c_fill%2Cw_1000/v1771140590/hl2yijdiqoz8ywg9qghj.jpg","Osaka Castle":"https://imgcp.aacdn.jp/img-a/1200/900/aa_news/article/2023/03/08/640821c1bc890.jpg","Shinsekai District":"https://media.tacdn.com/media/attractions-splice-spp-674x446/15/b4/b7/22.jpg","Shinsekai":"https://media.tacdn.com/media/attractions-splice-spp-674x446/15/b4/b7/22.jpg","Tsutenkaku Tower":"https://media.tacdn.com/media/attractions-splice-spp-674x446/15/b4/b7/22.jpg","Iwatayama Monkey Park":"https://itsyourjapan.com/wp-content/uploads/2020/09/Iwatayama-monkey-park.jpg","Jojakko-ji / Gio-ji לפי השלכת":"https://rimage.gnst.jp/livejapan.com/public/article/detail/a/20/00/a2000024/img/en/a2000024_parts_5cf0bf7438fb9.jpg?20201120205857=&q=80&rh=490&rw=686","Kasugataisha Manyo Botanical Garden":"https://img.rurubu.jp/img_srw/andmore/images/0000494368/HAPRd89DYCHYDoZ1npZWuW1mQ9V5BwT6UMUSyiz3.jpg","Hozen-ji Temple":"https://rimage.gnst.jp/livejapan.com/public/article/detail/a/20/00/a2000351/img/en/a2000351_parts_5e301712b4728.jpg?20201222143517=&q=80&rh=490&rw=686","Hozenji Yokocho Alley":"https://rimage.gnst.jp/livejapan.com/public/article/detail/a/20/00/a2000351/img/en/a2000351_parts_5e301712b4728.jpg?20201222143517=&q=80&rh=490&rw=686","Shitenno-ji Temple":"https://www.americanexpress.com/de-de/amexcited/dam/asset/serve/id/9275/japanischer-tempel-alt.jpg?v=1779890300","Umeda Sky Building":"https://a2.cdn.japantravel.com/photo/poi-287-214436/1545x1030%21/osaka-umeda-sky-building-214436.jpg","Osaka Station City":"https://www.abitus.co.jp/column_voice/image1%20%2843%29.jpg","HEP FIVE Ferris Wheel — אופציונלי":"https://airial.travel/_next/image?q=75&url=https%3A%2F%2Fmedia-cdn.tripadvisor.com%2Fmedia%2Fphoto-o%2F16%2F45%2F10%2F00%2Fhep.jpg&w=3840","Universal Studios Japan":"https://www.romancing-japan.com/_next/image/?q=75&url=https%3A%2F%2Fcdn.sanity.io%2Fimages%2Fx0c10dda%2Fproduction%2Fc4f7e85f939619d3fa3517c4602b3406f435bcbb-2000x1333.jpg&w=3840","SUPER NINTENDO WORLD":"https://philstarlife.s3.ap-east-1.amazonaws.com/photos/Kara/2023%20Nintendo%20World/BANNER%20Super%20Nintendo%20World%20Universal%20Studios%20Japan.jpg","teamLab Borderless":"https://airial.travel/_next/image?q=70&url=https%3A%2F%2Fimagedelivery.net%2Fb5EBo9Uo-OK6SM09ZTkEZQ%2FTHHkrpKLtCypBrHthcisKN%2Fwidth%3D3840%2Cquality%3D80&w=3840","Tokyu Kabukicho Tower":"https://www.architecturelab.net/wp-content/uploads/2024/05/tokyu-kabukicho-tower-yuko-nagayama-and-associates-plus-kume-sekkei-co-p.jpg","Omoide Yokocho":"https://stat.ameba.jp/user_images/20250608/00/tomokomalaghan/f9/77/j/o1080144015612064527.jpg","Unicorn Gundam":"https://static.wixstatic.com/media/0b2e36_c0d16a59a82c43d193f1255e4b077dcb~mv2.jpg/v1/fill/w_980%2Ch_735%2Cal_c%2Cq_85%2Cusm_0.66_1.00_0.01%2Cenc_avif%2Cquality_auto/0b2e36_c0d16a59a82c43d193f1255e4b077dcb~mv2.jpg","Tokyo Joypolis":"https://networkwatcherrgvnetdiag.blob.core.windows.net/gds-blob/production/products/91313c1a-be4c-400c-a6d2-6cf8d57fd7da/0.jpg","Statue of Liberty replica":"https://i0.wp.com/tokyotourists.com/wp-content/uploads/2022/09/Liberty-from-pathway.jpg?fit=1024%2C683&ssl=1","teamLab Planets":"https://static.tripzilla.com/thumb/f/b/220923_800x.jpg","Toyosu Market":"https://www.goorby.jp/storage/uploads/2025/09/20250917110006_401932a51b51ef7d9eb28e80d8eea762c1c8826d.jpg","Senkyaku Banrai":"https://assets.hldycdn.com/cdn-cgi/image/format%3Dwebp%2Cquality%3D75%2Cwidth%3D1024/articles/4eeb57_bde5973b40a04066b15f190e0d153c98~mv2.jpg","Azabudai Hills":"https://assets.st-note.com/production/uploads/images/177273001/rectangle_large_type_2_668dea79ff653d52ea05e46d3197926c.jpeg","Roppongi Hills":"https://www.mitsui-chintai.co.jp/pickuparea/tokyo_areaguide/akasaka-roppongi/maps/images/9-6_akasaka-roppongi.JPG","Mori Art Museum":"https://images.squarespace-cdn.com/content/v1/642fe9d50ff3d476932fc101/c7096d99-8b08-451d-ae98-2b49eb8e6d84/Mori.jpg?format=1500w","Tokyo City View":"https://d3fphkxyf5o5bm.cloudfront.net/image-resize/format%3Dwebp%2Cw%3D720/QwRY54Li1HMwD7oNfpfewX03oITjMsVPrOzBtYlhvW","21_21 Design Sight":"https://static.gltjp.com/glt/data/article/21000/20571/20260114_092324_8fd901ff_w1920.webp","Sony Park Ginza":"https://fashionsnap-assets.com/asset/format%3Dauto%2Cwidth%3D1088/article/images/2024/08/ginza_sony_park_20240823_019-9d11c194-230f-4ffb-9568-b2f88e5fd494.jpg","Reissue 3D Latte Art":"https://images.squarespace-cdn.com/content/v1/5b196ee731d4df831f0acadd/1580873065287-5XPP592BBWU0XYEW07D3/latte_artist_runapocket_reissue_cafe","Shunju Shibuya Bunkamuradori":"https://dynamic-media-cdn.tripadvisor.com/media/photo-o/10/ba/23/38/entrance.jpg?h=500&s=1&w=900","Hat Coffee / 3D Foam Art":"https://imgfp.hotp.jp/IMGH/30/21/P037613021/P037613021_480.jpg","Bic Camera AKIBA":"https://bcnretail.kuroco.app/files/user/201707251752_1.jpg?v=1500972720","Yodobashi Akiba":"https://media.timeout.com/images/106018363/1920/1080/image.jpg","Vegan Ramen UZU Kyoto":"https://vegan-uzu.com/cdn/shop/articles/EC_1_4480x.jpg?v=1618195048","Nakatanidou Mochi":"https://mindtrip.ai/cdn-cgi/image/format%3Dwebp%2Cw%3D1200/https%3A/images.mindtrip.ai/attractions/01cb/b041/c054/8f1a/1004/66cf/9920/2bb0","Minion Park":"https://viettourist.com/resources/images/NHATBAN/NHATBAN-2023/Universal-Studios-Japan-Osaka5.jpg","Universal CityWalk Osaka":"https://www.datocms-assets.com/101439/1758597097-universal-city-walk-osaka.jpg?crop=focalpoint&dpr=2&fit=crop&fm=webp&fp-x=0.51&fp-y=0.49&h=640&w=640","Koishikawa Korakuen":"https://www.gotokyo.org/es/story/guide/find-peace-in-a-japanese-garden/images/koishikawa_korakuen_gardens.jpg","Rikugien Garden":"https://www.kyushuandtokyo.org/cdn/front_assets/images_other/spot/middle/spot_8_2.jpg","Neco Republic Ikebukuro rescue cat café":"https://resources.matcha-jp.com/resize/720x2000/2017/08/16-33762.jpeg","Sunshine Aquarium":"https://cdn-news.asoview.com/production/article/efe1b8cb-0c0d-4308-9694-b3980089a99a.jpeg","NAMJATOWN":"https://www.princehotels.co.jp/sunshine/images/loc_namjatown.jpg","Pikachu Sweets by Pokémon Cafe":"https://mihoshappylife.files.wordpress.com/2022/06/pikachu-sweets-pokemon-center-japan-ikebukuro-11.png?w=1000","Pokémon Center MEGA TOKYO":"https://www.tanseisha.co.jp/resource/57888-2.jpg.webp","Osaka Castle Park":"https://a.cdn-hotels.com/gdcs/production11/d233/fd17a733-3d8a-4dd1-af7e-fce722fa2c33.jpg","Shinsaibashi / Amerikamura — אופציונלי":"https://cdn-ak.f.st-hatena.com/images/fotolife/r/ritocamp/20241007/20241007064503.jpg","Sumida River":"https://www.apahotel.com/image/840azumabashi1280960.jpg","Asahi Beer Hall":"https://www.apahotel.com/image/840azumabashi1280960.jpg","ALPAKA Harajuku Harakado":"https://fashionsnap-assets.com/article/images/2025/07/alpaka-harajyuku-2025-001-61f5b6a2-1ec7-42ab-b269-e7ca2b46fe6a.jpg","Akihabara Retro Game Shopping — Surugaya, Trader, Super Potato, Sofmap, Jan-gle, Retro Game Camp & BOOKOFF":"https://wowu-production.s3.ap-northeast-1.amazonaws.com/image_store/9c84d2fa6782b320129089f737746807.jpg","BOOKOFF SUPER BAZAAR SEIYU Omori Store":"https://www.bookoff.co.jp/inbound/shopimg/316691/6.jpg","Nigatsu-do":"https://www.datocms-assets.com/101439/1707211924-nigatsudo.jpg?auto=format&h=1000&w=1000","Matcha / Tea Street + חוויית תה":"https://res.cloudinary.com/dbm1qiew0/image/upload/blog-images/2024/08/Byodoin-Omotesando.png"};
 function ytSearchUrl(name){
   return 'https://www.youtube.com/results?search_query='+encodeURIComponent(name+' Japan travel');
 }
@@ -1164,6 +1300,15 @@ function imageQueryName(name){
   /* Composite itinerary labels are not safe to guess. If there is no explicit alias, use the full card name. */
   return String(name||'').trim();
 }
+
+function verifiedStaticImage(name){
+  const key=String(name||'').trim();
+  const direct=VERIFIED_IMAGES[key];
+  if(direct) return {image:direct,imageEntity:key,imageEntityId:'verified-web',verifiedSource:'static'};
+  const alias=IMAGE_ALIASES[key];
+  if(alias && VERIFIED_IMAGES[alias]) return {image:VERIFIED_IMAGES[alias],imageEntity:alias,imageEntityId:'verified-web',verifiedSource:'static'};
+  return null;
+}
 function entityAccepts(query, row){
   const q=normEntity(query);
   const label=normEntity(row&&row.label);
@@ -1176,20 +1321,32 @@ function entityAccepts(query, row){
   }
   return false;
 }
+function jsonpMedia(url, timeoutMs){
+  return new Promise((resolve,reject)=>{
+    const cb='japan26jsonp_'+Date.now()+'_'+Math.random().toString(36).slice(2);
+    const sc=document.createElement('script');
+    let done=false;
+    const clean=()=>{try{delete window[cb]}catch(e){}; if(sc.parentNode)sc.parentNode.removeChild(sc);};
+    const timer=setTimeout(()=>{ if(done)return; done=true; clean(); reject(new Error('JSONP timeout')); }, timeoutMs||8500);
+    window[cb]=(data)=>{ if(done)return; done=true; clearTimeout(timer); clean(); resolve(data); };
+    sc.onerror=()=>{ if(done)return; done=true; clearTimeout(timer); clean(); reject(new Error('JSONP failed')); };
+    sc.src=url+(url.includes('?')?'&':'?')+'callback='+encodeURIComponent(cb);
+    document.head.appendChild(sc);
+  });
+}
 async function strictWikidataImage(name){
   const query=imageQueryName(name);
   if(!query) return null;
   try{
-    const search='https://www.wikidata.org/w/api.php?origin=*&action=wbsearchentities'
-      +'&search='+encodeURIComponent(query)+'&language=en&uselang=en&type=item&limit=6&format=json';
-    const j=await fetchJsonTimeout(search,6500);
+    const search='https://www.wikidata.org/w/api.php?action=wbsearchentities'
+      +'&search='+encodeURIComponent(query)+'&language=en&uselang=en&type=item&limit=8&format=json';
+    const j=await jsonpMedia(search,8500);
     const rows=Array.isArray(j&&j.search)?j.search:[];
     const hit=rows.find(r=>entityAccepts(query,r));
     if(!hit || !hit.id) return null;
-
-    const detail='https://www.wikidata.org/w/api.php?origin=*&action=wbgetentities'
+    const detail='https://www.wikidata.org/w/api.php?action=wbgetentities'
       +'&ids='+encodeURIComponent(hit.id)+'&props=claims|labels|descriptions&languages=en&format=json';
-    const d=await fetchJsonTimeout(detail,6500);
+    const d=await jsonpMedia(detail,8500);
     const ent=d&&d.entities&&d.entities[hit.id];
     const p18=ent&&ent.claims&&ent.claims.P18&&ent.claims.P18[0];
     const filename=p18&&p18.mainsnak&&p18.mainsnak.datavalue&&p18.mainsnak.datavalue.value;
@@ -1201,21 +1358,54 @@ async function strictWikidataImage(name){
     };
   }catch(e){ return null; }
 }
+
+async function strictWikipediaImage(name){
+  const query=imageQueryName(name);
+  if(!query) return null;
+  const fetchTitle=async(title)=>{
+    const u='https://en.wikipedia.org/w/api.php?action=query&prop=pageimages|info&piprop=thumbnail&pithumbsize=1000&redirects=1&titles='+encodeURIComponent(title)+'&format=json';
+    const j=await jsonpMedia(u,8500);
+    const pages=j&&j.query&&j.query.pages?Object.values(j.query.pages):[];
+    const p=pages.find(x=>x && !x.missing && x.thumbnail && x.thumbnail.source);
+    if(!p) return null;
+    const titleOk=entityAccepts(query,{label:p.title}) || entityAccepts(imageQueryName(name),{label:p.title});
+    if(!titleOk) return null;
+    return {image:p.thumbnail.source,entityId:'wikipedia:'+p.pageid,entityLabel:p.title};
+  };
+  try{
+    const direct=await fetchTitle(query);
+    if(direct) return direct;
+  }catch(e){}
+  try{
+    const su='https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch='+encodeURIComponent('intitle:"'+query+'" Japan')+'&srlimit=6&format=json';
+    const sj=await jsonpMedia(su,8500);
+    const rows=(sj&&sj.query&&sj.query.search)||[];
+    const hit=rows.find(r=>entityAccepts(query,{label:r.title}));
+    if(hit) return await fetchTitle(hit.title);
+  }catch(e){}
+  return null;
+}
+
 async function resolveMedia(name){
   const key=String(name||'').trim();
   if(!key) return {};
-  const preset=exactMediaForName(key);
-  if(preset && preset.image) return preset;
+  const staticHit=verifiedStaticImage(key);
+  if(staticHit){
+    const cached=Object.assign({mediaVersion:106,youtube:'',youtubeTitle:'',videoId:'',failedAt:0},staticHit);
+    live.media[key]=cached; saveMediaSoon(); return cached;
+  }
   const cached=live.media[key];
-  if(cached && cached.mediaVersion===67){
+  if(cached && cached.mediaVersion===106){
     if(cached.youtube || cached.image) return cached;
     if(cached.failedAt && Date.now()-cached.failedAt<MEDIA_FAIL_TTL) return cached;
   }
-  const [ytR,imgR]=await Promise.allSettled([youtubeSecondResult(key), strictWikidataImage(key)]);
+  const [ytR,wdR,wpR]=await Promise.allSettled([youtubeSecondResult(key), strictWikidataImage(key), strictWikipediaImage(key)]);
   const yt=ytR.status==='fulfilled'?ytR.value:null;
-  const img=imgR.status==='fulfilled'?imgR.value:null;
+  const wd=wdR.status==='fulfilled'?wdR.value:null;
+  const wp=wpR.status==='fulfilled'?wpR.value:null;
+  const img=(wd&&wd.image)?wd:((wp&&wp.image)?wp:null);
   const result={
-    mediaVersion:67,
+    mediaVersion:106,
     youtube:yt&&yt.youtube?yt.youtube:'',
     youtubeTitle:yt&&yt.youtubeTitle?yt.youtubeTitle:'',
     videoId:yt&&yt.videoId?yt.videoId:'',
@@ -1236,10 +1426,167 @@ function paintMedia(el, m){
     if(m&&m.image){
       imageWrap.classList.add('on');
       imageWrap.innerHTML='<img class="media-image" loading="lazy" referrerpolicy="no-referrer" alt="'+esc(name)+'" src="'+esc(m.image)+'">'
-        +'<div class="media-image-note">תמונה מזוהה לפי הישות המדויקת: '+esc(m.imageEntity||name)+'</div>';
+        +'<div class="media-image-note">תמונה מאומתת: '+esc(m.imageEntity||name)+'</div>';
     }else{
       imageWrap.classList.remove('on');
       imageWrap.innerHTML='<div class="m-no-verified-image">📷<small>אין תמונה מאומתת של המקום</small></div>';
+
+    }
+  }
+  const y=el.querySelector('[data-media-youtube]');
+  if(y){
+    if(m&&m.youtube){
+      y.dataset.href=m.youtube;
+      y.textContent='▶ YouTube · תוצאה #2';
+    }else{
+      /* הכפתור לעולם לא נעלם: במקרה שה-API חסום הוא פותח את החיפוש. */
+      y.dataset.href=ytSearchUrl(name);
+      y.textContent='▶ YouTube · חיפוש';
+    }
+  }
+  const s=el.querySelector('.media-status');
+  if(s){
+    s.textContent=(m&&m.image)?'תמונה מדויקת':'אין תמונה מאומתת';
+  }
+  el.dataset.mediaState='done';
+}
+async function loadMediaEl(el){
+  if(!el || el.dataset.mediaState==='loading' || el.dataset.mediaState==='done') return;
+  el.dataset.mediaState='loading';
+  const m=await resolveMedia(el.dataset.mediaName||'');
+  paintMedia(el,m);
+}
+function hydrateMedia(){
+  if(mediaObserver){ try{mediaObserver.disconnect();}catch(e){} }
+  const els=[...document.querySelectorAll('[data-media-name]')];
+  els.forEach(el=>{
+    const key=el.dataset.mediaName||'';
+    const sh=verifiedStaticImage(key);
+    if(sh){ const c=Object.assign({mediaVersion:106,youtube:'',failedAt:0},sh); live.media[key]=c; paintMedia(el,c); return; }
+    const c=live.media[key];
+    if(c && c.mediaVersion===106 && (c.youtube||c.image||c.failedAt)) paintMedia(el,c);
+  });
+  const pending=els.filter(el=>el.dataset.mediaState!=='done');
+  if(!pending.length) return;
+  if('IntersectionObserver' in window){
+    mediaObserver=new IntersectionObserver(entries=>{
+      entries.forEach(en=>{
+        if(en.isIntersecting){
+          mediaObserver.unobserve(en.target);
+          loadMediaEl(en.target);
+        }
+      });
+    },{rootMargin:'260px 0px'});
+    pending.forEach(el=>mediaObserver.observe(el));
+  }else{
+    pending.slice(0,12).forEach(loadMediaEl);
+  }
+}
+function openMediaYoutube(target){
+  const y=target&&target.closest?target.closest('[data-media-youtube]'):null;
+  if(!y || !y.dataset.href) return false;
+  window.open(y.dataset.href,'_blank','noopener');
+  return true;
+}
+
+function pad(n){ return String(n).padStart(2,'0'); }
+function fmt(min){ if(min==null) return ''; min=((min%(24*60))+(24*60))%(24*60); return pad(Math.floor(min/60))+':'+pad(min%60); }
+function dayById(id){ return TRIP.days.find(d=>d.id===id); }
+function todayId(){
+  const n=new Date();
+  return n.getFullYear()+'-'+pad(n.getMonth()+1)+'-'+pad(n.getDate());
+}
+function activeDay(){
+  const today=todayId();
+  if(TRIP.days.some(d=>d.id===today)) return dayById(today);
+  if(live.dayId && dayById(live.dayId)) return dayById(live.dayId);
+  return TRIP.days.find(d=>!d.empty) || TRIP.days[0];
+}
+function setDay(id){ live.dayId=id; saveLive(live); render(); }
+function isFood(it){ return /אוכל|מסעדה|קפה/.test(it.kind||'') || /ראמן|קפה|מסעדה/.test(it.name||''); }
+function shown(day, index){
+  const base=day.items[index];
+  const repl=live.replace[base.uid];
+  const it=repl? Object.assign({}, base, repl) : base;
+  if(it.start==null) return it;
+  let extra = live.done[it.uid] ? 0 : (live.delay[day.id]||0);
+  for(let i=0;i<index;i++) extra += live.cascade[day.items[i].uid]||0;
+  const own = live.cascade[it.uid]||0;
+  const start=it.start+extra, end=(it.end==null?it.start:it.end)+extra+own;
+  return Object.assign({}, it, {time: fmt(start)+'–'+fmt(end), start, end});
+}
+function visibleItems(day){
+  return day.items.map((it,i)=>({it:shown(day,i), i})).filter(x=>!live.skipped[x.it.uid]);
+}
+function currentIndex(day){
+  const rows=visibleItems(day);
+  const hit=rows.find(x=>!live.done[x.it.uid]);
+  return hit? hit.i : -1;
+}
+function persist(){ saveLive(live); }
+function toast(text, undo){
+  const el=document.getElementById('toast');
+  el.classList.remove('hidden');
+  el.innerHTML='<span>'+esc(text)+'</span>'+(undo?'<button class="ghost btn" id="undo" type="button">בטל</button>':'');
+  if(undo) document.getElementById('undo').onclick=undo;
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.add('hidden'), 4000);
+}
+
+function isDesk(){ return matchMedia('(min-width:960px)').matches; }
+function dayCityLabel(d){
+  const labels={
+    '2026-11-25':'טוקיו',
+    '2026-11-26':'טוקיו',
+    '2026-11-27':'טוקיו',
+    '2026-11-28':'טוקיו',
+    '2026-11-29':'טוקיו',
+    '2026-11-30':'טוקיו',
+    '2026-12-01':'קיוטו',
+    '2026-12-02':'קיוטו',
+    '2026-12-03':'קיוטו',
+    '2026-12-04':'אוסקה',
+    '2026-12-05':'אוסקה',
+    '2026-12-06':'אוסקה',
+    '2026-12-07':'אוסקה',
+    '2026-12-08':'טוקיו',
+    '2026-12-09':'טוקיו · טיסה 23:00'
+  };
+  return labels[d.id] || d.base || '';
+}
+
+function normalizeInfoName(name){
+  return (name||'').toLowerCase()
+    .replace(/[—–-]/g,' ')
+    .replace(/[^\w\u0590-\u05FF]+/g,' ')
+    .replace(/\s+/g,' ')
+    .trim();
+}
+function placeForInfo(name){
+  if(!name) return null;
+  let p=TRIP.places.find(x=>x.name===name);
+  if(p) return p;
+  const n=normalizeInfoName(name);
+  p=TRIP.places.find(x=>normalizeInfoName(x.name)===n);
+  if(p) return p;
+  return null;
+}
+function infoData(name, fallbackDesc, fallbackInfo){
+  const p=placeForInfo(name);
+  const summary=(fallbackInfo || (p&&p.info) || fallbackDesc || (p&&p.desc) || 'אין כרגע סיכום נוסף למקום הזה.');
+  const facts=[];
+  if(p&&p.area) facts.push(p.area);
+  if(p&&p.duration) facts.push('זמן מומלץ: '+p.duration);
+  if(p&&p.note) facts.push(p.note);
+  const source=(p&&p.infoSource)||'';
+  return {summary, facts, source};
+}
+function infoSummaryHtml(name, fallbackDesc, fallbackInfo){
+  const d=infoData(name, fallbackDesc, fallbackInfo);
+  return '<div class="info-summary"><h3>ⓘ הסיפור וההיסטוריה של המקום</h3><p>'+esc(d.summary)+'</p>'
+    +(d.facts.length?'<div class="info-facts">'+d.facts.map(x=>'<span class="info-fact">'+esc(x)+'</span>').join('')+'</div>':'')
+    +(d.source?'<a class="info-source" target="_blank" rel="noopener" href="'+esc(d.source)+'">מקור מידע מאומת</a>':'')
+    +'</div>';
 }
 
 function planStatus(p){
@@ -1769,20 +2116,29 @@ function mobilePartIcon(part){
   const x=String(part||'');
   if(x.includes('בוקר')) return '☀️'; if(x.includes('צהר')) return '🍜'; if(x.includes('שקיעה')) return '🌇'; if(x.includes('ערב')) return '🌙'; return '📍';
 }
+
+function mobileOperationalIcon(name){
+  const n=String(name||'');
+  if(/צ[׳']ק.?אאוט|נסיעה|Tokyo → Kyoto|מעבר/.test(n)) return '🚄';
+  if(/צ[׳']ק.?אין|מלון|Hotel/i.test(n)) return '🏨';
+  if(/ארוחה|ראמן|Ramen|Mochi|Cafe|Coffee|Sweets/i.test(n)) return '🍜';
+  if(/ערב|מנוחה|Downtown|Pontocho|Kamogawa/.test(n)) return '🌙';
+  return '📍';
+}
+function isOperationalMobileItem(name){
+  const n=String(name||'');
+  return /צ[׳']ק.?אאוט|צ[׳']ק.?אין|התארגנות|חזרה למרכז|מנוחה|ערב קל|ערב רגוע|ערב אחרון|ארוחה קלה/.test(n);
+}
+
 function mobilePhotoForPlace(p){
   const key=(p&&p.name)||'';
-  const exact=exactMediaForName(key);
-  if(exact && exact.image){
-    return '<img loading="lazy" referrerpolicy="no-referrer" alt="'+esc(key)+'" src="'+esc(exact.image)+'" onerror="this.style.display=\'none\';this.parentNode.classList.add(\'no-photo\')">';
-  }
-  queueResolveMedia(key);
-  return '<span class="m-photo-unavailable loading" data-thumb-name="'+esc(key)+'">📷<small>טוען תמונה מאומתת…</small></span>';
+  return '<span class="m-mobile-media media-card compact" data-media-name="'+esc(key)+'" data-media-state="idle"><span class="media-image-wrap"></span></span>';
 }
 function mobilePhotoForName(name,city){
   const place=TRIP.places.find(p=>p.name===name);
+  if(!place && isOperationalMobileItem(name)) return '<span class="m-op-icon">'+mobileOperationalIcon(name)+'</span>';
   return mobilePhotoForPlace(place||{name:name,city:city||activeDay().scope[0]||'טוקיו'});
 }
-function hydrateVisibleMobileThumbs(){ document.querySelectorAll('[data-thumb-name]').forEach(el=>{ const key=el.getAttribute('data-thumb-name')||''; if(key) queueResolveMedia(key); }); }
 function mobileThumb(name, fallback){
   const m=(typeof MEDIA_CACHE!=='undefined'&&MEDIA_CACHE[name])||null;
   if(m&&m.image) return '<img loading="lazy" alt="" src="'+esc(m.image)+'">';
@@ -1820,7 +2176,7 @@ function renderMobileHome(){
   const pct=Math.round(planned/TRIP.days.length*100);
   let h=mobileHeader()+'<main class="m-screen"><div class="m-city-strip">';
   h+=groups.map(g=>'<button type="button" class="m-city-card '+g.key+'" data-day="'+esc(g.first||day.id)+'" data-mobile-open-day="1"><span class="m-city-emoji">'+mobileCityEmoji(g.key)+'</span><span><b>'+g.name+'</b><small>'+g.dates+'<br>'+g.days+'</small></span></button>').join('');
-  h+='</div><div class="m-quick-grid"><a class="m-quick" href="'+MYMAPS_URL+'" target="_blank" rel="noopener"><span class="ico">🗺️</span>מפה</a><button class="m-quick" data-quick-target="restaurants"><span class="ico">🍜</span>מסעדות</button><button class="m-quick" data-quick-target="hotels"><span class="ico">🛏️</span>מלונות</button><button class="m-quick" data-quick-target="weather"><span class="ico">☁️</span>מזג אוויר</button></div>';
+  h+='</div><div class="m-quick-grid"><a class="m-quick" href="https://www.google.com/maps/d/u/0/edit?mid=1_J3VtAh7aeQm4eNmhs2IENs4dfl31Ks&ll=35.660636463289485%2C139.73541419999998&z=12" target="_blank" rel="noopener"><span class="ico">🗺️</span>מפה</a><button class="m-quick" data-quick-target="restaurants"><span class="ico">🍜</span>מסעדות</button><button class="m-quick" data-quick-target="hotels"><span class="ico">🛏️</span>מלונות</button><button class="m-quick" data-quick-target="weather"><span class="ico">☁️</span>מזג אוויר</button></div>';
   h+='<div class="m-section-head"><h2>הבא בתור</h2><button type="button" data-mobile-view="day">פתח יום ←</button></div>';
   h+='<button type="button" class="m-next-card" data-mobile-view="day"><span class="m-next-art">'+mobileCityEmoji(mobileCityKey(day))+'</span><span><b>'+esc(day.dow)+' · '+esc(day.date)+'</b><span class="meta">'+esc(dayCityLabel(day))+' · '+esc(day.title||'יום פתוח')+'</span></span><span class="arrow">‹</span></button>';
   h+='<section class="m-progress-card"><div class="m-progress-top"><b>Trip Progress</b><span>'+planned+' / '+TRIP.days.length+' ימים עם תכנון</span></div><div class="m-progress-track"><div class="m-progress-fill" style="width:'+pct+'%"></div></div><div class="m-stats"><div class="m-stat"><strong>'+TRIP.places.length+'</strong><small>מקומות במאגר</small></div><div class="m-stat"><strong>'+TRIP.days.length+'</strong><small>ימי טיול</small></div><div class="m-stat"><strong>'+planned+'</strong><small>ימים מתוכננים</small></div></div></section>';
@@ -1828,24 +2184,90 @@ function renderMobileHome(){
   return '<div class="mobile-trip-app">'+h+mobileBottom('home')+'</div>';
 }
 function renderMobileDay(){
-  const day=activeDay(); const items=(day.items||[]).filter(it=>!it.transit); const parts=[];
+  const day=activeDay();
+  const allRows=visibleItems(day).filter(x=>!x.it.transit);
+  const items=allRows.map(x=>x.it);
+  const parts=[];
   items.forEach(it=>{ const name=it.part||'מסלול'; let p=parts.find(x=>x.name===name); if(!p){p={name,items:[]};parts.push(p)} p.items.push(it); });
-  const slots=Math.max(4,parts.length||1), planned=Math.min(slots,parts.filter(p=>p.items.length).length), pct=Math.round(planned/slots*100);
+  const doneCount=items.filter(it=>live.done[it.uid]).length;
+  const totalCount=items.length;
+  const current=items.find(it=>!live.done[it.uid])||null;
+  const execPct=totalCount?Math.round(doneCount/totalCount*100):0;
+  const slots=Math.max(4,parts.length||1), planned=Math.min(slots,parts.filter(p=>p.items.length).length), planPct=Math.round(planned/slots*100);
+  const pct=appMode==='execute'?execPct:planPct;
   let h=mobileHeader()+'<div class="m-day-top"><div class="m-day-title"><div class="m-day-title-main"><h1>'+esc(day.date)+'</h1><p>'+esc(day.dow)+' · '+esc(dayCityLabel(day))+' · '+esc(day.title||'יום פתוח')+'</p></div><span class="m-weather-pill">☁️ מזג אוויר</span></div>';
-  h+='<div class="m-day-scroll">'+TRIP.days.map(d=>'<button type="button" class="m-date-pill'+(d.id===day.id?' on':'')+'" data-day="'+d.id+'"><b>'+esc(d.date.split('/')[0])+'</b><span>'+esc(d.dow)+'</span></button>').join('')+'</div>';
-  h+='<div class="m-segment"><button class="on" type="button">Plan</button><a class="m-map-link" href="'+MYMAPS_URL+'" target="_blank" rel="noopener">Map ↗</a><button type="button" data-mobile-view="places">List</button></div></div><main class="m-screen">';
-  h+='<section class="m-panel m-day-progress"><div class="m-ring" style="--p:'+pct+'%"><b>'+planned+'/'+slots+'</b></div><div class="m-day-progress-copy"><b>'+(appMode==='execute'?'מעקב ביצוע':'Day Progress')+'</b><small>'+planned+' מתוך '+slots+' מקטעים מתוכננים</small><div class="m-mini-track"><i style="width:'+pct+'%"></i></div></div></section>';
+  h+='<div class="m-day-scroll">'+TRIP.days.map(d=>'<button type="button" class="m-date-pill'+(d.id===day.id?' on':'')+'" data-day="'+d.id+'"><b>'+esc(d.date.split('/')[0])+'</b><span>'+esc(d.dow)+'</span><i class="m-date-dot '+(dayCityLabel(d)==='קיוטו'?'kyoto':dayCityLabel(d)==='אוסקה'?'osaka':'tokyo')+'"></i></button>').join('')+'</div>';
+  h+='<div class="m-segment '+(appMode==='execute'?'execute-segment':'')+'"><button class="'+(appMode==='plan'?'on':'')+'" type="button" data-mode-mobile="plan">Plan</button><button class="'+(appMode==='execute'?'on':'')+'" type="button" data-mode-mobile="execute">Execute</button><a class="m-map-link" href="https://www.google.com/maps/d/u/0/edit?mid=1_J3VtAh7aeQm4eNmhs2IENs4dfl31Ks&ll=35.660636463289485%2C139.73541419999998&z=12" target="_blank" rel="noopener">Map ↗</a><button type="button" data-mobile-view="places">List</button></div></div><main class="m-screen">';
+  h+='<section class="m-panel m-day-progress '+(appMode==='execute'?'exec-progress':'')+'"><div class="m-ring" style="--p:'+pct+'%"><b>'+(appMode==='execute'?doneCount+'/'+totalCount:planned+'/'+slots)+'</b></div><div class="m-day-progress-copy"><b>'+(appMode==='execute'?'מצב ביצוע · עכשיו בזמן אמת':'Day Progress')+'</b><small>'+(appMode==='execute'?(doneCount+' מתוך '+totalCount+' פעילויות בוצעו'):(planned+' מתוך '+slots+' מקטעים מתוכננים'))+'</small><div class="m-mini-track"><i style="width:'+pct+'%"></i></div></div></section>';
+  if(appMode==='execute' && current){
+    h+='<section class="m-exec-now"><span>עכשיו</span><b>'+esc(current.name)+'</b><small>'+esc(current.time||'')+'</small></section>';
+  }
   if(day.empty || !items.length){
     h+='<section class="m-panel m-empty-day"><div class="ico">🛬</div><h2>יום פתוח</h2><p>'+esc(day.title||'אין פעילויות ששובצו ליום הזה עדיין')+'</p></section>';
-    h+=['☀️ בוקר','🍜 צהריים','🌤️ אחר הצהריים','🌙 ערב'].map(x=>'<section class="m-part"><div class="m-part-head"><b>'+x+'</b><span>0 מתוכננים</span></div><button type="button" class="m-add-slot" data-mobile-view="places">＋ הוסף פעילות</button></section>').join('');
+    if(appMode==='plan') h+=['☀️ בוקר','🍜 צהריים','🌤️ אחר הצהריים','🌙 ערב'].map(x=>'<section class="m-part"><div class="m-part-head"><b>'+x+'</b><span>0 מתוכננים</span></div><button type="button" class="m-add-slot" data-mobile-view="places">＋ הוסף פעילות</button></section>').join('');
   } else {
-    parts.forEach(p=>{ h+='<section class="m-part"><div class="m-part-head"><b><span class="m-part-icon">'+mobilePartIcon(p.name)+'</span>'+esc(p.name)+'</b><span>'+p.items.length+' פריטים</span></div>';
-      p.items.forEach(it=>{ const shownIt=(live.replace&&live.replace[it.uid])?Object.assign({},it,live.replace[it.uid]):it; h+='<div class="m-activity-line"><button type="button" class="m-activity" data-info-item="'+esc(it.uid)+'"><span class="m-act-photo">'+mobilePhotoForName(shownIt.name,dayCityLabel(day))+'</span><span class="m-act-content"><b>'+esc(shownIt.name)+'</b><small>'+esc(it.time||'')+' · '+esc(shownIt.kind||'')+'</small></span><span class="m-act-dot">›</span></button>'+(appMode==='execute'?'<button type="button" class="m-execute-check '+(live.done[it.uid]?'checked':'')+'" data-exec-toggle="'+esc(it.uid)+'">'+(live.done[it.uid]?'✓ בוצע':'✓ סמן שבוצע')+'</button>':'')+'</div>'; });
-      h+='<button class="m-add-slot" type="button" data-mobile-view="places">＋ הוסף מקום ל'+esc(p.name)+'</button></section>'; });
+    parts.forEach(p=>{
+      const partDone=p.items.filter(it=>live.done[it.uid]).length;
+      h+='<section class="m-part '+(appMode==='execute'&&partDone===p.items.length?'part-complete':'')+'"><div class="m-part-head"><b><span class="m-part-icon">'+mobilePartIcon(p.name)+'</span>'+esc(p.name)+'</b><span>'+(appMode==='execute'?partDone+'/'+p.items.length+' בוצעו':p.items.length+' פריטים')+'</span></div>';
+      p.items.forEach(it=>{
+        const shownIt=(live.replace&&live.replace[it.uid])?Object.assign({},it,live.replace[it.uid]):it;
+        const isDone=!!live.done[it.uid];
+        const isCurrent=appMode==='execute' && current && current.uid===it.uid;
+        const state=appMode==='execute'?(isDone?'is-done':isCurrent?'is-current':'is-upcoming'):'';
+        h+='<div class="m-activity-line '+state+'"><button type="button" class="m-activity" data-info-item="'+esc(it.uid)+'"><span class="m-act-photo">'+mobilePhotoForName(shownIt.name,dayCityLabel(day))+'</span><span class="m-act-content"><b>'+esc(shownIt.name)+'</b><small>'+esc(it.time||'')+' · '+esc(shownIt.kind||'')+'</small>'+(isCurrent?'<em class="m-live-badge">In progress</em>':'')+'</span><span class="m-act-dot">›</span></button>'+(appMode==='execute'?'<button type="button" aria-label="'+(isDone?'בטל סימון':'סמן שבוצע')+'" class="m-exec-state '+state+'" data-exec-toggle="'+esc(it.uid)+'">'+(isDone?'✓':isCurrent?'●':'○')+'</button>':'')+'</div>';
+      });
+      if(appMode==='plan') h+='<button class="m-add-slot" type="button" data-mobile-view="places">＋ הוסף מקום ל'+esc(p.name)+'</button>';
+      h+='</section>';
+    });
   }
   h+='</main>';
-  return '<div class="mobile-trip-app">'+h+mobileBottom('day')+'</div>';
+  return '<div class="mobile-trip-app '+(appMode==='execute'?'m-execute-app':'')+'">'+h+mobileBottom('day')+'</div>';
 }
+function execMapsUrl(it){
+  const p=placeForInfo(it&&it.name);
+  return (it&&it.maps) || (p&&p.maps) || ('https://www.google.com/maps/search/?api=1&query='+encodeURIComponent((it&&it.name?it.name:'')+' Japan'));
+}
+function renderMobileExecute(){
+  const day=activeDay();
+  const rows=visibleItems(day).filter(x=>!x.it.transit);
+  const total=rows.length;
+  const done=rows.filter(x=>live.done[x.it.uid]).length;
+  const pct=total?Math.round(done/total*100):0;
+  const curPos=rows.findIndex(x=>!live.done[x.it.uid]);
+  const current=curPos>=0?rows[curPos].it:null;
+  const next=curPos>=0?rows.slice(curPos+1).map(x=>x.it).find(it=>!live.done[it.uid]):null;
+  const mymaps='https://www.google.com/maps/d/u/0/edit?mid=1_J3VtAh7aeQm4eNmhs2IENs4dfl31Ks&ll=35.660636463289485%2C139.73541419999998&z=12';
+  let h=mobileHeader();
+  h+='<div class="mx-top"><div class="mx-dayline"><div><h1>'+esc(day.date)+'</h1><p>'+esc(day.dow)+' · '+esc(dayCityLabel(day))+' · '+esc(day.title||'')+'</p></div><span class="mx-weather">☁️ מזג אוויר</span></div>';
+  h+='<div class="mx-dates">'+TRIP.days.map(d=>'<button type="button" class="mx-date'+(d.id===day.id?' on':'')+'" data-day="'+esc(d.id)+'"><b>'+esc(d.date.split('/')[0])+'</b><span>'+esc(d.dow)+'</span></button>').join('')+'</div>';
+  h+='<div class="mx-tabs"><button type="button" data-mode-mobile="plan">Plan</button><button type="button" class="on" data-mode-mobile="execute">Execute</button><a href="'+mymaps+'" target="_blank" rel="noopener">Map ↗</a><button type="button" data-mobile-view="places">List</button></div></div>';
+  h+='<main class="mx-screen">';
+  h+='<section class="mx-summary"><div class="mx-ring" style="--p:'+pct+'%"><b>'+done+'/'+total+'</b></div><div class="mx-summary-copy"><b>Day Progress</b><small>'+done+' מתוך '+total+' פעילויות הושלמו</small><div class="mx-progress"><i style="width:'+pct+'%"></i></div></div></section>';
+
+  if(!total){
+    h+='<div class="mx-empty"><b>אין פעילויות לביצוע</b><span>היום עדיין פתוח בתכנון.</span></div>';
+  }else if(current){
+    const currentPlace=placeForInfo(current.name);
+    const currentDesc=current.desc || (currentPlace&&currentPlace.desc) || '';
+    h+='<div class="mx-label"><b>עכשיו</b><span>'+Math.max(total-done,0)+' נותרו</span></div>';
+    h+='<section class="mx-now"><div class="mx-now-photo">'+mobilePhotoForName(current.name,dayCityLabel(day))+'</div><div class="mx-now-body"><div class="mx-now-title"><div><h2>'+esc(current.name)+'</h2><div class="mx-now-time">'+esc(current.time||'')+'</div><div class="mx-now-meta">'+esc((currentPlace&&currentPlace.area)||current.kind||dayCityLabel(day))+'</div></div><button type="button" class="m-icon-btn" data-info-item="'+esc(current.uid)+'">ⓘ</button></div>'+(currentDesc?'<p class="mx-now-desc">'+esc(currentDesc)+'</p>':'')+'<div class="mx-actions"><a class="mx-action primary" href="'+esc(execMapsUrl(current))+'" target="_blank" rel="noopener">↗ Directions</a><a class="mx-action" href="'+mymaps+'" target="_blank" rel="noopener">🗺 My Maps</a></div><button class="mx-done" type="button" data-exec-toggle="'+esc(current.uid)+'">✓ סמן כבוצע</button></div></section>';
+    h+='<div class="mx-label"><b>הבא בתור</b><span>'+(next?'NEXT':'')+'</span></div>';
+    if(next){ const np=placeForInfo(next.name); h+='<button type="button" class="mx-next" data-info-item="'+esc(next.uid)+'"><span class="mx-next-photo">'+mobilePhotoForName(next.name,dayCityLabel(day))+'</span><span class="mx-next-copy"><b>'+esc(next.name)+'</b><small><span class="mx-ltr">'+esc(next.time||'')+'</span> · '+esc((np&&np.area)||next.kind||'')+'</small></span><span class="mx-next-arrow">‹</span></button>'; }
+    else h+='<div class="mx-complete">זה הפריט האחרון להיום</div>';
+  }else{
+    h+='<div class="mx-complete">✓ כל הפעילויות להיום הושלמו</div>';
+  }
+
+  h+='<div class="mx-label"><b>היום</b><span>'+done+'/'+total+' הושלמו</span></div><div class="mx-timeline">';
+  rows.forEach((x,idx)=>{
+    const it=x.it, isDone=!!live.done[it.uid], isCurrent=current&&current.uid===it.uid;
+    const p=placeForInfo(it.name);
+    h+='<div class="mx-row '+(isDone?'done ': '')+(isCurrent?'current':'')+'"><button type="button" class="mx-row-photo" data-info-item="'+esc(it.uid)+'">'+mobilePhotoForName(it.name,dayCityLabel(day))+'</button><button type="button" class="mx-row-copy" data-info-item="'+esc(it.uid)+'"><b>'+esc(it.name)+'</b><small><span class="mx-ltr">'+esc(it.time||'')+'</span> · '+esc((p&&p.area)||it.kind||'')+'</small></button><button type="button" class="mx-status" data-exec-toggle="'+esc(it.uid)+'">'+(isDone?'✓':isCurrent?'●':'○')+'</button></div>';
+  });
+  h+='</div></main>';
+  return '<div class="mobile-trip-app mobile-execute-v109">'+h+mobileBottom('day')+'</div>';
+}
+
 function renderMobilePlaces(){
   const day=activeDay();
   let h=mobileHeader()+'<main class="m-screen"><div class="m-section-head" style="margin-top:4px"><h2>Places Library · '+TRIP.places.length+'</h2><span>'+esc(dayCityLabel(day))+'</span></div>';
@@ -1856,6 +2278,7 @@ function renderMobileMore(){
   return '<div class="mobile-trip-app">'+mobileHeader()+'<main class="m-screen"><div class="m-section-head"><h2>עוד</h2></div><div class="m-quick-grid"><button class="m-quick" data-quick-target="weather"><span class="ico">☁️</span>מזג אוויר</button><button class="m-quick" data-quick-target="restaurants"><span class="ico">🍜</span>מסעדות</button><button class="m-quick" data-quick-target="hotels"><span class="ico">🛏️</span>מלונות</button><button class="m-quick" data-quick-target="more"><span class="ico">⚙️</span>כלים</button></div></main>'+mobileBottom('more')+'</div>';
 }
 function renderPlanningMobile(){
+  if(appMode==='execute' && (mobilePlanView==='day' || mobilePlanView==='home')) return renderMobileExecute();
   if(mobilePlanView==='day') return renderMobileDay();
   if(mobilePlanView==='places') return renderMobilePlaces();
   if(mobilePlanView==='more') return renderMobileMore();
@@ -1885,11 +2308,13 @@ function render(){
   const root=document.getElementById('app');
   document.body.classList.toggle('desk', isDesk());
   document.body.classList.toggle('planning-mode', appMode==='plan');
+  document.body.classList.toggle('mobile-execute', window.innerWidth<760 && appMode==='execute');
+  document.body.classList.toggle('execute-v109', appMode==='execute');
   document.querySelectorAll('.modebar button').forEach(b=>b.classList.toggle('on', b.dataset.mode===appMode));
   document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('on', b.dataset.tab===tab));
-  if(window.innerWidth<760) root.innerHTML=renderPlanningMobile();
+  if(appMode==='execute') root.innerHTML=renderMobileExecute();
+  else if(window.innerWidth<760) root.innerHTML=renderPlanningMobile();
   else if(appMode==='plan') root.innerHTML=renderPlanning();
-  else if(isDesk() && tab==='today') root.innerHTML='<div class="work"><aside class="rail">'+renderRail()+'</aside><main>'+renderToday()+'</main><aside class="side">'+renderPlaces()+'</aside></div>';
   else if(tab==='today') root.innerHTML=renderToday();
   else if(tab==='weather') root.innerHTML=renderWeather();
   else if(tab==='restaurants') root.innerHTML=renderRestaurants();
@@ -1897,7 +2322,7 @@ function render(){
   else if(tab==='places') root.innerHTML=renderPlaces();
   else root.innerHTML=renderMore();
   document.getElementById('sheet').innerHTML = sheet ? renderSheet() : '';
-  requestAnimationFrame(hydrateMedia); if(window.innerWidth<760) requestAnimationFrame(hydrateVisibleMobileThumbs);
+  requestAnimationFrame(hydrateMedia);
   if(appMode!=='plan' && tab==='weather' && !weatherState.loading && !weatherState.updated) setTimeout(()=>loadWeather(false),0);
 }
 function renderToday(){
@@ -1905,7 +2330,7 @@ function renderToday(){
   let html='<div class="days">'+TRIP.days.map(d=>'<button class="pill'+(d.id===day.id?' on':'')+'" data-day="'+d.id+'" type="button"><b>'+esc(d.date)+'</b><span>'+esc(d.dow)+'</span></button>').join('')+'</div>';
   html+='<div class="dow">'+esc(day.dow)+' · '+esc(day.base||'')+'</div>';
   html+='<h1>'+esc(day.date)+'</h1><p class="sub">'+esc(day.title)+(day.subtitle?' · '+esc(day.subtitle):'')+'</p>';
-  html+='<a class="mymaps-link" target="_blank" rel="noopener" href="'+MYMAPS_URL+'">🗺️ Japan 2026 ב־Google My Maps</a>';
+  html+='<a class="mymaps-link" target="_blank" rel="noopener" href="https://www.google.com/maps/d/u/0/edit?mid=1_J3VtAh7aeQm4eNmhs2IENs4dfl31Ks&ll=35.660636463289485%2C139.73541419999998&z=12">🗺️ Japan 2026 ב־Google My Maps</a>';
   if(day.empty){
     html+='<section class="now"><div class="label">יום הגעה</div><h2>בלי תכנון</h2><p class="desc">נוחתים בערך ב־13:00. היום נשאר פתוח בכוונה.</p></section>';
     return html;
@@ -2287,7 +2712,7 @@ function renderHotels(){
 }
 
 function renderMore(){
-  return '<h1>עוד</h1><a class="mymaps-link" target="_blank" rel="noopener" href="'+MYMAPS_URL+'">🗺️ פתח Japan 2026 ב־Google My Maps</a><p class="sub">גרסה v104 · Japan Mobile App חדש, בלי לפגוע בשכבת ההיסטוריה המפורטת ובכל המידע הקיים. אטרקציות אמיתיות מקבלות סיפור היסטורי מפורט ומקור מאומת; חנויות/אוכל/retail נשארים עם מידע שימושי בלבד.</p><p class="sub">באייפון השמירה נפתחת כשיתוף. בוחרים "שמור לקבצים", ואז פותחים את הקובץ החדש מ־Safari.</p><button class="btn primary" id="save-full" type="button">שמור גרסה מלאה</button><p class="desc" style="margin-top:18px">25/11 נשאר ריק. גנים בבוקר, קניות לקראת הסוף, ולילה רק אם נשאר כוח.</p>';
+  return '<h1>עוד</h1><a class="mymaps-link" target="_blank" rel="noopener" href="https://www.google.com/maps/d/u/0/edit?mid=1_J3VtAh7aeQm4eNmhs2IENs4dfl31Ks&ll=35.660636463289485%2C139.73541419999998&z=12">🗺️ פתח Japan 2026 ב־Google My Maps</a><p class="sub">גרסה v108 · Japan Mobile App חדש, בלי לפגוע בשכבת ההיסטוריה המפורטת ובכל המידע הקיים. אטרקציות אמיתיות מקבלות סיפור היסטורי מפורט ומקור מאומת; חנויות/אוכל/retail נשארים עם מידע שימושי בלבד.</p><p class="sub">באייפון השמירה נפתחת כשיתוף. בוחרים "שמור לקבצים", ואז פותחים את הקובץ החדש מ־Safari.</p><button class="btn primary" id="save-full" type="button">שמור גרסה מלאה</button><p class="desc" style="margin-top:18px">25/11 נשאר ריק. גנים בבוקר, קניות לקראת הסוף, ולילה רק אם נשאר כוח.</p>';
 }
 function renderSheet(){
   if(sheet.mode==='item'){
@@ -2377,7 +2802,7 @@ async function saveFull(){
   const blob=new Blob([html],{type:'text/html;charset=utf-8'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
-  a.download='japan_2026_trip_dashboard_v102_images_map_modes.html';
+  a.download='japan_2026_trip_dashboard_v108_dedicated_execute.html';
   document.body.appendChild(a); a.click(); a.remove();
   toast('אם הקובץ לא נשמר: כפתור השיתוף של Safari, ואז שמור לקבצים');
 }
@@ -2386,6 +2811,7 @@ document.querySelector('.modebar').onclick=e=>{
   const b=e.target.closest('[data-mode]');
   if(!b) return;
   appMode=b.dataset.mode==='plan'?'plan':'execute';
+  if(window.innerWidth<760){ mobilePlanView='day'; }
   live.appMode=appMode;
   sheet=null; persist(); render();
 };
@@ -2399,7 +2825,7 @@ document.getElementById('app').onclick=e=>{
   if(openMediaYoutube(e.target)){ e.preventDefault(); e.stopPropagation(); return; }
   const ex=e.target.closest('[data-exec-toggle]'); if(ex){const id=ex.dataset.execToggle; if(live.done[id]) delete live.done[id]; else live.done[id]=Date.now();persist();render();return;}
   const modeMobile=e.target.closest('[data-mode-mobile]');
-  if(modeMobile){ appMode=modeMobile.dataset.modeMobile; if(appMode==='execute' && mobilePlanView==='home') mobilePlanView='day'; live.appMode=appMode; sheet=null; persist(); render(); return; }
+  if(modeMobile){ appMode=modeMobile.dataset.modeMobile; if(appMode==='execute') mobilePlanView='day'; live.appMode=appMode; sheet=null; persist(); render(); return; }
   const mobileFilter=e.target.closest('[data-m-filter]');
   if(mobileFilter){mobilePlaceFilter=mobileFilter.dataset.mFilter;render();return;}
   const mobileView=e.target.closest('[data-mobile-view]');
@@ -2409,7 +2835,7 @@ document.getElementById('app').onclick=e=>{
   const ptab=e.target.closest('[data-plan-tab]');
   if(ptab){ planTab=ptab.dataset.planTab; sheet=null; render(); return; }
   const mapExternal=e.target.closest('[data-map-external]');
-  if(mapExternal){window.open(MYMAPS_URL,'_blank');return;}
+  if(mapExternal){window.open('https://www.google.com/maps/d/u/0/edit?mid=1_J3VtAh7aeQm4eNmhs2IENs4dfl31Ks&ll=35.660636463289485%2C139.73541419999998&z=12','_blank','noopener');return;}
   const quick=e.target.closest('[data-quick-target]');
   if(quick){ const q=quick.dataset.quickTarget; if(['tokyo','kyoto','osaka','day'].indexOf(q)>=0){ planTab=q; render(); return; } appMode='execute'; live.appMode=appMode; tab=q; sheet=null; persist(); render(); if(tab==='weather') loadWeather(false); return; }
   const pcity=e.target.closest('[data-plan-city]');
@@ -2499,7 +2925,7 @@ document.getElementById('app').oninput=e=>{
     const list=document.getElementById('place-list');
     if(count) count.textContent=rows.length+' במאגר';
     if(list) list.innerHTML=placeCards(rows);
-    requestAnimationFrame(hydrateMedia); if(window.innerWidth<760) requestAnimationFrame(hydrateVisibleMobileThumbs);
+    requestAnimationFrame(hydrateMedia);
   }
 };
 document.getElementById('app').onchange=e=>{
@@ -2540,7 +2966,7 @@ document.getElementById('sheet').oninput=e=>{
     sheet.q=e.target.value;
     const list=document.getElementById('swap-list');
     if(list) list.innerHTML=swapCards(swapMatches());
-    requestAnimationFrame(hydrateMedia); if(window.innerWidth<760) requestAnimationFrame(hydrateVisibleMobileThumbs);
+    requestAnimationFrame(hydrateMedia);
   }
 };
 render();
