@@ -747,6 +747,8 @@ body.execute-v110 .mx-ltr{direction:ltr;unicode-bidi:isolate;display:inline-bloc
 @media(min-width:760px){body.execute-v110 .mobile-bottom-nav{display:none!important}}
 @media(max-width:759px){body.execute-v110 .m-app-head{padding:calc(12px + env(safe-area-inset-top)) 16px 10px} body.execute-v110 .mx-top{top:110px;padding:12px 16px 14px} body.execute-v110 .mx-dayline h1{font-size:32px} body.execute-v110 .mx-screen{padding:0 16px 118px} body.execute-v110 .mx-now-photo{height:190px} body.execute-v110 .mx-now-title h2{font-size:24px} body.execute-v110 .mobile-bottom-nav{display:grid!important}}
 
+
+.m-place-list:empty::after{content:"אין מקומות שמתאימים לסינון הזה";display:block;padding:28px 14px;text-align:center;color:#8fa2b8;border:1px dashed #2a435e;border-radius:18px;background:#0b1724}
 </style>
 
 <style id="mobile-v100-redesign">
@@ -2109,6 +2111,7 @@ const MOBILE_CITY_PHOTOS={tokyo:'data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQAB
 let mobilePlanView='home';
 let mobilePlaceFilter='all';
 let mobilePlaceQuery='';
+let mobilePlacesMode='places';
 function mobileCityKey(day){
   const c=dayCityLabel(day);
   if(c==='קיוטו') return 'kyoto';
@@ -2149,16 +2152,33 @@ function mobileThumb(name, fallback){
   if(m&&m.image) return '<img loading="lazy" alt="" src="'+esc(m.image)+'">';
   return fallback;
 }
+function mobileIsFoodPlace(p){
+  const kind=String(p.kind||'').toLowerCase();
+  const name=String(p.name||'').toLowerCase();
+  if(p.kind==='food') return true;
+  if(/אוכל|מסעד|restaurant|food|cafe|coffee|ramen|izakaya|sushi|udon|soba|bakery|dessert|mochi|latte|dining/.test(kind)) return true;
+  return /cafe|coffee|ramen|izakaya|sushi|udon|soba|bakery|restaurant|mochi|latte|patisserie|dessert/.test(name);
+}
+function mobileIsShoppingPlace(p){
+  const hay=((p.kind||'')+' '+(p.name||'')+' '+(p.desc||'')).toLowerCase();
+  return p.kind==='shop' || /חנות|קניות|shopping|shop|store|mall|market|parco|pokemon|pokémon|capcom|nintendo|don quijote|retail/.test(hay);
+}
 function mobilePlaceRows(limit){
   const day=activeDay();
   const q=mobilePlaceQuery.trim().toLowerCase();
-  let rows=TRIP.places.filter(p=>day.scope.indexOf(p.city)>=0);
-  if(q) rows=rows.filter(p=>(p.name+' '+(p.area||'')+' '+(p.kind||'')+' '+(p.desc||'')).toLowerCase().includes(q));
+  let rows = mobilePlacesMode==='restaurants'
+    ? TRIP.places.filter(mobileIsFoodPlace)
+    : TRIP.places.filter(p=>day.scope.indexOf(p.city)>=0);
+  if(mobilePlaceFilter==='must') rows=rows.filter(p=>planStatus(p)==='חובה');
+  if(mobilePlaceFilter==='want') rows=rows.filter(p=>planStatus(p)==='רוצה');
+  if(mobilePlaceFilter==='food') rows=rows.filter(mobileIsFoodPlace);
+  if(mobilePlaceFilter==='shopping') rows=rows.filter(mobileIsShoppingPlace);
+  if(q) rows=rows.filter(p=>(p.name+' '+(p.area||'')+' '+(p.city||'')+' '+(p.kind||'')+' '+(p.desc||'')).toLowerCase().includes(q));
   rows=planSort(rows);
   if(limit) rows=rows.slice(0,limit);
   return rows.map(p=>{
     const st=planStatus(p), stc=st==='חובה'?'must':st==='רוצה'?'want':'';
-    const icon=p.kind&&p.kind.includes('אוכל')?'🍜':p.kind&&p.kind.includes('חנות')?'🛍️':p.kind&&p.kind.includes('פארק')?'🌿':'📍';
+    const icon=mobileIsFoodPlace(p)?'🍜':mobileIsShoppingPlace(p)?'🛍️':p.kind&&p.kind.includes('פארק')?'🌿':'📍';
     return '<button class="m-place-row" type="button" data-info-place="'+esc(p.id)+'"><span class="m-place-thumb">'+mobilePhotoForPlace(p)+'</span><span><b>'+esc(p.name)+'</b><small>'+esc(p.area||p.city||'')+' · '+esc(p.kind||'מקום')+'</small><span class="m-tags">'+(st?'<i class="m-tag '+stc+'">'+esc(st)+'</i>':'')+(p.area?'<i class="m-tag">'+esc(p.area)+'</i>':'')+'</span></span><span class="m-plus">›</span></button>';
   }).join('');
 }
@@ -2270,12 +2290,24 @@ function renderMobileExecute(){
     h+='<div class="mx-row '+(isDone?'done ': '')+(isCurrent?'current':'')+'"><button type="button" class="mx-row-photo" data-info-item="'+esc(it.uid)+'">'+mobilePhotoForName(it.name,dayCityLabel(day))+'</button><button type="button" class="mx-row-copy" data-info-item="'+esc(it.uid)+'"><b>'+esc(it.name)+'</b><small><span class="mx-ltr">'+esc(it.time||'')+'</span> · '+esc((p&&p.area)||it.kind||'')+'</small></button><button type="button" class="mx-status" data-exec-toggle="'+esc(it.uid)+'">'+(isDone?'✓':isCurrent?'●':'○')+'</button></div>';
   });
   h+='</div></main>';
-  return '<div class="mobile-trip-app mobile-execute-v113">'+h+mobileBottom('day')+'</div>';
+  return '<div class="mobile-trip-app mobile-execute-v115">'+h+mobileBottom('day')+'</div>';
 }
 
 function renderMobilePlaces(){
   const day=activeDay();
-  let h=mobileHeader()+'<main class="m-screen"><div class="m-section-head" style="margin-top:4px"><h2>Places Library · '+TRIP.places.length+'</h2><span>'+esc(dayCityLabel(day))+'</span></div>';
+  const title=mobilePlacesMode==='restaurants'?'מסעדות ואוכל':'Places Library';
+  const scopeLabel=mobilePlacesMode==='restaurants'?'כל הטיול':dayCityLabel(day);
+  const visibleCount=(function(){
+    const q=mobilePlaceQuery.trim().toLowerCase();
+    let rows=mobilePlacesMode==='restaurants'?TRIP.places.filter(mobileIsFoodPlace):TRIP.places.filter(p=>day.scope.indexOf(p.city)>=0);
+    if(mobilePlaceFilter==='must') rows=rows.filter(p=>planStatus(p)==='חובה');
+    if(mobilePlaceFilter==='want') rows=rows.filter(p=>planStatus(p)==='רוצה');
+    if(mobilePlaceFilter==='food') rows=rows.filter(mobileIsFoodPlace);
+    if(mobilePlaceFilter==='shopping') rows=rows.filter(mobileIsShoppingPlace);
+    if(q) rows=rows.filter(p=>(p.name+' '+(p.area||'')+' '+(p.city||'')+' '+(p.kind||'')+' '+(p.desc||'')).toLowerCase().includes(q));
+    return rows.length;
+  })();
+  let h=mobileHeader()+'<main class="m-screen"><div class="m-section-head" style="margin-top:4px"><h2>'+title+' · '+visibleCount+'</h2><span>'+esc(scopeLabel)+'</span></div>';
   h+='<input class="m-search" id="mobile-place-q" placeholder="חיפוש מקום, אזור או קטגוריה" value="'+esc(mobilePlaceQuery)+'"><div class="m-filter-strip"><button data-m-filter="all" class="m-filter-chip '+(mobilePlaceFilter==='all'?'on':'')+'">הכל</button><button data-m-filter="must" class="m-filter-chip '+(mobilePlaceFilter==='must'?'on':'')+'">⭐ חובה</button><button data-m-filter="want" class="m-filter-chip '+(mobilePlaceFilter==='want'?'on':'')+'">♡ רוצה</button><button data-m-filter="food" class="m-filter-chip '+(mobilePlaceFilter==='food'?'on':'')+'">🍜 אוכל</button><button data-m-filter="shopping" class="m-filter-chip '+(mobilePlaceFilter==='shopping'?'on':'')+'">🛍️ קניות</button></div><div class="m-place-list" style="margin-top:10px">'+mobilePlaceRows()+'</div></main>';
   return '<div class="mobile-trip-app">'+h+mobileBottom('places')+'</div>';
 }
@@ -2283,7 +2315,7 @@ function renderMobileMore(){
   return '<div class="mobile-trip-app">'+mobileHeader()+'<main class="m-screen"><div class="m-section-head"><h2>עוד</h2></div><div class="m-quick-grid"><button class="m-quick" data-quick-target="weather"><span class="ico">☁️</span>מזג אוויר</button><button class="m-quick" data-quick-target="restaurants"><span class="ico">🍜</span>מסעדות</button><button class="m-quick" data-quick-target="hotels"><span class="ico">🛏️</span>מלונות</button><button class="m-quick" data-quick-target="more"><span class="ico">⚙️</span>כלים</button></div></main>'+mobileBottom('more')+'</div>';
 }
 function renderPlanningMobile(){
-  if(appMode==='execute' && (mobilePlanView==='day' || mobilePlanView==='home')) return renderMobileExecute();
+  if(appMode==='execute' && mobilePlanView==='day') return renderMobileExecute();
   if(mobilePlanView==='day') return renderMobileDay();
   if(mobilePlanView==='places') return renderMobilePlaces();
   if(mobilePlanView==='more') return renderMobileMore();
@@ -2839,7 +2871,7 @@ async function saveFull(){
   const blob=new Blob([html],{type:'text/html;charset=utf-8'});
   const a=document.createElement('a');
   a.href=URL.createObjectURL(blob);
-  a.download='japan_2026_trip_dashboard_v108_dedicated_execute.html';
+  a.download='japan_2026_trip_dashboard_v115_nav_filters_fixed.html';
   document.body.appendChild(a); a.click(); a.remove();
   toast('אם הקובץ לא נשמר: כפתור השיתוף של Safari, ואז שמור לקבצים');
 }
@@ -2867,8 +2899,13 @@ document.getElementById('app').onclick=e=>{
   if(mobileFilter){mobilePlaceFilter=mobileFilter.dataset.mFilter;render();return;}
   const mobileView=e.target.closest('[data-mobile-view]');
   if(mobileView){
-    mobilePlanView=mobileView.dataset.mobileView;
-    if(mobilePlanView==='day') scheduleRevealActiveDate();
+    const nextView=mobileView.dataset.mobileView;
+    mobilePlanView=nextView;
+    if(nextView==='places'){
+      mobilePlacesMode='places';
+      if(mobilePlaceFilter==='food' && mobilePlaceQuery==='') mobilePlaceFilter='all';
+    }
+    if(nextView==='day') scheduleRevealActiveDate();
     sheet=null;
     render();
     return;
@@ -2880,7 +2917,14 @@ document.getElementById('app').onclick=e=>{
   const mapExternal=e.target.closest('[data-map-external]');
   if(mapExternal){window.open('https://www.google.com/maps/d/u/0/edit?mid=1_J3VtAh7aeQm4eNmhs2IENs4dfl31Ks&ll=35.660636463289485%2C139.73541419999998&z=12','_blank','noopener');return;}
   const quick=e.target.closest('[data-quick-target]');
-  if(quick){ const q=quick.dataset.quickTarget; if(['tokyo','kyoto','osaka','day'].indexOf(q)>=0){ planTab=q; render(); return; } appMode='execute'; live.appMode=appMode; tab=q; sheet=null; persist(); render(); if(tab==='weather') loadWeather(false); return; }
+  if(quick){
+    const q=quick.dataset.quickTarget;
+    if(window.innerWidth<760 && q==='restaurants'){
+      mobilePlacesMode='restaurants'; mobilePlaceFilter='food'; mobilePlaceQuery=''; mobilePlanView='places'; sheet=null; render(); return;
+    }
+    if(['tokyo','kyoto','osaka','day'].indexOf(q)>=0){ planTab=q; render(); return; }
+    appMode='execute'; live.appMode=appMode; tab=q; sheet=null; persist(); render(); if(tab==='weather') loadWeather(false); return;
+  }
   const pcity=e.target.closest('[data-plan-city]');
   if(pcity){ planCityFilter=pcity.dataset.planCity; planAreaFilter='הכל'; render(); return; }
   const pkind=e.target.closest('[data-plan-kind]');
