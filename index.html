@@ -592,7 +592,7 @@
   .m-place-list{display:grid;gap:8px}.m-place-row{width:100%;display:grid;grid-template-columns:58px 1fr 38px;gap:10px;align-items:center;padding:8px;border:1px solid #202f42;border-radius:16px;background:#0c141e;text-align:right;color:#eef4fb}.m-place-thumb{height:58px;border-radius:12px;background:linear-gradient(145deg,#163052,#0c1b2c);display:grid;place-items:center;font-size:25px}.m-place-row b{font-size:14px;line-height:1.2}.m-place-row small{display:block;color:#8d9db2;font-size:10px;margin-top:4px}.m-tags{display:flex;gap:4px;margin-top:5px;flex-wrap:wrap}.m-tag{font-size:8px;padding:3px 6px;border-radius:999px;background:#132239;border:1px solid #29466c;color:#bcd9ff}.m-tag.must{background:#10271c;border-color:#2a754d;color:#aef0c6}.m-tag.want{background:#28210e;border-color:#6e5a24;color:#ffdc7b}.m-plus{width:34px;height:34px;border-radius:50%;border:1px solid #37689b;background:#11263d;color:#bfe0ff;font-size:20px;display:grid;place-items:center}
 
   .m-day-top{padding:12px 14px 8px;border-bottom:1px solid #142134;background:linear-gradient(180deg,#091523,#07101b)}.m-day-title{display:flex;align-items:center;justify-content:space-between;gap:8px}.m-day-title-main{min-width:0}.m-day-title h1{font-size:27px;margin:0;direction:ltr;text-align:right}.m-day-title p{margin:4px 0 0;color:#8ca1ba;font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.m-weather-pill{flex:0 0 auto;border:1px solid #29455f;background:#0c1a29;border-radius:999px;padding:7px 10px;font-size:11px;color:#c8ddf4}
-  .m-day-scroll{display:flex;gap:7px;overflow-x:auto;padding:10px 14px 4px;margin:0 -14px;scrollbar-width:none;scroll-snap-type:x proximity;scroll-padding-inline:42%}.m-day-scroll::-webkit-scrollbar{display:none}.m-date-pill{flex:0 0 53px;height:63px;border:1px solid #24344a;background:#0d1622;color:#d8e2ef;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;scroll-snap-align:center}.m-date-pill b{font-size:14px;direction:ltr}.m-date-pill span{font-size:9px;color:#7f91aa;margin-top:3px}.m-date-pill.on{background:#77aff7;color:#07111d;border-color:#77aff7;box-shadow:0 8px 22px rgba(68,139,226,.25)}.m-date-pill.on span{color:#24496c}
+  .m-day-scroll{display:flex;gap:7px;overflow-x:auto;overflow-y:hidden;padding:10px 14px 4px;margin:0 -14px;scrollbar-width:none;scroll-snap-type:x proximity;scroll-padding-inline:42%;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}.m-day-scroll::-webkit-scrollbar{display:none}.m-date-pill{flex:0 0 53px;height:63px;border:1px solid #24344a;background:#0d1622;color:#d8e2ef;border-radius:15px;display:flex;flex-direction:column;align-items:center;justify-content:center;scroll-snap-align:center}.m-date-pill b{font-size:14px;direction:ltr}.m-date-pill span{font-size:9px;color:#7f91aa;margin-top:3px}.m-date-pill.on{background:#77aff7;color:#07111d;border-color:#77aff7;box-shadow:0 8px 22px rgba(68,139,226,.25)}.m-date-pill.on span{color:#24496c}
   .m-segment{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:#0b131d;border:1px solid #1d2c3f;padding:4px;border-radius:14px;margin:9px 0}.m-segment button{min-height:37px;border:0;border-radius:10px;background:transparent;color:#8fa0b5;font-size:11px;font-weight:800}.m-segment button.on{background:#7bb4fb;color:#07111c}
   .m-day-progress{padding:12px 13px;margin:10px 0 12px;display:flex;align-items:center;gap:11px}.m-ring{width:50px;height:50px;border-radius:50%;background:conic-gradient(#42cb8a var(--p),#1a2a3d 0);display:grid;place-items:center;position:relative;flex:0 0 auto}.m-ring::after{content:'';position:absolute;width:38px;height:38px;background:#0c1622;border-radius:50%}.m-ring b{position:relative;z-index:1;font-size:11px;direction:ltr}.m-day-progress-copy{flex:1}.m-day-progress-copy b{font-size:13px}.m-day-progress-copy small{display:block;color:#8599b2;font-size:10px;margin-top:3px}.m-mini-track{height:5px;border-radius:99px;background:#1b2a3d;margin-top:8px;overflow:hidden}.m-mini-track i{display:block;height:100%;background:#3ccb8a;border-radius:99px}
   .m-part{margin-top:10px;border:1px solid #1e2f43;background:#09121c;border-radius:18px;overflow:hidden}.m-part-head{padding:11px 12px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #17263a}.m-part-head b{font-size:14px}.m-part-head span{font-size:9px;color:#83d9ad}.m-part-icon{margin-left:5px}.m-activity{display:grid;grid-template-columns:64px 1fr 22px;gap:10px;align-items:center;padding:10px 11px;border-bottom:1px solid #162437}.m-activity:last-child{border-bottom:0}.m-act-time{direction:ltr;font-size:11px;color:#9ec6ee}.m-activity b{font-size:13px}.m-activity small{display:block;color:#7f90a6;font-size:9px;margin-top:3px}.m-act-dot{color:#68829f}.m-add-slot{width:calc(100% - 20px);margin:8px 10px 10px;min-height:42px;border-radius:12px;border:1px dashed #35506f;background:#0c1724;color:#86a6ca;font-size:11px}
@@ -658,7 +658,7 @@ body.mobile-execute .m-day-progress{border-color:#1f8e78}
   .mx-dayline h1{margin:0;font-size:32px;line-height:1;font-weight:900;letter-spacing:-1px}
   .mx-dayline p{margin:6px 0 0;color:#91a6bd;font-size:13px}
   .mx-weather{border:1px solid #315170;border-radius:999px;padding:8px 12px;color:#d9e7f5;background:#0d2033;font-size:12px;white-space:nowrap}
-  .mx-dates{display:flex;gap:8px;overflow:auto;padding:8px 0 4px;scrollbar-width:none;direction:rtl;scroll-snap-type:x proximity;scroll-padding-inline:42%}
+  .mx-dates{display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;padding-block:8px 4px;padding-inline:calc(50% - 29px);box-sizing:border-box;scrollbar-width:none;direction:ltr;scroll-snap-type:x proximity;scroll-padding-inline:50%;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
   .mx-dates::-webkit-scrollbar{display:none}
   .mx-date{min-width:54px;height:66px;border-radius:18px;border:1px solid #2b425a;background:#0b1827;color:#c9d5e3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;scroll-snap-align:center}
   .mx-date b{font-size:19px}.mx-date span{font-size:10px;color:#8599af}.mx-date.on{background:#5aa4ff;border-color:#79b7ff;color:#051528}.mx-date.on span{color:#173a5e}
@@ -716,7 +716,7 @@ body.execute-v110 .mx-dayline{display:flex;align-items:center;justify-content:sp
 body.execute-v110 .mx-dayline h1{margin:0;font-size:38px;line-height:1;font-weight:950;letter-spacing:-1.2px}
 body.execute-v110 .mx-dayline p{margin:7px 0 0;color:#91a6bd;font-size:14px}
 body.execute-v110 .mx-weather{border:1px solid #315170;border-radius:999px;padding:9px 13px;color:#d9e7f5;background:#0d2033;font-size:12px;white-space:nowrap}
-body.execute-v110 .mx-dates{display:flex;gap:8px;overflow:auto;padding:9px 0 5px;scrollbar-width:none;direction:rtl}
+body.execute-v110 .mx-dates{display:flex;gap:8px;overflow-x:auto;overflow-y:hidden;padding-block:9px 5px;padding-inline:calc(50% - 29px);box-sizing:border-box;scrollbar-width:none;direction:ltr;scroll-snap-type:x proximity;scroll-padding-inline:50%;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch}
 body.execute-v110 .mx-date{min-width:58px;height:68px;border-radius:18px;border:1px solid #2b425a;background:#0b1827;color:#c9d5e3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px}
 body.execute-v110 .mx-date b{font-size:19px} body.execute-v110 .mx-date span{font-size:10px;color:#8599af}
 body.execute-v110 .mx-date.on{background:#5aa4ff;border-color:#79b7ff;color:#051528} body.execute-v110 .mx-date.on span{color:#173a5e}
@@ -1502,7 +1502,12 @@ function activeDay(){
   if(live.dayId && dayById(live.dayId)) return dayById(live.dayId);
   return TRIP.days.find(d=>!d.empty) || TRIP.days[0];
 }
-function setDay(id){ live.dayId=id; saveLive(live); render(); }
+function setDay(id, opts){
+  live.dayId=id;
+  saveLive(live);
+  if(opts && opts.reveal) scheduleRevealActiveDate();
+  if(!opts || opts.render!==false) render();
+}
 function isFood(it){ return /אוכל|מסעדה|קפה/.test(it.kind||'') || /ראמן|קפה|מסעדה/.test(it.name||''); }
 function shown(day, index){
   const base=day.items[index];
@@ -2239,7 +2244,7 @@ function renderMobileExecute(){
   const mymaps='https://www.google.com/maps/d/u/0/edit?mid=1_J3VtAh7aeQm4eNmhs2IENs4dfl31Ks&ll=35.660636463289485%2C139.73541419999998&z=12';
   let h=mobileHeader();
   h+='<div class="mx-top"><div class="mx-dayline"><div><h1>'+esc(day.date)+'</h1><p>'+esc(day.dow)+' · '+esc(dayCityLabel(day))+' · '+esc(day.title||'')+'</p></div><span class="mx-weather">☁️ מזג אוויר</span></div>';
-  h+='<div class="mx-dates">'+TRIP.days.map(d=>'<button type="button" class="mx-date'+(d.id===day.id?' on':'')+'" data-day="'+esc(d.id)+'"><b>'+esc(d.date.split('/')[0])+'</b><span>'+esc(d.dow)+'</span></button>').join('')+'</div>';
+  h+='<div class="mx-dates">'+[...TRIP.days].reverse().map(d=>'<button type="button" class="mx-date'+(d.id===day.id?' on':'')+'" data-day="'+esc(d.id)+'"><b>'+esc(d.date.split('/')[0])+'</b><span>'+esc(d.dow)+'</span></button>').join('')+'</div>';
   h+='<div class="mx-tabs"><button type="button" data-mode-mobile="plan">Plan</button><button type="button" class="on" data-mode-mobile="execute">Execute</button><a href="'+mymaps+'" target="_blank" rel="noopener">Map ↗</a><button type="button" data-mobile-view="places">List</button></div></div>';
   h+='<main class="mx-screen">';
   h+='<section class="mx-summary"><div class="mx-ring" style="--p:'+pct+'%"><b>'+done+'/'+total+'</b></div><div class="mx-summary-copy"><b>Day Progress</b><small>'+done+' מתוך '+total+' פעילויות הושלמו</small><div class="mx-progress"><i style="width:'+pct+'%"></i></div></div></section>';
@@ -2265,7 +2270,7 @@ function renderMobileExecute(){
     h+='<div class="mx-row '+(isDone?'done ': '')+(isCurrent?'current':'')+'"><button type="button" class="mx-row-photo" data-info-item="'+esc(it.uid)+'">'+mobilePhotoForName(it.name,dayCityLabel(day))+'</button><button type="button" class="mx-row-copy" data-info-item="'+esc(it.uid)+'"><b>'+esc(it.name)+'</b><small><span class="mx-ltr">'+esc(it.time||'')+'</span> · '+esc((p&&p.area)||it.kind||'')+'</small></button><button type="button" class="mx-status" data-exec-toggle="'+esc(it.uid)+'">'+(isDone?'✓':isCurrent?'●':'○')+'</button></div>';
   });
   h+='</div></main>';
-  return '<div class="mobile-trip-app mobile-execute-v111">'+h+mobileBottom('day')+'</div>';
+  return '<div class="mobile-trip-app mobile-execute-v113">'+h+mobileBottom('day')+'</div>';
 }
 
 function renderMobilePlaces(){
@@ -2306,15 +2311,21 @@ function renderRail(){
 let revealActiveDateAfterRender=false;
 function revealActiveDate(){
   const active=document.querySelector('.mx-date.on, .m-date-pill.on');
-  if(!active) return;
+  if(!active) return false;
   const rail=active.closest('.mx-dates, .m-day-scroll');
-  if(!rail) return;
-  try{
-    active.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
-  }catch(e){
-    const left=active.offsetLeft-(rail.clientWidth-active.offsetWidth)/2;
-    rail.scrollLeft=left;
-  }
+  if(!rail) return false;
+  const target=active.offsetLeft-(rail.clientWidth-active.offsetWidth)/2;
+  const oldSnap=rail.style.scrollSnapType;
+  rail.style.scrollSnapType='none';
+  try{ rail.scrollTo({left:target,top:0,behavior:'auto'}); }
+  catch(e){ rail.scrollLeft=target; }
+  requestAnimationFrame(()=>{ rail.style.scrollSnapType=oldSnap; });
+  return true;
+}
+function settleActiveDate(){
+  revealActiveDate();
+  setTimeout(revealActiveDate,60);
+  setTimeout(revealActiveDate,180);
 }
 function scheduleRevealActiveDate(){
   revealActiveDateAfterRender=true;
@@ -2347,7 +2358,7 @@ function render(){
   requestAnimationFrame(hydrateMedia);
   if(revealActiveDateAfterRender){
     revealActiveDateAfterRender=false;
-    requestAnimationFrame(()=>requestAnimationFrame(revealActiveDate));
+    requestAnimationFrame(()=>requestAnimationFrame(settleActiveDate));
   }
   if(appMode!=='plan' && tab==='weather' && !weatherState.loading && !weatherState.updated) setTimeout(()=>loadWeather(false),0);
 }
@@ -2863,7 +2874,7 @@ document.getElementById('app').onclick=e=>{
     return;
   }
   const dayBtn=e.target.closest('[data-day]');
-  if(dayBtn){ setDay(dayBtn.dataset.day); scheduleRevealActiveDate(); if(appMode==='plan' && window.innerWidth<760 && (dayBtn.dataset.mobileOpenDay==='1' || e.target.closest('[data-mobile-open-day]'))) mobilePlanView='day'; render(); return; }
+  if(dayBtn){ if(appMode==='plan' && window.innerWidth<760 && (dayBtn.dataset.mobileOpenDay==='1' || e.target.closest('[data-mobile-open-day]'))) mobilePlanView='day'; setDay(dayBtn.dataset.day,{reveal:true}); return; }
   const ptab=e.target.closest('[data-plan-tab]');
   if(ptab){ planTab=ptab.dataset.planTab; sheet=null; render(); return; }
   const mapExternal=e.target.closest('[data-map-external]');
